@@ -1,0 +1,60 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Content index{% endblock %}
+
+{% block body %}
+    <h1>Content index</h1>
+
+    <table class="table table-bordered table-striped mb-0" id="datatable-editable" >
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Article N°</th>
+                <th>Title</th>
+                {# <th>Intro</th> #}
+                <th>Body</th>
+                {# <th>Slug</th>
+                <th>Tags</th> #}
+                <th>Published_date</th>
+                <th>Created_at</th>
+                <th>Updated_at</th>
+                <th>Published</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for content in contents %}
+            <tr>
+                <td>{{ content.id }}</td>
+                <td>{{ content.article.id }}</td>
+                <td class="fw-bold">{{ content.title }}</td>
+                <td>{{ intro(content.body , 10, " ...") }}</td>
+                {# <td>{{ content.slug }}</td>
+                <td>{{ content.tags }}</td> #}
+                <td>{{ content.publishedDate ? content.publishedDate|date('Y-m-d') : '' }}</td>
+                <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ content.updatedAt ? content.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td class="fw-bold {{content.published ? 'text-success' : 'text-danger'}}">{{ content.published ? 'Publié' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_content_show', {'id': content.id}) }}" class="on-default show-row"><i class="fa fa-eye"></i></a>
+                    &nbsp;&nbsp;
+
+                    <a href="{{ path('app_content_edit', {'id': content.id, 'article_id': content.article.id}) }}" class="on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<div class="row">
+<div class="col-sm-6">
+<div class="mt-3">
+    {# <button id="addToTable" class="btn btn-primary">Add <i class="fas fa-plus"></i></button> #}
+    <a class="btn btn-sm btn-primary" href="{{ path('app_content_new') }}">Add&nbsp;<i class="fas fa-plus"></i></a>
+</div>
+</div>
+</div>
+{% endblock %}

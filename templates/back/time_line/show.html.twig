@@ -1,0 +1,54 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}TimeLine{% endblock %}
+
+{% block body %}
+    <h1>TimeLine</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ time_line.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ time_line.title }}</td>
+            </tr>
+            <tr>
+                <th>StepDate</th>
+                <td>{{ time_line.stepDate ? time_line.stepDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ time_line.description }}</td>
+            </tr>
+            <tr>
+                <th>Icon</th>
+                <td>{{ time_line.icon }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ time_line.createdAt ? time_line.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ time_line.updatedAt ? time_line.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Published</th>
+                <td>{{ time_line.published ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>Article</th>
+                <td>{{ time_line.article }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_time_line_index') }}">back to list</a>
+
+    <a href="{{ path('app_time_line_edit', {'id': time_line.id}) }}">edit</a>
+
+    {{ include('back/time_line/_delete_form.html.twig') }}
+{% endblock %}

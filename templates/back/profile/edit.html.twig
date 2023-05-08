@@ -1,0 +1,104 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Edit Profil{% endblock %}
+
+{% block body %}
+
+    <h1>Edit Profil</h1>
+
+    {{ include('back/profile/_form.html.twig', {'button_label': 'Update'}) }}
+
+{% set routes = app.session.get('permession_routes') %}
+    {# {{dump(routes) }} #}
+    
+{% if routes.app_profile_index is defined %}
+<a class="btn btn-default" href="{{ path('app_profile_index') }}">back to list</a>
+{% endif %}
+    <br/>
+    <br/>
+{% set checkedAllPrivileges ="" %}
+{% if all_privileges == true %}
+
+    {% set checkedAllPrivileges ="checked = true" %}
+{% endif %}
+<a class="btn btn-default " href="#">
+<input type="checkbox" {{checkedAllPrivileges}} class="all" id="all_privileges" >
+    TOUS LES PRIVILÈGES
+</a>
+    {# {{ include('profil/_delete_form.html.twig') }} #}
+<div class="card-body">
+<div class="row">
+    <div class="col-lg-6">
+        <div class="dd" id="nestable">
+        <input type="hidden" id="profil_id" value={{profile_id}} />
+            <ol class="dd-list widget-todo-list">
+            {% for section in sections %}
+                <li class="dd-item dd-handle ban-section" id="{{section.id}}">
+                    <div class="  checkbox-default" id="section-{{ section.id }}">
+                    {% if section.business_name is defined  %}
+                        <label for="checkboxExample1">Rubrique : {{section.business_name}}</label>
+                        {% else %}
+                        <label for="checkboxExample1">Rubrique : {{section.label}}</label>
+                    {% endif %}
+                        <small class="text-muted" >{{ section.description }}</small>
+                    </div> 
+                </li>
+                {% set checkedAll ="" %}
+                {% if section.allAction == true %}
+                
+                    {% set checkedAll ="checked = true" %}
+                {% endif %}
+                <ol class="dd-list" id="actions_{{ section.id }}"  >
+                    <li class="dd-item" data-id="3">
+                        <div class=" checkbox-custom checkbox-default" id="section-{{ section.id }}">
+                            <input type="checkbox" {{checkedAll}} class="all_action_{{ section.id }}" id="all_{{ section.id }}" value="{{section.id}}">
+                                <label for="checkboxExample1"> Tous</label>
+                        </div>
+                    </li>
+                    {% for action in section.actions %}
+                        {% set checkedCheckbox ='' %}
+                        {% for profil_action in profil_actions %}
+                            {% if action.id == profil_action.action.id  %}
+                                {% set checkedCheckbox ="checked = true" %}
+                            {% endif %}
+                        {% endfor %}          
+                                <li class="dd-item" data-id="3">
+                                    <div class=" checkbox-custom checkbox-default" id="section-{{ action.id }}">
+                                        <input type="checkbox" {{checkedCheckbox}} class="action_{{ section.id }}" id="action_{{ action.id }}" value="{{action.id}}">
+                                        {% if action.business_name is defined  %}
+                                            <label for="checkboxExample1">{{action.business_name}}</label>
+                                            {% else %}
+                                            <label for="checkboxExample1">{{action.label}}</label>
+                                            <small class="text-muted" >{{ action.route }}</small>
+                                        {% endif %}
+                                        {# <small class="text-muted" >{{ action.description }}</small> #}
+                                    </div>
+                                </li>
+                    {% endfor %}          
+                </ol>
+
+                {% endfor %}
+             
+            </ol>
+        </div>
+    </div>
+<script>
+$(document).ready(function(){ 
+
+    $('.action_action_linked').parent().hide()
+     $('.action_type_linked').on('change', function(e){
+         if(this.value == 2)
+         {
+             $('.action_action_linked').parent().show()
+         }else{
+
+            $('.action_action_linked').parent().hide();
+            $('.action_action_linked option[value=""]').prop('selected', true);
+         }
+     })
+})
+</script>   
+{% endblock %}
+
+
+

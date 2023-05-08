@@ -1,0 +1,21 @@
+# Read the documentation: https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html
+
+twig:
+    form_themes:
+        - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+
+fos_ck_editor:
+    configs:
+        main_config:
+            toolbarr:  [ 
+                [ 'Preview' ], 
+                [ 'Cut','Copy','Paste','PasteText','PasteFromWord','-','Undo','Redo' ], 
+                [ 'Find','Replace','-','SelectAll','-','SpellChecker', 'Scayt' ], 
+                [ 'Source' ], [ "About" ], "/", [ 'Bold','Italic','Underline','Strike', 'Blockquote','Subscript','Superscript','-','RemoveFormat' ], 
+                [ 'NumberedList','BulletedList','-','Outdent','Indent','-','-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock' ], 
+                [ 'Link','Unlink','Anchor' ], [ 'pbckcode', 'Image', 'Video', 'Table','SpecialChar','Iframe' ], '/', [ 'Styles', 'Format','Font','FontSize' ], 
+                [ 'TextColor','BGColor' ], [ 'RemoveFormat' ], [ 'Maximize' ] 
+            ]
+            
+            filebrowserBrowseRoute: elfinder
+            filebrowserBrowseRouteParameters: []

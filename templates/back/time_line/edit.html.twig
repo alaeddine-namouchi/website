@@ -1,0 +1,47 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Edit TimeLine{% endblock %}
+
+{% block body %}
+    <h1>Edit TimeLine</h1>
+    {{ include('back/time_line/_form.html.twig', {'button_label': 'Update'}) }}
+  {# start TileLine #}
+
+<h4 class="mb-3 pt-4 font-weight-semibold text-dark">Timeline</h4>
+    <div class="timeline timeline-simple mt-3 mb-3">
+        <div class="tm-body">
+            <div class="tm-title">
+                <h5 class="m-0 pt-2 pb-2 text-dark font-weight-semibold text-uppercase">November 2021</h5>
+            </div>
+            <ol class="tm-items">
+            {% for time_line in time_lines %}
+                <li>
+                    <div class="tm-box">
+                    <h5 class="m-0 pt-2 pb-2 text-dark font-weight-semibold text-uppercase">{{time_line.title}}</h5>
+                        <p class="text-muted mb-0">{{time_line.stepDate ? time_line.stepDate|date('Y-m-d') : ''  }}</p>
+                        <p>
+                            {{time_line.description}}
+                        </p>
+                        <div class="tm-meta text-end px-3">
+                            {# <span>
+                                <i class="bx bx-user-circle"></i> By <a href="#">John Doe</a>
+                            </span>
+                            <span>
+                                <i class="fas fa-tag"></i> <a href="#">Porto</a>, <a href="#">Awesome</a>
+                            </span> #}
+                            <span class="">
+                                <i class="fas fa-edit"></i> <a href="{{path('app_time_line_edit', {'id': time_line.id})}}">Editer</a>
+                            </span>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ol>
+        </div>
+    </div>
+
+{# End TileLine #}
+
+
+    <a class="btn btn-sm btn-default" href="{{ path('app_time_line_index') }}"><<< &nbsp;back to list</a>
+{% endblock %}

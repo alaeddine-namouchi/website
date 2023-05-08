@@ -1,0 +1,452 @@
+<!doctype html>
+<html class="fixed">
+	<head>
+		<!-- Basic -->
+		<meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+		<meta name="keywords" content="HTML5 Admin Template" />
+		<meta name="description" content="Porto Admin - Responsive HTML5 Template">
+		<meta name="author" content="okler.net">
+        {% block stylesheets %}
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+	<!-- Web Fonts  -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800%7COpen+Sans:400,700,800" rel="stylesheet" type="text/css">
+		{# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.rtl.min.css" integrity="sha384-gXt9imSW0VcJVHezoNQsP+TNrjYXoGcrqBZJpry9zJt8PCQjobwmhMGaDHTASo9N" crossorigin="anonymous"> #}
+	<!-- Vendor CSS -->
+		<link rel="stylesheet" href="{{ asset('vendor/bootstrap/css/bootstrap.css') }}" />
+		<link rel="stylesheet" href="{{ asset('vendor/animate/animate.compat.css') }}">
+		<link rel="stylesheet" href="{{ asset('vendor/font-awesome/css/all.min.css') }}" />
+		<link rel="stylesheet" href="{{ asset('vendor/boxicons/css/boxicons.min.css') }}" />
+		<link rel="stylesheet" href="{{ asset('vendor/magnific-popup/magnific-popup.css') }}" />
+		<link rel="stylesheet" href="{{ asset('vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css') }}" />
+		<link rel="stylesheet" href="{{ asset('vendor/owl.carousel/assets/owl.carousel.css') }}" />
+		<link rel="stylesheet" href="{{ asset('vendor/owl.carousel/assets/owl.theme.default.css') }}" />
+		<link rel="stylesheet" href="{{ asset('vendor/bootstrap-tagsinput/bootstrap-tagsinput.css') }}" />
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+        <!-- Theme CSS -->
+		<link rel="stylesheet" href="{{ asset('css/theme.css') }}" />
+<!-- Landing Page CSS -->
+		<link rel="stylesheet" href="{{ asset('css/landing.css') }}" />
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="{{ asset('css/skins/default.css') }}" />
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="{{ asset('css/custom.css') }}">
+		<!-- Head Libs -->
+		<script src="{{ asset('vendor/modernizr/modernizr.js') }}"></script>
+		<script src="{{ asset('master/style-switcher/style.switcher.localstorage.js') }}"></script>
+		
+
+	</head>
+	<body>
+		<section class="body">
+
+			<!-- start: header -->
+			{% include "back/bloc/_header.html.twig" %}
+			<!-- end: header -->
+
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				{% include "back/bloc/_left_menu.html.twig" %}
+				<!-- end: sidebar -->
+
+				<section role="main" class="content-body">
+					<header class="page-header">
+						<h2>Default Layout</h2>
+					
+						<div class="right-wrapper text-end">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="index.html">
+										<i class="bx bx-home-alt"></i>
+									</a>
+								</li>
+
+								<li><span>Layouts</span></li>
+
+								<li><span>Default</span></li>
+
+							</ol>
+						
+
+							<a class="sidebar-right-toggle" data-open="sidebar-right"><i class="fas fa-chevron-left"></i></a>
+						</div>
+					</header>
+				
+
+
+{# debut  #}
+ 	<div class="row">
+		<div class="col">
+			<span class="tabs tabs-dark">
+				<ul class="nav nav-tabs">
+				{% for locale in locales %}
+				{% if locale != app.request.locale %}
+					<li class="nav-item">
+						<a class="nav-link  test-link  " data-bs-target="#{{ locale }}" href="{{ path('switch_locale', {'locale': locale}) }}" ><i class="fas fa-star"></i> 
+							{% if locale == 'ar' %} Arabe {% endif %}
+							{% if locale == 'fr' %} Français {% endif %}
+							{% if locale == 'en' %} Anglais {% endif %}
+						</a>
+					</li>
+				
+				{% endif %}
+				{% if locale == app.request.locale %}
+					<li class="nav-item active">
+						<a class="nav-link test-link active" data-bs-target="#{{ locale }}" href="{{ path('switch_locale', {'locale': locale}) }}" ><i class="fas fa-star"></i> 
+							{% if locale == 'ar' %} Arabe {% endif %}
+							{% if locale == 'fr' %} Français {% endif %}
+							{% if locale == 'en' %} Anglais {% endif %}
+						</a>
+					</li>
+				{% endif %}
+			{% endfor %}
+
+				</ul>
+				<div class="tab-content">
+					<div id="{{app.request.locale}}" class="tab-pane active">
+					{% block body %}
+					
+					{% endblock %}
+					</div>
+				</div>
+			</div>
+		</span>
+	</div>
+{# fin #}
+				</section>
+			</div> 
+
+
+			{% include "back/bloc/_right_menu.htm.twig" %}
+		</section>
+ {% block javascripts %}
+            {{ encore_entry_script_tags('app') }}
+{% endblock %}
+		<!-- Vendor -->
+		<script src="{{ asset('vendor/jquery/jquery.js')}}"></script>
+		<script src="{{ asset('vendor/jquery-browser-mobile/jquery.browser.mobile.js')}}"></script>
+		<script src="{{ asset('vendor/popper/umd/popper.min.js')}}"></script>
+		<script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+		<script src="{{ asset('vendor/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+		<script src="{{ asset('vendor/common/common.js')}}"></script>
+		<script src="{{ asset('vendor/nanoscroller/nanoscroller.js')}}"></script>
+		<script src="{{ asset('vendor/magnific-popup/jquery.magnific-popup.js')}}"></script>
+		<script src="{{ asset('vendor/jquery-placeholder/jquery.placeholder.js')}}"></script>
+
+		<!-- Specific Page Vendor -->
+		<script src="{{ asset('vendor/jquery-ui/jquery-ui.js')}}"></script>
+		<script src="{{ asset('vendor/jqueryui-touch-punch/jquery.ui.touch-punch.js')}}"></script>
+		<script src="{{ asset('vendor/jquery-appear/jquery.appear.js')}}"></script>
+		<script src="{{ asset('vendor/bootstrapv5-multiselect/js/bootstrap-multiselect.js')}}"></script>
+		<script src="{{ asset('vendor/jquery.easy-pie-chart/jquery.easypiechart.js')}}"></script>
+		<script src="{{ asset('vendor/flot/jquery.flot.js')}}"></script>
+		<script src="{{ asset('vendor/flot.tooltip/jquery.flot.tooltip.js')}}"></script>
+		<script src="{{ asset('vendor/flot/jquery.flot.pie.js')}}"></script>
+		<script src="{{ asset('vendor/flot/jquery.flot.categories.js')}}"></script>
+		<script src="{{ asset('vendor/flot/jquery.flot.resize.js')}}"></script>
+		<script src="{{ asset('vendor/jquery-sparkline/jquery.sparkline.js')}}"></script>
+		<script src="{{ asset('vendor/raphael/raphael.js')}}"></script>
+		<script src="{{ asset('vendor/morris/morris.js')}}"></script>
+		<script src="{{ asset('vendor/gauge/gauge.js')}}"></script>
+		<script src="{{ asset('vendor/snap.svg/snap.svg.js')}}"></script>
+		<script src="{{ asset('vendor/liquid-meter/liquid.meter.js')}}"></script>
+		<script src="{{ asset('vendor/jqvmap/jquery.vmap.js')}}"></script>
+		<script src="{{ asset('vendor/jqvmap/data/jquery.vmap.sampledata.js')}}"></script>
+		<script src="{{ asset('vendor/jqvmap/maps/jquery.vmap.world.js')}}"></script>
+		<script src="{{ asset('vendor/jqvmap/maps/continents/jquery.vmap.africa.js')}}"></script>
+		<script src="{{ asset('vendor/jqvmap/maps/continents/jquery.vmap.asia.js')}}"></script>
+		<script src="{{ asset('vendor/jqvmap/maps/continents/jquery.vmap.australia.js')}}"></script>
+		<script src="{{ asset('vendor/jqvmap/maps/continents/jquery.vmap.europe.js')}}"></script>
+		<script src="{{ asset('vendor/jqvmap/maps/continents/jquery.vmap.north-america.js')}}"></script>
+		<script src="{{ asset('vendor/jqvmap/maps/continents/jquery.vmap.south-america.js')}}"></script>
+		<script src="{{ asset('vendor/bootstrap-tagsinput/bootstrap-tagsinput.js')}}"></script>
+		
+
+		{# <script src="{{ asset('vendor/treeview/bootstrap-treeview.js')}}"></script> #}
+
+		<!-- Specific Page Vendor -->
+		<script src="{{ asset('vendor/jquery-nestable/jquery.nestable.js')}}"></script>
+		<!-- Theme Base, Components and Settings -->
+		<script src="{{ asset('js/theme.js')}}"></script>
+		<!-- Theme Custom -->
+		<script src="{{ asset('js/custom.js')}}"></script>
+		<!-- Theme Initialization Files -->
+		<script src="{{ asset('js/theme.init.js')}}"></script>
+		<!-- Examples -->
+		<script src="{{ asset('js/examples/examples.dashboard.js')}}"></script>
+		<script>
+		$(document).ready(function() {
+			const switch_route_lang = "{{ path('switch_locale', {'locale' : '_loc_'})|escape('js') }}";
+
+		 	const LANGS = ["fr", "ar", "en"];
+			var url = window.location.href;
+			let currentLang = LANGS.find((lang) => (url.includes('/'+lang+'/')));
+			$('#switch-lang option[value="' + currentLang + '"]').prop('selected', true); 
+			
+    		 $("#switch-lang").change(function(){
+				langId = $(this).prop('id');
+				var url = window.location.href;
+				let currentLang = LANGS.find((lang) => (url.includes('/'+lang+'/')));
+				let aliasLang = this.value;
+				 {# console.log( $(this).find(":selected").val() ); #}
+				let urlSwitch  = switch_route_lang.replace('/_loc_', '/'+aliasLang);
+				{# console.log(urlSwitch); #}
+				window.location.replace(urlSwitch);
+
+			})
+/**
+gestion des droit d'accès
+*/
+ $('.action_action_linked').parent().hide()
+     $('.action_type_linked').on('change', function(e){
+         if(this.value == 2)
+         {
+             $('.action_action_linked').parent().show()
+         }else{
+
+            $('.action_action_linked').parent().hide();
+            $('.action_action_linked option[value=""]').prop('selected', true);
+         }
+     });
+
+	$('.dd-handle').click(function(e) {
+        sectionId = $(this).prop('id')
+        $("#actions_"+sectionId).toggle();
+        
+});
+$('[class^="action_"]').on('click', function(e){ 
+        actionId = $(this).val()
+        profilId = $("#profil_id").val()
+        if($(this).is(":checked")) 
+        {
+            urlUpdate = "{{path('new_action_profil' )}}"
+            addActionProfil(urlUpdate, profilId, actionId);
+        
+        }else{
+            
+            removeUpdate = "{{path('remove_action_profil')}}"
+            removeActionProfil(removeUpdate, profilId, actionId);
+            
+        }
+});
+
+$('#all_privileges').on('click', function(e){ 
+        profilId = $("#profil_id").val()
+        if($(this).is(":checked")) 
+        {
+            url = "{{path('all_privileges_profil' )}}"
+            addAllPrivilegesProfil(url, profilId);
+        
+        }else{
+            
+            removeUrl = "{{path('remove_all_privileges_profil')}}"
+            removeAllPrivilegesProfil(removeUrl, profilId); 
+            
+        }
+});
+
+
+
+/**
+* check all Action By Section
+*/
+$('[class^="all_action_"]').on('click', function(e){ 
+        sectionId = $(this).val()
+        profilId = $("#profil_id").val()
+        if($(this).is(":checked")) 
+        {
+            const urlUpdate = "{{path('new_actions_profil_by_section' )}}"
+            addActionsProfilBySection(urlUpdate, profilId, sectionId);
+        
+        }else{
+            
+            const removeUpdate = "{{path('remove_actions_profil_by_section')}}"
+            removeActionsProfilBySection(removeUpdate, profilId, sectionId);
+            
+        }
+
+});
+
+});
+
+function addActionProfil(urlUpdate, idp, ida)
+{
+        $.ajax({
+            type: "POST",
+            url: urlUpdate,
+            timeout: 9000,
+            //dataType: 'json',
+            cache: false,
+            data: {action_id: ida, profil_id: idp },
+            beforeSend: function () {
+                //Code à jouer avant l'appel ajax en lui même
+            },
+            success: function (data) {
+                console.log('data : ' + JSON.stringify(data))
+                if(data.all_action)
+                {
+                    $("#all_"+ data.section_id).prop('checked', true);
+                }
+            },
+            // La fonction à appeler si la requête n'a pas abouti
+            error: function(e) {
+                console.log(e)
+                // J'affiche un message d'erreur
+                console.log("Désolé, aucun résultat trouvé.");
+            }
+    })
+
+}
+
+function removeActionProfil(urlRemove, idp, ida)
+{
+    //console.log({action_id: ida , profil_id: idp });
+        $.ajax({
+            type: "POST",
+            url: urlRemove,
+            timeout: 9000,
+            //dataType: 'json',
+            cache: false,
+            data: {action_id: ida, profil_id: idp },
+
+            beforeSend: function () {
+                //Code à jouer avant l'appel ajax en lui même
+            },
+            success: function (data) {
+                console.log('data : ' + JSON.stringify(data))
+                if(data.deleted)
+                {
+                    $("#all_"+ data.section_id).prop('checked', false);
+                    $("#all_privileges").prop('checked', false);
+                }
+            },
+            error: function(e) {
+                console.log(e)
+                // J'affiche un message d'erreur
+                console.log("Désolé, aucun résultat trouvé.");
+            }
+        });
+
+}
+
+function addActionsProfilBySection(urlUpdate, idp, idSection )
+{
+    $.ajax({
+        type: "POST",
+        url: urlUpdate,
+        timeout: 9000,
+        //dataType: 'json',
+        cache: false,
+        data: {section_id: idSection, profil_id: idp },
+        beforeSend: function () {
+            //Code à jouer avant l'appel ajax en lui même
+        },
+        success: function (data) {
+            console.log('data : ' + JSON.stringify(data))
+            data.id_new_actions.map( id =>{
+                    return $("#action_" + id).prop('checked', true);
+            });
+        },
+        // La fonction à appeler si la requête n'a pas abouti
+        error: function(e) {
+            console.log(e)
+            // J'affiche un message d'erreur
+            console.log("Désolé, aucun résultat trouvé.");
+        }
+    });
+}
+
+function removeActionsProfilBySection(urlRemoveActions, profilId, sectionId)
+{
+     $.ajax({
+        type: "POST",
+        url: urlRemoveActions,
+        timeout: 9000,
+        //dataType: 'json',
+        cache: false,
+        data: {section_id: sectionId, profil_id: profilId },
+
+        beforeSend: function () {
+            //Code à jouer avant l'appel ajax en lui même
+        },
+        success: function (data) {
+            console.log('data : ' + JSON.stringify(data))
+            data.id_remove_actions.map( id =>{
+                    return $("#action_" + id).prop('checked', false);
+            });
+            $("#all_privileges").prop('checked', false);
+        },
+        // La fonction à appeler si la requête n'a pas abouti
+        error: function(e) {
+            console.log(e)
+            // J'affiche un message d'erreur
+            console.log("Désolé, aucun résultat trouvé.");
+        }
+    });
+}
+
+function addAllPrivilegesProfil(url, profilId)
+{
+    $.ajax({
+        type: "POST",
+        url: url,
+        timeout: 9000,
+        //dataType: 'json',
+        cache: false,
+        data: {profil_id: profilId },
+
+        beforeSend: function () {
+            //Code à jouer avant l'appel ajax en lui même
+        },
+        success: function (data) {
+            //console.log('data : ' + JSON.stringify(data))
+            data.id_actions.map( id =>{
+                    return $("#action_" + id).prop('checked', true);
+            });
+            $('[class^="all_action_"]').prop('checked', true);
+            
+        },
+        // La fonction à appeler si la requête n'a pas abouti
+        error: function(e) {
+            console.log(e)
+            // J'affiche un message d'erreur
+            console.log("Désolé, aucun résultat trouvé.");
+        }
+    });
+}
+function removeAllPrivilegesProfil(url, profilId)
+{
+    $.ajax({
+        type: "POST",
+        url: url,
+        timeout: 9000,
+        //dataType: 'json',
+        cache: false,
+        data: {profil_id: profilId },
+
+        beforeSend: function () {
+            //Code à jouer avant l'appel ajax en lui même
+        },
+        success: function (data) {
+            //console.log('data : ' + JSON.stringify(data))
+            data.id_actions.map( id =>{
+                    return $("#action_" + id).prop('checked', false);
+            });
+            $('[class^="all_action_"]').prop('checked', false);
+            
+        },
+        // La fonction à appeler si la requête n'a pas abouti
+        error: function(e) {
+            console.log(e)
+            // J'affiche un message d'erreur
+            console.log("Désolé, aucun résultat trouvé.");
+        }
+    });
+}
+
+		</script>
+
+	</body>
+</html>

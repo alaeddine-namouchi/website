@@ -1,0 +1,69 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Admin index{% endblock %}
+
+{% block body %}
+    <h1>Admin index</h1>
+<div class="row">
+    <div class="col-lg-12">
+        <section class="card">
+            <header class="card-header">
+                <div class="card-actions">
+                    <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                    <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                </div>
+
+                <h2 class="card-title">Basic</h2>
+            </header>
+            <div class="card-body">
+              <table class="table  table-responsive-md table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Email</th>
+                            <th>Roles</th>
+                            {# <th>Password</th> #}
+                            <th>Firstname</th>
+                            <th>Lastname</th>
+                            <th>Created_at</th>
+                            <th>Update_at</th>
+                            <th>WorkUnit</th>
+                            <th>PhoneNumber</th>
+                            <th>IsVerified</th>
+                            <th>actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for admin in admins %}
+                        <tr>
+                            <td>{{ admin.id }}</td>
+                            <td>{{ admin.email }}</td>
+                            <td>{{ admin.roles ? admin.roles|json_encode : '' }}</td>
+                            {# <td>{{ admin.password }}</td> #}
+                            <td>{{ admin.firstname }}</td>
+                            <td>{{ admin.lastname }}</td>
+                            <td>{{ admin.createdAt ? admin.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ admin.updateAt ? admin.updateAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>{{ admin.workUnit }}</td>
+                            <td>{{ admin.phoneNumber }}</td>
+                            <td>{{ admin.isVerified ? 'Yes' : 'No' }}</td>
+                            <td>
+                                <a href="{{ path('app_admin_edit', {'id': admin.id}) }}"><i class="fas fa-pencil-alt"></i></a>
+                                &nbsp;&nbsp;&nbsp;
+                                <a href="{{ path('app_admin_show', {'id': admin.id}) }}"><i class="fas fa-eye"></i></a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="12">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+                <a type="button" class="mb-1 mt-1 me-1 btn btn-primary" href="{{ path('app_admin_new') }}">Create new</a>
+                </div>
+        </section>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'back/base.html.twig' %}
+
+{% block title %}Section index{% endblock %}
+
+{% block body %}
+    <h1>Section index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Label</th>
+                <th>Alias</th>
+                <th>Description</th>
+                <th>BusinessName</th>
+                <th>AllAction</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for section in sections %}
+            <tr>
+                <td>{{ section.id }}</td>
+                <td>{{ section.label }}</td>
+                <td>{{ section.alias }}</td>
+                <td>{{ section.description }}</td>
+                <td>{{ section.businessName }}</td>
+                <td>{{ section.allAction ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('app_section_show', {'id': section.id}) }}">show</a>
+                    <a href="{{ path('app_section_edit', {'id': section.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_section_new') }}">Create new</a>
+{% endblock %}
