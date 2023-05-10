@@ -9,6 +9,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
+use Cocur\Slugify\Slugify;
+
 /**
  * @ORM\Entity(repositoryClass=ContentRepository::class)
  * @ORM\HasLifecycleCallbacks
@@ -112,7 +114,11 @@ class Content
     
 
 
+    public function getSlug(): string
+    {
+        return (new Slugify())->slugify($this->title);
 
+    }
 
 
     public function getId(): ?int
@@ -174,10 +180,7 @@ class Content
         return $this;
     }
 
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
+    
 
     public function setSlug(?string $slug): self
     {

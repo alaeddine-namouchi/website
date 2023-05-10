@@ -1,6 +1,6 @@
 <?php
 include "bloc/head-import.php";
-$current_page = "Accueil"
+// $current_page = "Accueil"
 ?>
 <body>
     <?php

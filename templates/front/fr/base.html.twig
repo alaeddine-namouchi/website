@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous"> -->
+    {# <link rel="stylesheet" href="{{ asset('../css/style.css')}}" /> #}
+    <!-- Custom styles for this template -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" /> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.1.0/css/flag-icon.min.css" rel="stylesheet"> 
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
+    <link href="{{ asset('css/style.css" rel="stylesheet') }}">
+    <link href="{{ asset('../assets/css/carousel.css') }}" rel="stylesheet">
+     <link href="{{ asset('../assets/css/style.css') }}" rel="stylesheet">
+     <link href="{{ asset('../assets/css/adapter-tpl.css') }}" rel="stylesheet">
+     <link href="{{ asset('../assets/css/card-widget-events.css') }}" rel="stylesheet" />
+     <link href="{{ asset('css/style-fr.css" rel="stylesheet') }}">
+    <title>STT :  </title>
+  </head>
+<body>
+{% include "front/fr/bloc/header.html.twig" %}
+    <main role="main">
+        <div class="container marketing bg-light" >
+        {% include "front/fr/bloc/baniere-img.html.twig" %}
+
+            <!-- <div class="my-3 p-3 bg-white  box-shadow">
+                <div class="embed-responsive " id="zframe"  style="padding-bottom:450px!important; margin: -130px  auto 0 auto;" >
+                <iframe id="myIframe" class=" rounded-sm" src="http://info.transtu.tn/info.php" title="Information vouyageurs version 1.0" frameborder="1" onmouseover="resizeIframe(this)"  onload="resizeIframe(this)" >
+                </iframe>
+                </div>
+            </div> -->
+            <div>
+                <!-- START : BLOC INFO VOUYAGEURS -->
+   
+           {% include "front/fr/bloc/info-travel.html.twig" %} 
+      
+        {% include "front/fr/bloc/communication.html.twig" %} 
+
+</div>
+        <!-- <?php 
+            // include "bloc/communication-2.php";
+        ?> -->
+     
+        {% include "front/fr/bloc/other.html.twig" %} 
+    <!-- /.container -->
+
+        {% include "front/fr/bloc/footer.html.twig" %} 
+        
+</div>
+    </main>
+{% include "front/fr/bloc/import-js.html.twig" %} 
+
+
+
+
