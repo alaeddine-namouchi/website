@@ -16,11 +16,19 @@
 
 				                <ul class="nav nav-main">
 				                    <li>
-				                        <a class="nav-link" href="layouts-default.html">
+				                        <a class="nav-link" href="#">
 				                            <i class="bx bx-home-alt" aria-hidden="true"></i>
 				                            <span>Dashboard</span>
 				                        </a>                        
 				                    </li>
+									 {% if routes.app_menu_index is defined %}
+									<li>
+				                        <a class="nav-link" href="layouts-default.html">
+				                            <i class="bx bx-home-alt" aria-hidden="true"></i>
+				                            <span>Gestion des menu</span>
+				                        </a>                        
+				                    </li>
+									{% endif %}	
 				                     {% if routes.app_content_index is defined %}
 									<li  class="nav-parent" >
 				                        <a class="nav-link" href="{{path('app_content_index')}}">
@@ -136,6 +144,15 @@
 														                            
 				                        </ul>
 				                    </li>
+
+									{% if routes.app_menu_index is defined %}
+									<li>
+				                        <a class="nav-link" href="{{path('app_menu_index')}}">
+				                            <i class="bx bx-home-alt" aria-hidden="true"></i>
+				                            <span>Gestion des menus</span>
+				                        </a>                        
+				                    </li>
+									{% endif %}	
 								{#	 {% if app.user.profil.alias == 'SUPER_USER' %} #}
 									<li class="nav-parent">
 				                        <a class="nav-link" href="#">

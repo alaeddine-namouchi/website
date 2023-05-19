@@ -4,6 +4,7 @@ namespace App\Controller\Front;
 
 use App\Entity\Article;
 use App\Entity\Category;
+use App\Entity\Contact;
 use App\Entity\Content;
 use App\Entity\Language;
 use App\Form\ContentType;
@@ -11,6 +12,7 @@ use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ContentRepository;
 use App\Repository\LanguageRepository;
+use App\Repository\MenuRepository;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,6 +35,8 @@ class ContentController extends AbstractController
     private $articleRepository;
     private $contentRepository;
     private $languageRepository;
+    private $categoryRepository;
+    private $menuRepository;
     private $translator;
     /**
      * @var LoggerInterface
@@ -44,6 +48,7 @@ class ContentController extends AbstractController
      */
     public function __construct(LoggerInterface $logger,
                                 Security $security, 
+                                MenuRepository $menuRepository,
                                 ContentRepository $contentRepository, 
                                 LanguageRepository $languageRepository, 
                                 CategoryRepository $categoryRepository, 
@@ -58,6 +63,7 @@ class ContentController extends AbstractController
         $this->languageRepository = $languageRepository;
         $this->categoryRepository = $categoryRepository;
         $this->translator = $translator;
+        $this->menuRepository = $menuRepository;
         $this->logger = $logger;
 
     }
@@ -90,8 +96,6 @@ class ContentController extends AbstractController
         ]);
     }
 
-    
- 
 
     /**
      * @Route("/{slug}/{id}", name="front_content_show", methods={"GET"} )
@@ -115,7 +119,46 @@ class ContentController extends AbstractController
         $content = $this->validContentFront( $objlang_from_url,  $article);
         $loc_url = $request->getSession()->get('_locale');
         $currentLang = $objlang_from_url->getName();
-        return $this->render('front/fr/base.html.twig', []);
+    
+        if($article->getCategory()->getAlias() == 'SIMPLE'){
+            return $this->render('front/fr/access-to-information.html.twig', [
+                'content_page' => $content->getBody(), 
+                'slug'=> $slug,
+                'current_page'=> $content->getTitle(),
+                'menus' => $this->menuRepository->findAll(),
+            
+            ]);
+        }
+        if($article->getCategory()->getAlias() == 'FORM'){
+            return $this->redirectToRoute('front_content_new', [], Response::HTTP_SEE_OTHER);
+
+        }
+
+        // if($article->getCategory()->getAlias() == 'FORM'){
+
+        //     $contact = new Contact();
+        // $form = $this->createForm(ContactType::class, $contact);
+        // $form->handleRequest($request);
+
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     $contactRepository->add($contact);
+        //     return $this->redirectToRoute('app_contact_index', [], Response::HTTP_SEE_OTHER);
+        // }
+
+        // return $this->renderForm('back/contact/new.html.twig', [
+        //     'contact' => $contact,
+        //     'form' => $form,
+        // ]);
+        //     return $this->render('front/fr/contact.html.twig', [
+        //         'current_page'=> $content->getTitle(),
+        //         'form_name' => 'form-contact',
+        //         'menus' => $this->menuRepository->findAll(),
+                
+            
+        //     ]);
+        // }
+
+        
     }
 
 

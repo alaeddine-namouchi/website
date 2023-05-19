@@ -1,6 +1,6 @@
 <h5>
     <a href="https://www.ratp.fr/en/infos-trafic/transilien" title="Voir toutes les perturbations transilien">
-        <img width="30" height="30" src="../assets/img/icon-metro.jpg" alt="Transilien">
+        <img width="30" height="30" src="{{asset('assets/img/icon-metro.jpg')}}" alt="Transilien">
         <!-- <img width="29" height="37" src="https://www.ratp.fr/sites/default/files/lines-assets/picto/sncf/symbole.1634824971.svg" alt="Transilien"> -->
     </a> <span style="font-weight: bold;color:rgb(27, 107, 7)">METRO</span>
 </h5>

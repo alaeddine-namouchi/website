@@ -187,9 +187,12 @@ class ContentController extends AbstractController
     public function edit(Request $request, $article_id, Content $content, LanguageRepository $languageRepository, ContentRepository $contentRepository, TranslatorInterface $translator): Response
     {
         
-        $loc_url = $request->getSession()->get('_locale');
+        // $loc_url = $request->getSession()->get('_locale');
+        $loc_url = $request->get('_locale');
+        // dd($loc_url);
         $objlang_from_url = $languageRepository->findOneByAlias($loc_url);
         $article  = $content->getArticle();
+        // dd($objlang_from_url);
         $action = $this->typeOfAction($objlang_from_url, $article);
         if($action == 'edit')
         {

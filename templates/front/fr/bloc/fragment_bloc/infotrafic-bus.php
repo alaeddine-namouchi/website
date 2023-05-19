@@ -1,6 +1,6 @@
 <h5>
     <a href="https://www.ratp.fr/en/infos-trafic/transilien" title="Voir toutes les perturbations transilien">
-        <img  width="30" height="30" src="../assets/img/icone-de-bus-jaune.png" alt="Transilien">
+        <img  width="30" height="30" src="{{asset('assets/img/icone-de-bus-jaune.png')}}" alt="Transilien">
     </a> <span style="font-weight: bold;color:  #e3ab09;">BUS</span>
     </h5>
 <div class="row">

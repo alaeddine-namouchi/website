@@ -9,12 +9,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Sec;
 
 /**
- * @Route("/contact")
+ * 
+ * @Route("/back/{_locale}/contact", requirements={  "_locale": "fr|ar|en"   })
+ * 
+ * @Sec("is_granted('IS_AUTHENTICATED_FULLY')")
  * 
  */
-//@Security("is_granted('IS_AUTHENTICATED_FULLY')")
+
 class ContactController extends AbstractController
 {
     /**
@@ -22,7 +26,7 @@ class ContactController extends AbstractController
      */
     public function index(ContactRepository $contactRepository): Response
     {
-        return $this->render('contact/index.html.twig', [
+        return $this->render('back/contact/index.html.twig', [
             'contacts' => $contactRepository->findAll(),
         ]);
     }
@@ -41,7 +45,7 @@ class ContactController extends AbstractController
             return $this->redirectToRoute('app_contact_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('contact/new.html.twig', [
+        return $this->renderForm('back/contact/new.html.twig', [
             'contact' => $contact,
             'form' => $form,
         ]);
@@ -52,7 +56,7 @@ class ContactController extends AbstractController
      */
     public function show(Contact $contact): Response
     {
-        return $this->render('contact/show.html.twig', [
+        return $this->render('back/contact/show.html.twig', [
             'contact' => $contact,
         ]);
     }
@@ -70,7 +74,7 @@ class ContactController extends AbstractController
             return $this->redirectToRoute('app_contact_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('contact/edit.html.twig', [
+        return $this->renderForm('back/contact/edit.html.twig', [
             'contact' => $contact,
             'form' => $form,
         ]);

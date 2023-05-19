@@ -37,6 +37,8 @@ class ContentType extends AbstractType
     ),
             "row_attr" => ['class' => 'col-lg-8' ] ])
            // ->add('slug', TextType::class)
+
+           // ->add('slug', TextType::class)
             ->add('tags', TextType::class, 
             ['attr' => ['data-role' => "tagsinput", 'data-tag-class'=>"badge badge-primary", 'class' => "form-control"
                     ]])

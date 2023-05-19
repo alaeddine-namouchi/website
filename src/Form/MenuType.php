@@ -9,6 +9,8 @@ use App\Repository\ContentRepository;
 use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -27,11 +29,18 @@ class MenuType extends AbstractType
             $articles = $this->contentRepository->findArticleByLang();
 
         $builder
-            ->add('label')
-            ->add('link')
-            ->add('emplacement')
-            ->add('typeMenu')
-            ->add('content', EntityType::class, [ "attr" => ["class" => "form-control "],
+            ->add('label', null, ["required"=> false,  "attr" => ["class" => "form-control"]])
+            ->add('link', null, ["required"=> false,  "attr" => ["class" => "form-control"]])
+            ->add('emplacement', ChoiceType::class, [
+                'placeholder' => 'Choisir Emplacement',
+                'choices'  => [
+                    'main' => 'Main Menu',
+                    'footer' =>  'Footer Menu',
+                    'page' => 'Page Menu',
+                ],
+            "required"=> false,  "attr" => ["class" => "form-control"]])
+            ->add('typeMenu', null, ["required"=> false,  "attr" => ["class" => "form-control"]])
+            ->add('content', EntityType::class, [ "attr" => ["class" => "form-control", "required"=> false],
             'placeholder' => 'Choisir Article',
             'class' => Content::class,
             'query_builder' => function (EntityRepository $er) {
@@ -54,11 +63,11 @@ class MenuType extends AbstractType
             'class' => Language::class,
             'choice_label' => 'name',
         ])
-        ->add('parent', EntityType::class, [ "attr" => ["class" => "form-control "],
+        ->add('parent', EntityType::class, [ "attr" => ["class" => "form-control "], "required"=> false,
         'placeholder' => 'Choisir Langue',
         'class' => Menu::class,
         'choice_label' => 'label',
-    ])
+        ])
         ;
     }
 

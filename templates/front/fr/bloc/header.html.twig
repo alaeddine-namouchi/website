@@ -1,4 +1,5 @@
 <header>
+{# {{dump(menus)}} #}
 	<!-- START:MENU-->
 	<!-- <nav class="navbar navbar-expand-lg  fixed-top navbar-light bg-light"  style="background-color: #e3f2fd!important;"> -->
 	<nav class="navbar navbar-expand-lg  py-0 fixed-top  navbar-expand-xs navbar-light bg-light"  style="background-color: #fff;">
@@ -55,7 +56,7 @@
 										<a href="visual-identity.php" class="dropdown-item mega-menu-item">Identités visuelles</a>
 										<a href="transport-museum.php" class="dropdown-item mega-menu-item">Musée de transport</a>
 										
-										<a href="contact.php" class="dropdown-item mega-menu-item">Contact</a>
+										<a href="{{path('front_contact_new')}}" class="dropdown-item mega-menu-item">Contact</a>
 										<a href="gallery.php" class="dropdown-item mega-menu-item">Galerie des photos</a>
 										
 									</div>
@@ -70,7 +71,7 @@
 										<!-- <a href="journalists-area.php" class="dropdown-item mega-menu-item">Dossiers de presse</a> -->
 										<a href="journalists-area.php" class="dropdown-item mega-menu-item">Communiqués de presse</a>
 										<a href="faq.php" class="dropdown-item mega-menu-item">FAQ</a>
-										<a href="access-to-information.php" class="dropdown-item mega-menu-item">Accès à l'information</a>
+										{# <a href="{{path('front_content_show', {'id': 26, 'slug': slug})}}" class="dropdown-item mega-menu-item">Accès à l'information</a> #}
 										<a href="donnees-personnelles.php" class="dropdown-item mega-menu-item">Données personnel</a>
 										<a href="recruitment.php" class="dropdown-item mega-menu-item">Recrutement</a>
 

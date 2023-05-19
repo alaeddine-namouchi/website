@@ -64,7 +64,7 @@
                     <div class="d-flex">
                         <!-- <h1 class="font-weight-bold mr-2 px-3" style="color:orange; background-color:darkgreen"> T </h1>
                         <h1 style="color: darkblue;font-weight:bold">RANSTU</h1>  -->
-                        <img height="70" src="../assets/img/transtu_logo-bw.png" />
+                        <img height="70" src="../../assets/img/transtu_logo-bw.png" />
                     </div>
                     <p class="card-text">
                     <ol class="list-unstyled">

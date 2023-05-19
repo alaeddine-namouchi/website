@@ -75,7 +75,7 @@
                     <div class="row align-items-center mb-2 d-flex">
                         <div class="col-3">
                             <h2 class="d-flex align-items-center mb-0">
-                            <img  width="60" src="../assets/img/facebook-3-3.svg" alt="">
+                            <img  width="60" src="{{asset('assets/img/facebook-3-3.svg')}}" alt="">
                             </h2>
                         </div>
                         <div class="col-9 text-right" >

@@ -9,6 +9,7 @@ $current_page = "Galleri des photo"
         // include "bloc/header-mega-menu.php";
     ?>
     <main role="main">
+
         <div class="container-fluid marketing bg-light pb-5" >
         <?php
             include "bloc/fil_arian.php";

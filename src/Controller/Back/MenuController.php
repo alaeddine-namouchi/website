@@ -11,16 +11,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/menu")
+ * @Route("/back/{_locale}/menu", requirements={  "_locale": "fr|ar|en"   })
  */
 class MenuController extends AbstractController
 {
     /**
      * @Route("/", name="app_menu_index", methods={"GET"})
+     * 
      */
     public function index(MenuRepository $menuRepository): Response
     {
-        return $this->render('menu/index.html.twig', [
+        return $this->render('back/menu/index.html.twig', [
             'menus' => $menuRepository->findAll(),
         ]);
     }
@@ -39,7 +40,7 @@ class MenuController extends AbstractController
             return $this->redirectToRoute('app_menu_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('menu/new.html.twig', [
+        return $this->renderForm('back/menu/new.html.twig', [
             'menu' => $menu,
             'form' => $form,
         ]);
@@ -50,7 +51,7 @@ class MenuController extends AbstractController
      */
     public function show(Menu $menu): Response
     {
-        return $this->render('menu/show.html.twig', [
+        return $this->render('back/menu/show.html.twig', [
             'menu' => $menu,
         ]);
     }
@@ -68,7 +69,7 @@ class MenuController extends AbstractController
             return $this->redirectToRoute('app_menu_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('menu/edit.html.twig', [
+        return $this->renderForm('back/menu/edit.html.twig', [
             'menu' => $menu,
             'form' => $form,
         ]);
