@@ -7,19 +7,27 @@
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Label</th>
-                <th>Link</th>
-                <th>Emplacement</th>
-                <th>TypeMenu</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Parent</th>
+            <th>Label</th>
+            <th>Link</th>
+            <th>Emplacement</th>
+            <th>TypeMenu</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
         {% for menu in menus %}
             <tr>
                 <td>{{ menu.id }}</td>
+                {% if menu.parent is empty %}
+                    <td> -</td>
+                {% endif %}
+				{% if menu.parent is not empty %}
+					<td> {{ menu.parent.label }}</td>
+				{% endif %}
+
                 <td>{{ menu.label }}</td>
                 <td>{{ menu.link }}</td>
                 <td>{{ menu.emplacement }}</td>
@@ -38,102 +46,151 @@
     </table>
 
     <a href="{{ path('app_menu_new') }}">Create new</a>
-    
-     <!-- start: page -->
-					<div class="row">
-						<div class="col">
-							<section class="card">
-								<header class="card-header">
-									<div class="card-actions">
-										<a href="#" class="card-action card-action-toggle" data-card-toggle></a>
-										<a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
-									</div>
 
-									<h2 class="card-title">Menu Principale</h2>
-									<p class="card-subtitle">Menu principale de site web.</p>
-								</header>
-								<div class="card-body">
-									<div class="row">
-										<div class="col-lg-6">
-											<div class="dd" id="nestable">
-												<ol class="dd-list">
-													<li class="dd-item" data-id="1">
-														<div class="dd-handle">Accueil 
-                                                        <span class="float-end">
+    <!-- start: page -->
+    <div class="row">
+        <div class="col">
+            <section class="card">
+                <header class="card-header">
+                    <div class="card-actions">
+                        <a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+                        <a href="#" class="card-action card-action-dismiss" data-card-dismiss></a>
+                    </div>
+
+                    <h2 class="card-title">Menu Principale</h2>
+                    <p class="card-subtitle">Menu principale de site web.</p>
+                </header>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="dd" id="nestable">
+                                <ol class="dd-list">
+                                    <li class="dd-item" data-id="1">
+                                        <div class="dd-handle">Accueil
+                                            <span class="float-end">
                                                 <a href="#" class=" on-editing save-row"><i class="el el-plus"></i></a>
 												{# <a href="#" class=" on-editing cancel-row"><i class="fas fa-times"></i></a> #}
-												<a href="#" class="on-default edit-row"><i class="fas fa-pencil-alt"></i></a>
-												<a href="#" class="on-default remove-row"><i class="far fa-trash-alt"></i></a>
-                                                     </span>   
-                                                        </div>
-													</li>
-													<li class="dd-item" data-id="2">
-														<div class="dd-handle">Services</div>
-														<ol class="dd-list">
-															<li class="dd-item" data-id="3"><div class="dd-handle">Ecoute clientèle </div></li>
-															<li class="dd-item" data-id="4"><div class="dd-handle">Procés Verbaux</div></li>
-															<li class="dd-item" data-id="5">
-																<div class="dd-handle">Espace Journaliste</div>
-																<ol class="dd-list">
-																	<li class="dd-item" data-id="6"><div class="dd-handle">Communiqué de presse</div></li>
-																	<li class="dd-item" data-id="7"><div class="dd-handle">Dossier de presse </div></li>
-																	<li class="dd-item" data-id="8"><div class="dd-handle">Gallerie de photos</div></li>
-																</ol>
-															</li>
-															<li class="dd-item" data-id="4"><div class="dd-handle">Procés Verbaux</div></li>
-															
-															<li class="dd-item" data-id="9"><div class="dd-handle">Accès à l'information</div></li>
-															<li class="dd-item" data-id="10"><div class="dd-handle">Achat public</div></li>
-														</ol>
-													</li>
-													<li class="dd-item" data-id="11">
-														<div class="dd-handle">Tarifs</div>
-															<ol class="dd-list">
-																<li class="dd-item" data-id="6"><div class="dd-handle">Points de vente</div></li>
-																<li class="dd-item" data-id="7"><div class="dd-handle">Dossier d'abonnement  </div></li>
-																<li class="dd-item" data-id="8"><div class="dd-handle">Tickets Bus et Métro</div></li>
-																<li class="dd-item" data-id="8"><div class="dd-handle">Tickets TGM</div></li>
-																<li class="dd-item" data-id="8"><div class="dd-handle">Carte Hébdomadaire</div></li>
-																<li class="dd-item" data-id="8"><div class="dd-handle">Abonnement mensuel</div></li>
-																<li class="dd-item" data-id="8"><div class="dd-handle">Abonnement annuel</div></li>
-																<li class="dd-item" data-id="8"><div class="dd-handle">Abonnement scolaire</div></li>
-																<li class="dd-item" data-id="8"><div class="dd-handle">Carnet 10 Tickets</div></li>
-															</ol>
-													</li>
-													<li class="dd-item" data-id="12">
-														<div class="dd-handle">Entreprise</div>
-														<ol class="dd-list">
-																<li class="dd-item" data-id="6"><div class="dd-handle">A propos </div></li>
-																<li class="dd-item" data-id="7"><div class="dd-handle">Historique </div></li>
-																<li class="dd-item" data-id="8"><div class="dd-handle">Rapport d'activité</div></li>
-															</ol>
-													</li>
-													<li class="dd-item" data-id="12">
-														<div class="dd-handle">Horaires</div>
-														<ol class="dd-list">
-																<li class="dd-item" data-id="6"><div class="dd-handle">Horaires Hiver 2021-2022 </div></li>	
-																<li class="dd-item" data-id="7"><div class="dd-handle">Ramadan 2022 </div></li>														</ol>
-													</li>
+												<a href="#" class="on-default edit-row"><i
+                                                            class="fas fa-pencil-alt"></i></a>
+												<a href="#" class="on-default remove-row"><i
+                                                            class="far fa-trash-alt"></i></a>
+                                                     </span>
+                                        </div>
+                                    </li>
+                                    <li class="dd-item" data-id="2">
+                                        <div class="dd-handle">Services</div>
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="3">
+                                                <div class="dd-handle">Ecoute clientèle</div>
+                                            </li>
+                                            <li class="dd-item" data-id="4">
+                                                <div class="dd-handle">Procés Verbaux</div>
+                                            </li>
+                                            <li class="dd-item" data-id="5">
+                                                <div class="dd-handle">Espace Journaliste</div>
+                                                <ol class="dd-list">
+                                                    <li class="dd-item" data-id="6">
+                                                        <div class="dd-handle">Communiqué de presse</div>
+                                                    </li>
+                                                    <li class="dd-item" data-id="7">
+                                                        <div class="dd-handle">Dossier de presse</div>
+                                                    </li>
+                                                    <li class="dd-item" data-id="8">
+                                                        <div class="dd-handle">Gallerie de photos</div>
+                                                    </li>
+                                                </ol>
+                                            </li>
+                                            <li class="dd-item" data-id="4">
+                                                <div class="dd-handle">Procés Verbaux</div>
+                                            </li>
 
-													<li class="dd-item" data-id="12">
-														<div class="dd-handle">Comapgnes</div>
-														<ol class="dd-list">
-																<li class="dd-item" data-id="6"><div class="dd-handle">comapgne de sensibilisation </div></li>
-														</ol>
-													</li>
-												</ol>
-											</div>
-										</div>
-										<div class="col-lg-6">
-											<textarea id="nestable-output" rows="3" class="form-control"></textarea>
-										</div>
-									</div>
-								</div>
-							</section>
-						</div>
-					</div>
-					<!-- end: page -->
-					<script src="{{ asset('js/examples/examples.nestable.js')}}"></script>
+                                            <li class="dd-item" data-id="9">
+                                                <div class="dd-handle">Accès à l'information</div>
+                                            </li>
+                                            <li class="dd-item" data-id="10">
+                                                <div class="dd-handle">Achat public</div>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li class="dd-item" data-id="11">
+                                        <div class="dd-handle">Tarifs</div>
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="6">
+                                                <div class="dd-handle">Points de vente</div>
+                                            </li>
+                                            <li class="dd-item" data-id="7">
+                                                <div class="dd-handle">Dossier d'abonnement</div>
+                                            </li>
+                                            <li class="dd-item" data-id="8">
+                                                <div class="dd-handle">Tickets Bus et Métro</div>
+                                            </li>
+                                            <li class="dd-item" data-id="8">
+                                                <div class="dd-handle">Tickets TGM</div>
+                                            </li>
+                                            <li class="dd-item" data-id="8">
+                                                <div class="dd-handle">Carte Hébdomadaire</div>
+                                            </li>
+                                            <li class="dd-item" data-id="8">
+                                                <div class="dd-handle">Abonnement mensuel</div>
+                                            </li>
+                                            <li class="dd-item" data-id="8">
+                                                <div class="dd-handle">Abonnement annuel</div>
+                                            </li>
+                                            <li class="dd-item" data-id="8">
+                                                <div class="dd-handle">Abonnement scolaire</div>
+                                            </li>
+                                            <li class="dd-item" data-id="8">
+                                                <div class="dd-handle">Carnet 10 Tickets</div>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li class="dd-item" data-id="12">
+                                        <div class="dd-handle">Entreprise</div>
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="6">
+                                                <div class="dd-handle">A propos</div>
+                                            </li>
+                                            <li class="dd-item" data-id="7">
+                                                <div class="dd-handle">Historique</div>
+                                            </li>
+                                            <li class="dd-item" data-id="8">
+                                                <div class="dd-handle">Rapport d'activité</div>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                    <li class="dd-item" data-id="12">
+                                        <div class="dd-handle">Horaires</div>
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="6">
+                                                <div class="dd-handle">Horaires Hiver 2021-2022</div>
+                                            </li>
+                                            <li class="dd-item" data-id="7">
+                                                <div class="dd-handle">Ramadan 2022</div>
+                                            </li>
+                                        </ol>
+                                    </li>
+
+                                    <li class="dd-item" data-id="12">
+                                        <div class="dd-handle">Comapgnes</div>
+                                        <ol class="dd-list">
+                                            <li class="dd-item" data-id="6">
+                                                <div class="dd-handle">comapgne de sensibilisation</div>
+                                            </li>
+                                        </ol>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <textarea id="nestable-output" rows="3" class="form-control"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+    <!-- end: page -->
+    <script src="{{ asset('js/examples/examples.nestable.js') }}"></script>
 {% endblock %}
 
 

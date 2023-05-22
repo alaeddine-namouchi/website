@@ -31,6 +31,7 @@ class   Menu
 
     /**
      * @ORM\ManyToOne(targetEntity=Content::class)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $content;
 

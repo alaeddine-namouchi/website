@@ -24,7 +24,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Sec;
 
 /**
  * @Route("/back/{_locale}/content", requirements={  "_locale": "fr|ar|en"   })
- * 
+ *
  * @Sec("is_granted('IS_AUTHENTICATED_FULLY')")
  */
 class ContentController extends AbstractController
@@ -44,10 +44,10 @@ class ContentController extends AbstractController
      *  constructor.
      */
     public function __construct(LoggerInterface $logger,
-                                Security $security, 
-                                ContentRepository $contentRepository, 
-                                LanguageRepository $languageRepository, 
-                                CategoryRepository $categoryRepository, 
+                                Security $security,
+                                ContentRepository $contentRepository,
+                                LanguageRepository $languageRepository,
+                                CategoryRepository $categoryRepository,
                                 ArticleRepository $articleRepository,
                                 TranslatorInterface $translator)
                             {
@@ -69,13 +69,13 @@ class ContentController extends AbstractController
     {
         // dump($this->security->getUser());
 
-        $loc_url = $request->getSession()->get('_locale');
+        $loc_url = $request->get('_locale');
         $loc_url = $request->getLocale();
         $lang_from_url = $languageRepository->findOneByAlias($loc_url);
-        $listConent  = $contentRepository->findBy(['language' => $lang_from_url], ['created_at' => 'DESC']);
+        $listContent  = $contentRepository->findBy(['language' => $lang_from_url], ['created_at' => 'DESC']);
         $this->logger->info('USER : '. $loc_url .' : display article list');
         return $this->render('back/content/index.html.twig', [
-            'contents' => $listConent
+            'contents' => $listContent
         ]);
     }
     /**
@@ -86,10 +86,10 @@ class ContentController extends AbstractController
         $content = new Content();
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
-        $loc_url = $request->getSession()->get('_locale');
+        $loc_url = $request->get('_locale');
         $objlang_from_url = $languageRepository->findOneByAlias($loc_url);
         $content->setLanguage($objlang_from_url);
-     
+
         if ($form->isSubmitted() && $form->isValid()) {
             // if(!$article_id)
             // {
@@ -112,18 +112,18 @@ class ContentController extends AbstractController
             'form' => $form,
         ]);
     }
-  
+
     public function translateContentArticle(Request $request,  $id, LanguageRepository $languageRepository, ContentRepository $contentRepository, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
-    {   
+    {
         $content = new Content();
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
-        $loc_url = $request->getSession()->get('_locale');
+        $loc_url = $request->get('_locale');
         $objlang_from_url = $languageRepository->findOneByAlias($loc_url);
         $content->setLanguage($objlang_from_url);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $article = $contentRepository->find($id)->getArticle();
             $articleRepository->add($article);
             $content->setArticle($article);
@@ -138,18 +138,18 @@ class ContentController extends AbstractController
         ]);
     }
 
-    
+
     public function newContentArticle(Request $request,  $id, LanguageRepository $languageRepository, ContentRepository $contentRepository, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
-    {   
+    {
         $content = new Content();
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
-        $loc_url = $request->getSession()->get('_locale');
+        $loc_url = $request->get('_locale');
         $objlang_from_url = $languageRepository->findOneByAlias($loc_url);
         $content->setLanguage($objlang_from_url);
-        
+
         if ($form->isSubmitted() && $form->isValid()) {
-            
+
             $article = $contentRepository->find($id)->getArticle();
             $articleRepository->add($article);
             $content->setArticle($article);
@@ -168,12 +168,12 @@ class ContentController extends AbstractController
      */
     public function show(Content $content, Request $request): Response
     {
-        $loc_url = $request->getSession()->get('_locale')?? 'fr';
+        $loc_url = $request->get('_locale')?? 'fr';
         $objlang_from_url = $this->languageRepository->findOneByAlias($loc_url);
         //dd($objlang_from_url);
         $article  = $content->getArticle();
         $content = $this->validContent( $objlang_from_url,  $article);
-        $loc_url = $request->getSession()->get('_locale');
+        $loc_url = $request->get('_locale');
         $currentLang = $objlang_from_url->getName();
         return $this->render('back/content/show.html.twig', [
             'content' => $content,
@@ -186,8 +186,8 @@ class ContentController extends AbstractController
      */
     public function edit(Request $request, $article_id, Content $content, LanguageRepository $languageRepository, ContentRepository $contentRepository, TranslatorInterface $translator): Response
     {
-        
-        // $loc_url = $request->getSession()->get('_locale');
+
+        // $loc_url = $request->get('_locale');
         $loc_url = $request->get('_locale');
         // dd($loc_url);
         $objlang_from_url = $languageRepository->findOneByAlias($loc_url);
@@ -227,12 +227,12 @@ class ContentController extends AbstractController
                 'form' => $form,
             ]);
 
-        } 
+        }
         // if($action === 'redirection'){
 
-        // }   
+        // }
 
-        
+
     }
 
     /**
@@ -256,7 +256,7 @@ class ContentController extends AbstractController
     return implode(' ', array_slice(explode(' ', $str), 0, $rankWord)) .  " ...";
 
     }
-    
+
     public function typeOfAction(Language $lang, Article $article){
 
         $content = $this->contentRepository->findBy(['language' => $lang, 'article' => $article]);

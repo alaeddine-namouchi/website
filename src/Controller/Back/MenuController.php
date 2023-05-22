@@ -17,12 +17,16 @@ class MenuController extends AbstractController
 {
     /**
      * @Route("/", name="app_menu_index", methods={"GET"})
-     * 
+     *
      */
     public function index(MenuRepository $menuRepository): Response
     {
+        $ms = $menuRepository->findAll();
+        foreach ($ms as  $m){
+//            dd($m->getLabel());
+        }
         return $this->render('back/menu/index.html.twig', [
-            'menus' => $menuRepository->findAll(),
+            'menus' => $menuRepository->findBy([], ['parent'=>'ASC']),
         ]);
     }
 

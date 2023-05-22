@@ -34,13 +34,20 @@ class MenuType extends AbstractType
             ->add('emplacement', ChoiceType::class, [
                 'placeholder' => 'Choisir Emplacement',
                 'choices'  => [
-                    'main' => 'Main Menu',
-                    'footer' =>  'Footer Menu',
-                    'page' => 'Page Menu',
+                    'Prémière Niveau' => 'level_one',
+                    'Deuxième Niveau' =>  'level_two',
+                    'Troixième Niveau' => 'level_three',
                 ],
             "required"=> false,  "attr" => ["class" => "form-control"]])
-            ->add('typeMenu', null, ["required"=> false,  "attr" => ["class" => "form-control"]])
-            ->add('content', EntityType::class, [ "attr" => ["class" => "form-control", "required"=> false],
+            ->add('typeMenu', ChoiceType::class, [
+                'placeholder' => 'Choisir type menu',
+                'choices'  => [
+                    'Main' => 'main',
+                    'Plus' =>  'plus',
+                    'Footer' => 'footer',
+                ],
+                "required"=> false,  "attr" => ["class" => "form-control"]])
+            ->add('content', EntityType::class, [  "required"=> false, "attr" => ["class" => "form-control",],
             'placeholder' => 'Choisir Article',
             'class' => Content::class,
             'query_builder' => function (EntityRepository $er) {

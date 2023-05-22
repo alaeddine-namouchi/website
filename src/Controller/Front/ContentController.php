@@ -3,8 +3,6 @@
 namespace App\Controller\Front;
 
 use App\Entity\Article;
-use App\Entity\Category;
-use App\Entity\Contact;
 use App\Entity\Content;
 use App\Entity\Language;
 use App\Form\ContentType;
@@ -19,15 +17,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Sec;
 
 /**
  * @Route("/{_locale}", requirements={  "_locale": "fr|ar|en"   })
- * 
- * 
+ *
+ *
  */
 class ContentController extends AbstractController
 {
@@ -47,11 +44,11 @@ class ContentController extends AbstractController
      *  constructor.
      */
     public function __construct(LoggerInterface $logger,
-                                Security $security, 
+                                Security $security,
                                 MenuRepository $menuRepository,
-                                ContentRepository $contentRepository, 
-                                LanguageRepository $languageRepository, 
-                                CategoryRepository $categoryRepository, 
+                                ContentRepository $contentRepository,
+                                LanguageRepository $languageRepository,
+                                CategoryRepository $categoryRepository,
                                 ArticleRepository $articleRepository,
                                 TranslatorInterface $translator)
                             {
@@ -69,101 +66,74 @@ class ContentController extends AbstractController
     }
 
 
-    
-  
-    public function translateContentArticle(Request $request,  $id, LanguageRepository $languageRepository, ContentRepository $contentRepository, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
-    {   
-        $content = new Content();
-        $form = $this->createForm(ContentType::class, $content);
-        $form->handleRequest($request);
-        $loc_url = $request->getSession()->get('_locale');
-        $objlang_from_url = $languageRepository->findOneByAlias($loc_url);
-        $content->setLanguage($objlang_from_url);
-        
-        if ($form->isSubmitted() && $form->isValid()) {
-            
-            $article = $contentRepository->find($id)->getArticle();
-            $articleRepository->add($article);
-            $content->setArticle($article);
-            dump($content);
-            $contentRepository->add($content);
-            return $this->redirectToRoute('app_content_index', [], Response::HTTP_SEE_OTHER);
-        }
 
-        return $this->renderForm('back/content/new.html.twig', [
-            'content' => $content,
-            'form' => $form,
-        ]);
+
+
+    /**
+     * @Route("/", name="font_content_index", methods={"GET"})
+     */
+    public function index( Request $request): Response
+    {
+        $loc_url1 = $request->get('_locale');
+        $loc_url2 = $request->get('_locale');
+        dump($loc_url1, $loc_url2);
+        $category = $this->categoryRepository->findOneBy(['alias'=> 'fr']);
+        $category = $this->languageRepository->findOneBy(['alias'=> 'HOME']);
+        $loc_url = $request->get('_locale') ?? 'fr';
+        $plusMenu = $this->menuRepository->findBy(['typeMenu' => 'plus', 'emplacement'=>'level_two'], ['parent'=>'ASC']);
+            return $this->render('front/fr/index.html.twig', [
+                'menus' => $plusMenu,
+            ]);
     }
-
-
     /**
      * @Route("/{slug}/{id}", name="front_content_show", methods={"GET"} )
      */
     public function show($slug, $id, Request $request): Response
     {
-
-        
         $content = $this->contentRepository->find($id);
-        // $loc_url = $request->getSession()->get('_locale');
-        // $article = $content->getArticle();
-
         if ($content->getSlug() !== $slug) {
             return $this->redirectToRoute('front_content_show', ['id' => $content->getId(), 'slug' => $content->getSlug()],
                 301);
         }
-        $loc_url = $request->getSession()->get('_locale') ?? 'fr';
-        $objlang_from_url = $this->languageRepository->findOneByAlias($loc_url);
+        $loc_url = $request->get('_locale') ?? 'fr';
+        $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
         //dd($objlang_from_url);
         $article  = $content->getArticle();
-        $content = $this->validContentFront( $objlang_from_url,  $article);
-        $loc_url = $request->getSession()->get('_locale');
-        $currentLang = $objlang_from_url->getName();
-    
+        $content = $this->validContentFront( $lang_from_url,  $article);
+        $loc_url = $request->get('_locale');
+        $currentLang = $lang_from_url->getName();
+
+        $plusMenu = $this->menuRepository->findBy(['typeMenu' => 'plus', 'emplacement'=>'level_two'], ['parent'=>'ASC']);
         if($article->getCategory()->getAlias() == 'SIMPLE'){
+
             return $this->render('front/fr/access-to-information.html.twig', [
-                'content_page' => $content->getBody(), 
+                'content_page' => $content->getBody(),
                 'slug'=> $slug,
                 'current_page'=> $content->getTitle(),
-                'menus' => $this->menuRepository->findAll(),
-            
+                'menus' => $plusMenu,
+
             ]);
         }
-        if($article->getCategory()->getAlias() == 'FORM'){
-            return $this->redirectToRoute('front_content_new', [], Response::HTTP_SEE_OTHER);
+        if($article->getCategory()->getAlias() == 'WELCOME'){
+            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
 
         }
+        if($article->getCategory()->getAlias() == 'FORM'){
+            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
 
-        // if($article->getCategory()->getAlias() == 'FORM'){
+        }else{
+            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+        }
 
-        //     $contact = new Contact();
-        // $form = $this->createForm(ContactType::class, $contact);
-        // $form->handleRequest($request);
 
-        // if ($form->isSubmitted() && $form->isValid()) {
-        //     $contactRepository->add($contact);
-        //     return $this->redirectToRoute('app_contact_index', [], Response::HTTP_SEE_OTHER);
-        // }
 
-        // return $this->renderForm('back/contact/new.html.twig', [
-        //     'contact' => $contact,
-        //     'form' => $form,
-        // ]);
-        //     return $this->render('front/fr/contact.html.twig', [
-        //         'current_page'=> $content->getTitle(),
-        //         'form_name' => 'form-contact',
-        //         'menus' => $this->menuRepository->findAll(),
-                
-            
-        //     ]);
-        // }
 
-        
+
     }
 
 
 
-  
+
 
 
     public function firstNWord(String $sentence, int $rankWord)
@@ -173,7 +143,7 @@ class ContentController extends AbstractController
     return implode(' ', array_slice(explode(' ', $str), 0, $rankWord)) .  " ...";
 
     }
-    
+
     public function typeOfAction(Language $lang, Article $article){
 
         $content = $this->contentRepository->findBy(['language' => $lang, 'article' => $article]);
@@ -205,4 +175,30 @@ class ContentController extends AbstractController
 
 
     }
+
+    public function translateContentArticle(Request $request,  $id, LanguageRepository $languageRepository, ContentRepository $contentRepository, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
+    {
+        $content = new Content();
+        $form = $this->createForm(ContentType::class, $content);
+        $form->handleRequest($request);
+        $loc_url = $request->get('_locale');
+        $objlang_from_url = $languageRepository->findOneByAlias($loc_url);
+        $content->setLanguage($objlang_from_url);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $article = $contentRepository->find($id)->getArticle();
+            $articleRepository->add($article);
+            $content->setArticle($article);
+            dump($content);
+            $contentRepository->add($content);
+            return $this->redirectToRoute('app_content_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('back/content/new.html.twig', [
+            'content' => $content,
+            'form' => $form,
+        ]);
+    }
+
 }

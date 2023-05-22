@@ -12,8 +12,8 @@
                     <!-- <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li> -->
                 </ul>
             </div>
-            <div class="entry-img"> <img src="../assets/img/tarifs/tickets.jpg" alt="" class="img-fluid  py-2 w-100"></div>
-            <div class="entry-img"> <img src="../assets/img/tarifs/tickets-tgm.jpg" alt="" class="img-fluid  py-2 w-100"></div>
+            <div class="entry-img"> <img src="../../uploads/images/tarifs/tickets.jpg" alt="" class="img-fluid  py-2 w-100"></div>
+            <div class="entry-img"> <img src="../../uploads/images/tarifs/tickets-tgm.jpg" alt="" class="img-fluid  py-2 w-100"></div>
 
 
         </article>
