@@ -11,6 +11,8 @@ use App\Repository\CategoryRepository;
 use App\Repository\ContentRepository;
 use App\Repository\LanguageRepository;
 use App\Repository\MenuRepository;
+use App\Service\LanguageService;
+use App\Service\TimeLineService;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -124,10 +126,48 @@ class ContentController extends AbstractController
         }else{
             return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
         }
+    }
 
+    /**
+     * @Route("/news", name="front_content_news", methods={"GET"} )
+     */
+    public function showNews( Request $request, TimeLineService $timeLineService, LanguageService $languageService): Response
+    {
+        $lang_from_url = $languageService->getUsedLanguage($request);
+        $contentNews = $timeLineService->getTimeLineByCategory(1, 3, $lang_from_url->getId() );
+        dd($contentNews);
+//        $category = $this->categoryRepository->findOneByAlias('NEWS');
+//        $loc_url = $request->get('_locale') ?? 'fr';
+//        $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
+//        $contents = $this->contentRepository->findBy(['category'=> $category, 'language' => $lang_from_url], ['created_at' => 'DESC'] , '3');
+//        dd($contents);
+        //dd($objlang_from_url);
+//        $article  = $content->getArticle();
+//        $content = $this->validContentFront( $lang_from_url,  $article);
+        $loc_url = $request->get('_locale');
+        $currentLang = $lang_from_url->getName();
 
+        $plusMenu = $this->menuRepository->findBy(['typeMenu' => 'plus', 'emplacement'=>'level_two'], ['parent'=>'ASC']);
+        if($article->getCategory()->getAlias() == 'NEWS'){
 
+            return $this->render('front/fr/news.html.twig', [
+                'content_page' => $content->getBody(),
+                'slug'=> $slug,
+                'current_page'=> $content->getTitle(),
+                'menus' => $plusMenu,
 
+            ]);
+        }
+        if($article->getCategory()->getAlias() == 'WELCOME'){
+            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+
+        }
+        if($article->getCategory()->getAlias() == 'FORM'){
+            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+
+        }else{
+            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+        }
 
     }
 
@@ -190,7 +230,7 @@ class ContentController extends AbstractController
             $article = $contentRepository->find($id)->getArticle();
             $articleRepository->add($article);
             $content->setArticle($article);
-            dump($content);
+//            dump($content);
             $contentRepository->add($content);
             return $this->redirectToRoute('app_content_index', [], Response::HTTP_SEE_OTHER);
         }

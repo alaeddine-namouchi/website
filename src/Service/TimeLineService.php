@@ -45,20 +45,27 @@ class TimeLineService
     {
         $pagination = $this->paginator->paginate($this->repository->getTimeLinesQueryBuilder( $langId ), $page, $limit);
         return $pagination;
-    
+
     }
 
     public function getTimeLineByCategory( $page, $limit,  $langId )
     {
         $pagination = $this->paginator->paginate($this->repository->getTimeLinesByCategoryQueryBuilder( $langId, 'NEW'), $page, $limit);
         return $pagination;
-    
+
     }
 
     public function getHistory(  $langId )
     {
         $list = $this->repository->getHistoryTransportQueryBuilder( $langId );
         return $list;
-    
+
+    }
+
+    public function getNews(  $langId )
+    {
+        $list = $this->repository->getNewsQueryBuilder( $langId );
+        return $list;
+
     }
 }

@@ -17,21 +17,40 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
- * 
- * @Route("/{_locale}/history-transport", requirements={  "_locale": "fr|ar|en"   })
- * 
+ *
+ * @Route("/{_locale}", requirements={  "_locale": "fr|ar|en"   })
+ *
  */
 class TimeLineController extends AbstractController
 {
     /**
-     * @Route("/", name="front_history_index", methods={"GET"})
+     * @Route("/history", name="front_history_show", methods={"GET"})
      */
-    public function show(TimeLineService $timeLineService, LanguageService $languageService, Request $request): Response
+    public function showHistory(TimeLineService $timeLineService, LanguageService $languageService, Request $request): Response
     {
-        
+
         // dd($request);
 
-        
+
+        $lang_from_url = $languageService->getUsedLanguage($request);
+
+        // $listConent  = $timeLineRepository->findBy(['language' => $lang_from_url], ['createdAt' => 'DESC']);
+        $listConent  = $timeLineService->getHistory( $lang_from_url->getId());
+        return $this->render('front/fr/time_line/time-line.html.twig', [
+            'pagination' => $listConent,
+            'title' => "Historique Transport"
+        ]);
+    }
+
+    /**
+     * @Route("/old-news", name="front_news_index", methods={"GET"})
+     */
+    public function showNews(TimeLineService $timeLineService, LanguageService $languageService, Request $request): Response
+    {
+
+        // dd($request);
+
+
         $lang_from_url = $languageService->getUsedLanguage($request);
 
         // $listConent  = $timeLineRepository->findBy(['language' => $lang_from_url], ['createdAt' => 'DESC']);
@@ -43,6 +62,6 @@ class TimeLineController extends AbstractController
     }
 
 
- 
-    
+
+
 }

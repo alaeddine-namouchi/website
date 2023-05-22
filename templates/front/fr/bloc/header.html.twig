@@ -1,5 +1,4 @@
 <header>
-    {# {{dump(menus)}} #}
     <!-- START:MENU-->
     <!-- <nav class="navbar navbar-expand-lg  fixed-top navbar-light bg-light"  style="background-color: #e3f2fd!important;"> -->
     <nav class="navbar navbar-expand-lg  py-0 fixed-top  navbar-expand-xs navbar-light bg-light"
@@ -61,64 +60,13 @@
                                         </p>
                                     {% endif %}
                                     {% for menu in sub_menu.menus %}
-                                        <a href="{{path('front_content_show', {'id': menu.content.id, 'slug': menu.content.slug})}}"
+                                        <a href="{{ path('front_content_show', {'id': menu.content.id, 'slug': menu.content.slug}) }}"
                                            class="dropdown-item  mega-menu-item ">{{ menu.label }}</a>
                                     {% endfor %}
                                     </div>
                                     </div>
                                 {% endfor %}
-                             {#   <div class="col-md-6 col-lg-4 mb-3 mb-lg-0" style="    border-right: 1px solid #999;">
-                                    <div class="list-group list-group-flush">
-                                        <p class="pb-2 list-group-item text-uppercase font-weight-bold"
-                                           style="color:#333;margin-bottom:7px">
-                                            Services
-                                        </p>
-                                        <a href="contact.php" class="dropdown-item  mega-menu-item ">Ecoute
-                                            clientèle</a>
-                                        <a href="journalists-area.php" class="dropdown-item mega-menu-item">Espace
-                                            journalistes</a>
-                                        <!-- <a href="journalists-area.php" class="dropdown-item mega-menu-item">Dossiers de presse</a> -->
-                                        <a href="journalists-area.php" class="dropdown-item mega-menu-item">Communiqués
-                                            de presse</a>
-                                        <a href="faq.php" class="dropdown-item mega-menu-item">FAQ</a>
-                                        #}{# <a href="{{path('front_content_show', {'id': 26, 'slug': slug})}}" class="dropdown-item mega-menu-item">Accès à l'information</a> #}{#
-                                        <a href="donnees-personnelles.php" class="dropdown-item mega-menu-item">Données
-                                            personnel</a>
-                                        <a href="recruitment.php" class="dropdown-item mega-menu-item">Recrutement</a>
 
-                                    </div>
-                                </div>#}
-                       {#         <div class="col-md-6 col-lg-4 mb-3 mb-lg-0" style="    border-right: 1px solid #999;">
-                                    <div class="list-group list-group-flush">
-                                        <p class="pb-2 list-group-item text-uppercase font-weight-bold"
-                                           style="color:#333;margin-bottom:7px">
-                                            Tarifs
-                                        </p>
-                                        <a href="tickets.php" class="dropdown-item  mega-menu-item ">Ticket</a>
-                                        <a href="carte-hebdomadaire.php" class="dropdown-item mega-menu-item">Carte
-                                            hébdomadaire</a>
-                                        <a href="abonnements.php" class="dropdown-item mega-menu-item">Abonnement
-                                            mensuel</a>
-                                        <a href="abonnements.php" class="dropdown-item mega-menu-item">Abonnement
-                                            annuel</a>
-                                        <a href="abonnements.php" class="dropdown-item mega-menu-item">Abonnement
-                                            scolaire</a>
-                                        <a href="carnet-10-tickets.php" class="dropdown-item mega-menu-item">Carnet 10
-                                            Tickets</a>
-                                    </div>
-                                </div>#}
-
-                                <!-- <div class="col-md-6 col-lg-3" >
-                                        <div class="list-group list-group-flush">
-                                            <p class="pb-2 list-group-item text-uppercase font-weight-bold" style="color:#333;margin-bottom:7px">
-                                                Lorem ipsum
-                                            </p>
-                                            <a href="" class="dropdown-item  mega-menu-item " >Dolor sit</a>
-                                            <a href="" class="dropdown-item mega-menu-item">Amet consectetur</a>
-                                            <a href="" class="dropdown-item mega-menu-item">Cras justo odio</a>
-                                            <a href="" class="dropdown-item mega-menu-item">Adipisicing elit</a>
-                                        </div>
-                                    </div> -->
                             </div>
                         </div>
                     </div>
@@ -158,11 +106,8 @@
 
 			</span>
             <!-- <a class="fa fa-twitter-square" aria-hidden="true"></a> -->
-
         </div>
 
-
-        </div>
     </nav>
     <!-- END : MENU-->
 </header>

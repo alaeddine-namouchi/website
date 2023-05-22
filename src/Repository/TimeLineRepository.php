@@ -84,6 +84,16 @@ class TimeLineRepository extends ServiceEntityRepository
 
         return $qb;
     }
+    public function getNewsQueryBuilder( $langId )
+    {
+        $qb = $this->createQueryBuilder('t');
+
+        $qb = $qb->where('t.language = :langId')
+            ->setParameter('langId', $langId)
+            ->orderBy('t.createdAt', 'DESC');
+
+        return $qb;
+    }
 
     // /**
     //  * @return TimeLine[] Returns an array of TimeLine objects

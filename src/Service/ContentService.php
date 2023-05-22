@@ -2,6 +2,9 @@
 namespace App\Service;
 
 use App\Entity\Content;
+use App\Entity\TimeLine;
+use App\Repository\ContentRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 
 use App\Utils\Paginator;
@@ -45,6 +48,6 @@ class ContentService
     {
         $pagination = $this->paginator->paginate($this->repository->getTimeLinesQueryBuilder( $langId ), $page, $limit);
         return $pagination;
-    
+
     }
 }

@@ -10,7 +10,7 @@ $current_page = "Contact"
     // include "bloc/header-mega-menu.php";
     ?>
     <main role="main">
-        <div class="container- marketing bg-light">
+        <div class="container marketing bg-light">
         <?php
             include "bloc/fil_arian.php";
         ?>

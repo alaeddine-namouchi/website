@@ -87,8 +87,8 @@ class ContentController extends AbstractController
         $form = $this->createForm(ContentType::class, $content);
         $form->handleRequest($request);
         $loc_url = $request->get('_locale');
-        $objlang_from_url = $languageRepository->findOneByAlias($loc_url);
-        $content->setLanguage($objlang_from_url);
+        $lang_from_url = $languageRepository->findOneByAlias($loc_url);
+        $content->setLanguage($lang_from_url);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // if(!$article_id)
