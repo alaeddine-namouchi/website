@@ -7,6 +7,7 @@ use App\Entity\Category;
 use App\Entity\Content;
 use App\Entity\Language;
 use App\Entity\Scope;
+use App\Entity\ScopeStatic;
 use App\Form\ContentType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
@@ -77,7 +78,7 @@ class ContentController extends AbstractController
         $this->logger->info('USER : '. $loc_url .' : display article list');
         return $this->render('back/content/index.html.twig', [
             'contents' => $listContent,
-            'scope' => Scope::ALL
+            'scope' => ScopeStatic::ALL
         ]);
     }
     /**

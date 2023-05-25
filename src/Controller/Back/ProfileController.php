@@ -4,9 +4,12 @@ namespace App\Controller\Back;
 
 use App\Entity\ProfilAction;
 use App\Entity\Profile;
+use App\Entity\ProfileScope;
+use App\Entity\ScopeStatic;
 use App\Form\ProfileType;
 use App\Repository\ActionRepository;
 use App\Repository\ProfileRepository;
+use App\Repository\ScopeRepository;
 use App\Repository\SectionRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -18,13 +21,13 @@ use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @Route("/back/{_locale}/profile")
- * 
+ *
  * Class ProfilController
  * @package App\Controller
  *
  * @Security("is_granted('IS_AUTHENTICATED_FULLY')")
  */
- 
+
 class ProfileController extends AbstractController
 {
     /**
@@ -35,6 +38,7 @@ class ProfileController extends AbstractController
         $profils = $profilRepository->findAll();
         return $this->render('back/profile/index.html.twig', [
             'profiles' => $profils,
+            'scope' => ScopeStatic::ALL
         ]);
     }
 
@@ -73,10 +77,10 @@ class ProfileController extends AbstractController
     /**
      * @Route("/{id}/edit", name="app_profile_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, Profile $profil, EntityManagerInterface $entityManager, SectionRepository $sectionRepository, 
+    public function edit(Request $request, Profile $profil,ScopeRepository $scopeRepository, EntityManagerInterface $entityManager, SectionRepository $sectionRepository,
     ActionRepository $actionRepository,
     ManagerRegistry $doctrine): Response
-    {   
+    {
         $form = $this->createForm(ProfileType::class, $profil);
         $form->handleRequest($request);
         dump($form);
@@ -89,18 +93,21 @@ class ProfileController extends AbstractController
         $sections = $sectionRepository->findAll();
         $allPrivileges = true;
         $res =  $sectionRepository->findBy(['allAction' => false]);
-        dump($profil->getId());
+//        dump($profil->getId());
         if(count($res ) > 0) $allPrivileges = false;
         $profilActions = $this->getDoctrine()->getRepository(ProfilAction::class)->findBy(['profile' => $profil->getId()]);
         // $profilActions = $doctrine->getRepository(ProfilAction::class)->findBy(['profile' => $profil->getId()]);
-     
+        $scopes = $scopeRepository->findAll();
         return $this->render('back/profile/edit.html.twig', [
             'profile' => $profil,
             'profile_id' => $profil->getId(),
             'sections'=> $sections,
             'all_privileges' => $allPrivileges,
-            'profil_actions'=> $profilActions,            
+            'profil_actions'=> $profilActions,
+            'profile_scopes'=> $profil->getProfileScopes(),
+            'scopes'=> $scopes,
             'form' => $form->createView(),
+            'scope' => ScopeStatic::ALL
         ]);
     }
 
@@ -116,5 +123,45 @@ class ProfileController extends AbstractController
 
         return $this->redirectToRoute('app_profile_index', [], Response::HTTP_SEE_OTHER);
     }
-    
+
+
+
+    /**
+     * @Route("/scope/add", name="new_profile_scope", methods={"POST"})
+     */
+
+    public function addProfileScope(Request $request,  ProfileRepository $profileRepository,  EntityManagerInterface $entityManager, ScopeRepository $scopeRepository): Response
+    {
+        $profileId = $request->request->get('profile_id');
+        $scopeId = $request->request->get('scope_id');
+        dump($scopeId);
+        $profile = $profileRepository->find($profileId);
+        $scope = $scopeRepository->find($scopeId);
+        $profileScope = new ProfileScope();
+        $profileScope->setProfile($profile)->setScope($scope);
+        $entityManager->persist($profileScope);
+        $entityManager->flush();
+
+        return $this->json(["save" => true,  'scope_id' => $scope->getId()]);
+
+    }
+
+    /**
+     * @Route("/scope/add", name="remove_profile_scope", methods={"POST"})
+     */
+    public function removeProfileScope(Request $request, ProfileRepository $profileRepository, EntityManagerInterface $entityManager, ScopeRepository $scopeRepository): Response
+    {
+
+        $profileId = $request->request->get('profile_id');
+        $scopeId = $request->request->get('scope_id');
+        $profile = $profileRepository->find($profileId);
+        $scope = $scopeRepository->find($scopeId);
+        $profileScope = $profileRepository->findOneBy(['scope' => $scope, 'profile' => $profile ]);
+        $entityManager->remove($profileScope);
+        $entityManager->flush();
+
+        return $this->json(["save" => true,  'scope_id' => $scope->getId()]);
+
+    }
+
 }

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ScopeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,16 @@ class Scope
      * @ORM\Column(type="string", length=255)
      */
     private $description;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ProfileScope::class, mappedBy="scope")
+     */
+    private $profileScopes;
+
+    public function __construct()
+    {
+        $this->profileScopes = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -69,6 +81,36 @@ class Scope
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProfileScope>
+     */
+    public function getProfileScopes(): Collection
+    {
+        return $this->profileScopes;
+    }
+
+    public function addProfileScope(ProfileScope $profileScope): self
+    {
+        if (!$this->profileScopes->contains($profileScope)) {
+            $this->profileScopes[] = $profileScope;
+            $profileScope->setScope($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfileScope(ProfileScope $profileScope): self
+    {
+        if ($this->profileScopes->removeElement($profileScope)) {
+            // set the owning side to null (unless already changed)
+            if ($profileScope->getScope() === $this) {
+                $profileScope->setScope(null);
+            }
+        }
 
         return $this;
     }

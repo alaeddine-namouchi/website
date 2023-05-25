@@ -49,10 +49,16 @@ class Profile
      */
     private $categories;
 
+    /**
+     * @ORM\OneToMany(targetEntity=ProfileScope::class, mappedBy="profile")
+     */
+    private $profileScopes;
+
     public function __construct()
     {
         $this->admins = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->profileScopes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -177,6 +183,36 @@ class Profile
     public function removeCategory(Category $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProfileScope>
+     */
+    public function getProfileScopes(): Collection
+    {
+        return $this->profileScopes;
+    }
+
+    public function addProfileScope(ProfileScope $profileScope): self
+    {
+        if (!$this->profileScopes->contains($profileScope)) {
+            $this->profileScopes[] = $profileScope;
+            $profileScope->setProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProfileScope(ProfileScope $profileScope): self
+    {
+        if ($this->profileScopes->removeElement($profileScope)) {
+            // set the owning side to null (unless already changed)
+            if ($profileScope->getProfile() === $this) {
+                $profileScope->setProfile(null);
+            }
+        }
 
         return $this;
     }

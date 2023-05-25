@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/back/{_locale}/action")
- * 
+ *
  */
 class ActionController extends AbstractController
 {
@@ -86,15 +86,15 @@ class ActionController extends AbstractController
         $numbeOfActionPrfil = (int) $numbeOfActionPrfil[0];
         if($numbeOfAction <= $numbeOfActionPrfil + 1)
         {
-            $section->setAllAction(true); 
+            $section->setAllAction(true);
             $allAction = true;
             $entityManager->persist($section);
         }
-        
+
         $entityManager->flush();
 
         return $this->json(["save" => true, 'all_action' => $allAction, 'section_id' => $section->getId()]);
-      
+
     }
 
     /**
@@ -105,7 +105,7 @@ class ActionController extends AbstractController
     {
         $profilId = $request->request->get('profil_id');
         $actionId = $request->request->get('action_id');
-        $profilActions = $this->getDoctrine()->getRepository(ProfilAction::class)->findBy(array('profile' => $profilId, 'action' => $actionId));;
+        $profilActions = $this->getDoctrine()->getRepository(ProfilAction::class)->findBy(array('profile' => $profilId, 'action' => $actionId));
         $section = $profilActions[0]->getAction()->getSection();
         $section->setAllAction(false);
         $entityManager->persist($section);
@@ -114,9 +114,9 @@ class ActionController extends AbstractController
             $entityManager->remove($profilAction);
         }
         $entityManager->flush();
-    
+
         return $this->json(["deleted" => true , "section_id" => $section->getId() ]);
-      
+
     }
 
 
@@ -139,13 +139,13 @@ class ActionController extends AbstractController
             $pa = $this->getDoctrine()->getRepository(ProfilAction::class)->findBy(['action' => $action->getId(), 'profile'=> $profilId]);
             if(count($pa) == 0)
             {
-              // dump($action->getId());  
+              // dump($action->getId());
                 $profilAction = new ProfilAction();
                 $profilAction->setProfile($profil)->setAction($action);
                 $entityManager->persist($profilAction);
                 $newActions[] =  $action->getId();
             }
-            
+
 
         }
         $section->setAllAction(true);
@@ -154,7 +154,7 @@ class ActionController extends AbstractController
         //die;
         $entityManager->flush();
         return $this->json(["save" => true, 'id_new_actions' => $newActions]);
-      
+
     }
 
     /**
@@ -187,7 +187,7 @@ class ActionController extends AbstractController
         //die;
         $entityManager->flush();
         return $this->json(["deleted" => true, 'id_remove_actions' => $removeActions]);
-      
+
     }
         /**
      * @Route("/profil/action/add/all", name="all_privileges_profil", methods={"POST"})
@@ -196,7 +196,7 @@ class ActionController extends AbstractController
     public function allPrivilegesProfil(Request $request,  EntityManagerInterface $entityManager): Response
     {
         $profilId = $request->request->get('profil_id');
-       
+
         $sections = $this->getDoctrine()->getRepository(Section::class)->findAll();
         $profil = $this->getDoctrine()->getRepository(Profile::class)->find($profilId);
         $idActions = [];
@@ -213,7 +213,7 @@ class ActionController extends AbstractController
                     $entityManager->persist($profilAction);
                     $idActions[] =  $action->getId();
                 }
-                
+
 
             }
             $section->setAllAction(true);
@@ -221,7 +221,7 @@ class ActionController extends AbstractController
         }
         $entityManager->flush();
         return $this->json(["save" => true, 'id_actions' => $idActions]);
-      
+
     }
 
 
