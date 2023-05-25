@@ -21,16 +21,16 @@
             <!-- <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> -->
             <ul class="navbar-nav mr-auto mt-0 mt-lg-0">
                 <li class="nav-item active-nav">
-                    <a class="nav-link nav-link-topbar " href="index.php">Accueil <span class="sr-only">(current)</span></a>
+                    <a class="nav-link nav-link-topbar " href="{{ path('font_content_index') }}">Accueil <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link nav-link-topbar" href="http://info.transtu.tn/info.php">Horaires</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  nav-link-topbar" href="contact.php">Contact</a>
+                    <a class="nav-link  nav-link-topbar" href="{{ path('front_contact_new') }}">Contact</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  nav-link-topbar" href="all-news.php">Dernières nouvelles</a>
+                    <a class="nav-link  nav-link-topbar" href="{{ path('front_content_news') }}">Dernières nouvelles</a>
                 </li>
 
                 <!-- Navbar dropdown -->

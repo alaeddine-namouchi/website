@@ -6,6 +6,7 @@ use App\Entity\Article;
 use App\Entity\Category;
 use App\Entity\Content;
 use App\Entity\Language;
+use App\Entity\Scope;
 use App\Form\ContentType;
 use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
@@ -68,14 +69,15 @@ class ContentController extends AbstractController
     public function index(ContentRepository $contentRepository, LanguageRepository $languageRepository, Request $request): Response
     {
         // dump($this->security->getUser());
-
+        $scope = $request->get('scope');
         $loc_url = $request->get('_locale');
         $loc_url = $request->getLocale();
         $lang_from_url = $languageRepository->findOneByAlias($loc_url);
         $listContent  = $contentRepository->findBy(['language' => $lang_from_url], ['created_at' => 'DESC']);
         $this->logger->info('USER : '. $loc_url .' : display article list');
         return $this->render('back/content/index.html.twig', [
-            'contents' => $listContent
+            'contents' => $listContent,
+            'scope' => Scope::ALL
         ]);
     }
     /**
@@ -91,16 +93,10 @@ class ContentController extends AbstractController
         $content->setLanguage($lang_from_url);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // if(!$article_id)
-            // {
             $article = new Article();
             $cat = $categoryRepository->findOneByAlias('SIMPLE');
             $article->setCategory($cat);
             $article->setNum(uniqid());
-            // }
-            // else{
-            //     $article = $articleRepository->findOneByNum($article_id);
-            // }
             $articleRepository->add($article);
             $content->setArticle($article);
             $contentRepository->add($content);
@@ -110,6 +106,7 @@ class ContentController extends AbstractController
         return $this->renderForm('back/content/new.html.twig', [
             'content' => $content,
             'form' => $form,
+            'scope' => Scope::ALL
         ]);
     }
 
@@ -135,6 +132,7 @@ class ContentController extends AbstractController
         return $this->renderForm('back/content/new.html.twig', [
             'content' => $content,
             'form' => $form,
+            'scope' => Scope::ALL
         ]);
     }
 
@@ -160,6 +158,7 @@ class ContentController extends AbstractController
         return $this->renderForm('back/content/new.html.twig', [
             'content' => $content,
             'form' => $form,
+            'scope' => Scope::ALL
         ]);
     }
 
@@ -177,7 +176,8 @@ class ContentController extends AbstractController
         $currentLang = $objlang_from_url->getName();
         return $this->render('back/content/show.html.twig', [
             'content' => $content,
-            'language' =>  $currentLang
+            'language' =>  $currentLang,
+            'scope' => Scope::ALL
         ]);
     }
 
@@ -209,6 +209,7 @@ class ContentController extends AbstractController
             return $this->renderForm('back/content/edit.html.twig', [
                 'content' => $content,
                 'form' => $form,
+                'scope' => Scope::ALL
             ]);
 
         }
@@ -225,14 +226,10 @@ class ContentController extends AbstractController
             return $this->renderForm('back/content/new.html.twig', [
                 'content' => $content,
                 'form' => $form,
+                'scope' => Scope::ALL
             ]);
 
         }
-        // if($action === 'redirection'){
-
-        // }
-
-
     }
 
     /**

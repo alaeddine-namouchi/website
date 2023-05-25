@@ -31,7 +31,7 @@ class ContentService
     public function __construct(EntityManagerInterface $em, PaginatorInterface $paginator)
     {
         $this->em = $em;
-        $this->repository = $em->getRepository(TimeLine::class);
+        $this->repository = $em->getRepository(Content::class);
         $this->paginator = $paginator;
     }
 
@@ -47,6 +47,13 @@ class ContentService
     public function getTimeLines( $page, $limit,  $langId )
     {
         $pagination = $this->paginator->paginate($this->repository->getTimeLinesQueryBuilder( $langId ), $page, $limit);
+        return $pagination;
+
+    }
+
+    public function getContentByArticles( int $page, int $limit,int $langId ,array $articleIds)
+    {
+        $pagination = $this->paginator->paginate($this->repository->getContentByArticlesQueryBuilder( $langId , $articleIds), $page, $limit);
         return $pagination;
 
     }

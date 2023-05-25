@@ -9,7 +9,7 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Published</th>
+{#                <th>Published</th>#}
                 <th>Created_at</th>
                 <th>Update_at</th>
                 <th>actions</th>
@@ -19,7 +19,7 @@
         {% for article in articles %}
             <tr>
                 <td>{{ article.id }}</td>
-                <td>{{ article.published ? 'Yes' : 'No' }}</td>
+{#                <td>{{ article.published ? 'Yes' : 'No' }}</td>#}
                 <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ article.updateAt ? article.updateAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>

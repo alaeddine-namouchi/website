@@ -11,6 +11,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\ContentRepository;
 use App\Repository\LanguageRepository;
 use App\Repository\MenuRepository;
+use App\Service\ContentService;
 use App\Service\LanguageService;
 use App\Service\TimeLineService;
 use Exception;
@@ -54,8 +55,6 @@ class ContentController extends AbstractController
                                 ArticleRepository $articleRepository,
                                 TranslatorInterface $translator)
                             {
-        // Avoid calling getUser() in the constructor: auth may not
-        // be complete yet. Instead, store the entire Security object.
         $this->security = $security;
         $this->articleRepository = $articleRepository;
         $this->contentRepository = $contentRepository;
@@ -116,6 +115,16 @@ class ContentController extends AbstractController
 
             ]);
         }
+        if($article->getCategory()->getAlias() == 'NEWS'){
+
+            return $this->render('front/fr/show-news.html.twig', [
+                'content_page' => $content,
+                'slug'=> $slug,
+                'current_page'=> $content->getTitle(),
+                'menus' => $plusMenu,
+
+            ]);
+        }
         if($article->getCategory()->getAlias() == 'WELCOME'){
             return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
 
@@ -131,29 +140,26 @@ class ContentController extends AbstractController
     /**
      * @Route("/news", name="front_content_news", methods={"GET"} )
      */
-    public function showNews( Request $request, TimeLineService $timeLineService, LanguageService $languageService): Response
+    public function showNews( Request $request, ContentService $contentService, LanguageService $languageService): Response
     {
-        $lang_from_url = $languageService->getUsedLanguage($request);
-        $contentNews = $timeLineService->getTimeLineByCategory(1, 3, $lang_from_url->getId() );
-        dd($contentNews);
-//        $category = $this->categoryRepository->findOneByAlias('NEWS');
-//        $loc_url = $request->get('_locale') ?? 'fr';
-//        $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
-//        $contents = $this->contentRepository->findBy(['category'=> $category, 'language' => $lang_from_url], ['created_at' => 'DESC'] , '3');
-//        dd($contents);
-        //dd($objlang_from_url);
-//        $article  = $content->getArticle();
-//        $content = $this->validContentFront( $lang_from_url,  $article);
-        $loc_url = $request->get('_locale');
-        $currentLang = $lang_from_url->getName();
+        $page = $request->query->getInt('page', 1);
+        $limit = $request->query->getInt('limit', 2);
 
+        $category = $this->categoryRepository->findOneByAlias('NEWS');
+        $loc_url = $request->get('_locale') ?? 'fr';
+        $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
+        $articles = $this->articleRepository->findBy(['category'=> $category]);
+        $articleIds = [];
+        foreach ($articles as $article){
+            $articleIds[] = $article->getId();
+        }
+        $contents = $contentService->getContentByArticles( $page,  $limit,  $lang_from_url->getId(),  $articleIds);
         $plusMenu = $this->menuRepository->findBy(['typeMenu' => 'plus', 'emplacement'=>'level_two'], ['parent'=>'ASC']);
         if($article->getCategory()->getAlias() == 'NEWS'){
 
-            return $this->render('front/fr/news.html.twig', [
-                'content_page' => $content->getBody(),
-                'slug'=> $slug,
-                'current_page'=> $content->getTitle(),
+            return $this->render('front/fr/all-news.html.twig', [
+                'contents' => $contents,
+                'current_page'=> $category->getLabel(),
                 'menus' => $plusMenu,
 
             ]);

@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * @Route("/{_locale}/article")
- * 
- * 
+ * @Route("/back/{_locale}/article")
+ *
+ *
  */
 //@Security("is_granted('IS_AUTHENTICATED_FULLY')")
 class ArticleController extends AbstractController
@@ -23,7 +23,7 @@ class ArticleController extends AbstractController
      */
     public function index($_locale, ArticleRepository $articleRepository): Response
     {
-        return $this->render('article/index.html.twig', [
+        return $this->render('back/article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
             'lang' => $_locale
         ]);
@@ -43,7 +43,7 @@ class ArticleController extends AbstractController
             return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('article/new.html.twig', [
+        return $this->renderForm('back/article/new.html.twig', [
             'article' => $article,
             'form' => $form,
         ]);
@@ -54,7 +54,7 @@ class ArticleController extends AbstractController
      */
     public function show(Article $article): Response
     {
-        return $this->render('article/show.html.twig', [
+        return $this->render('back/article/show.html.twig', [
             'article' => $article,
         ]);
     }

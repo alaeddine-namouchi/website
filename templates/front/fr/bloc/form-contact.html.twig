@@ -58,14 +58,14 @@
             </ul>
         </div>
         <div class="col-md-8 order-md-1">
-{#            {% for message in app.flashes('success') %}#}
-{#                <div class="alert alert-success">#}
-{#                    {{ message }}#}
-{#                </div>#}
-{#            {% endfor %}#}
-{#            <div class="my-custom-class-for-errors">#}
-{#                {{ form_errors(form) }}#}
-{#            </div>#}
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success">
+                    {{ message }}
+                </div>
+            {% endfor %}
+            <div class="my-custom-class-for-errors">
+                {{ form_errors(form) }}
+            </div>
 
             <h4 class="mb-3">ENVOYER UN MESSAGE</h4>
             {{ form_start(form) }}

@@ -1,203 +1,168 @@
-{% set routes = app.session.get('permession_routes') %}  
+{% set routes = app.session.get('permession_routes') %}
 <aside id="sidebar-left" class="sidebar-left">
 
-				    <div class="sidebar-header">
-				        <div class="sidebar-title">
-				            Navigation
-				        </div>
-				        <div class="sidebar-toggle d-none d-md-block" data-toggle-class="sidebar-left-collapsed" data-target="html" data-fire-event="sidebar-left-toggle">
-				            <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
-				        </div>
-				    </div>
+    <div class="sidebar-header">
+        <div class="sidebar-title">
+            Navigation
+        </div>
+        <div class="sidebar-toggle d-none d-md-block" data-toggle-class="sidebar-left-collapsed" data-target="html"
+             data-fire-event="sidebar-left-toggle">
+            <i class="fas fa-bars" aria-label="Toggle sidebar"></i>
+        </div>
+    </div>
 
-				    <div class="nano">
-				        <div class="nano-content">
-				            <nav id="menu" class="nav-main" role="navigation">
+    <div class="nano">
+        <div class="nano-content">
+            <nav id="menu" class="nav-main" role="navigation">
 
-				                <ul class="nav nav-main">
-				                    <li>
-				                        <a class="nav-link" href="#">
-				                            <i class="bx bx-home-alt" aria-hidden="true"></i>
-				                            <span>Dashboard</span>
-				                        </a>                        
-				                    </li>
-									 {% if routes.app_menu_index is defined %}
-									<li>
-				                        <a class="nav-link" href="layouts-default.html">
-				                            <i class="bx bx-home-alt" aria-hidden="true"></i>
-				                            <span>Gestion des menu</span>
-				                        </a>                        
-				                    </li>
-									{% endif %}	
-				                     {% if routes.app_content_index is defined %}
-									<li  class="nav-parent" >
-				                        <a class="nav-link" href="{{path('app_content_index')}}">
-				                            {# <span class="float-end badge badge-primary">182</span> #}
-				                            {# <i class="bx bx-envelope" aria-hidden="true"></i> #}
-											<i class="bx bx-cart-alt" aria-hidden="true"></i>
-				                            <span>Gestion des Contenus</span>
-				                        </a> 
-										<ul class="nav nav-children">
-										{% if routes.app_contact_index is defined %}
-				                            <li>
-				                                <a class="nav-link" href="{{path('app_contact_index')}}">
-				                                    Marche Horaires
-				                                </a>
-				                            </li>
-											{% endif %}	
-											{% if routes.app_contact_index is defined %}
-											<li>
-				                                <a class="nav-link" href="{{path('app_contact_index')}}">
-				                                    Transport à la carte
-				                                </a>
-				                            </li>	
-											{% endif %}		
-											{% if routes.app_contact_index is defined %}
-											<li>
-				                                <a class="nav-link" href="{{path('app_contact_index')}}">
-				                                    Accès à l'information
-				                                </a>
-				                            </li>	
-											{% endif %}	
-											{% if routes.app_contact_index is defined %}
-											<li>
-				                                <a class="nav-link" href="{{path('app_contact_index')}}">
-				                                    A propos l'entreprise
-				                                </a>
-				                            </li>	
-											{% endif %}	
-											{% if routes.app_contact_index is defined %}
-											<li>
-				                                <a class="nav-link" href="{{path('app_contact_index')}}">
-				                                    Rapport d'activité
-				                                </a>
-				                            </li>	
-											{% endif %}
-										
-											{% if routes.app_contact_index is defined %}
-											<li>
-				                                <a class="nav-link" href="{{path('app_contact_index')}}">
-				                                    Communiqué de presse
-				                                </a>
-				                            </li>	
-											{% endif %}	
-											{% if routes.app_contact_index is defined %}
-											<li>
-				                                <a class="nav-link" href="{{path('app_contact_index')}}">
-				                                    Dossier de presse
-				                                </a>
-				                            </li>	
-											{% endif %}			                            
-				                        </ul>                       
-				                    </li>
-									{% endif %}
-                                
-				                    <li class="nav-parent">
-				                        <a class="nav-link" href="#">
-				                            <i class="bx bx-cart-alt" aria-hidden="true"></i>
-				                            <span>Ecoute Clientèle</span>
-				                        </a>
-				                        <ul class="nav nav-children">
-										{% if routes.app_contact_index is defined %}
-				                            <li>
-				                                <a class="nav-link" href="{{path('app_contact_index')}}">
-				                                    Contact
-				                                </a>
-				                            </li>
-											{% endif %}	
-											{% if routes.app_contact_index is defined %}
-											<li>
-				                                <a class="nav-link" href="{{path('app_contact_index')}}">
-				                                    Réclamation
-				                                </a>
-				                            </li>	
-											{% endif %}			                            
-				                        </ul>
-				                    </li>
-									 <li class="nav-parent">
-				                        <a class="nav-link" href="#">
-				                            <i class="bx bx-cart-alt" aria-hidden="true"></i>
-				                            <span>TimeLine</span>
-				                        </a>
-				                        <ul class="nav nav-children">
-											{% if routes.app_time_line_all_news is defined %}
-				                            <li>
-				                                <a class="nav-link" href="{{path('app_time_line_all_news')}}">
-				                                    Actualité
-				                                </a>
-				                            </li>	
-											{% endif %}	
-											{% if routes.app_contact_index is defined %}
-											<li>
-				                                <a class="nav-link" href="{{path('app_contact_index')}}">
-				                                    Historique Transport collectif
-				                                </a>
-				                            </li>
-											{% endif %}	
-											{% if routes.app_contact_index is defined %}
-											<li>
-				                                <a class="nav-link" href="{{path('app_contact_index')}}">
-				                                    Historique Identités visuelles
-				                                </a>
-				                            </li>
-											{% endif %}	
-														                            
-				                        </ul>
-				                    </li>
+                <ul class="nav nav-main">
+                    <li>
+                        <a class="nav-link" href="#">
+                            <i class="bx bx-home-alt" aria-hidden="true"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    {% if routes.app_menu_index is defined %}
+                        <li>
+                            <a class="nav-link" href="layouts-default.html">
+                                <i class="bx bx-home-alt" aria-hidden="true"></i>
+                                <span>Gestion des menu</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if routes.app_content_index is defined %}
+                        <li class="nav-parent">
+                            <a class="nav-link" href="{{ path('app_content_index') }}">
+                                {# <span class="float-end badge badge-primary">182</span> #}
+                                {# <i class="bx bx-envelope" aria-hidden="true"></i> #}
+                                <i class="bx bx-cart-alt" aria-hidden="true"></i>
+                                <span>Gestion des Contenus</span>
+                            </a>
+                            <ul class="nav nav-children">
+                                {% if routes.app_content_index is defined %}
+                                    {% for key, section in scope %}
+                                        <li>
+                                            <a class="nav-link" href="{{ path('app_content_index', {'scope': key}) }}">
+                                                {{ section }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
 
-									{% if routes.app_menu_index is defined %}
-									<li>
-				                        <a class="nav-link" href="{{path('app_menu_index')}}">
-				                            <i class="bx bx-home-alt" aria-hidden="true"></i>
-				                            <span>Gestion des menus</span>
-				                        </a>                        
-				                    </li>
-									{% endif %}	
-								{#	 {% if app.user.profil.alias == 'SUPER_USER' %} #}
-									<li class="nav-parent">
-				                        <a class="nav-link" href="#">
-				                            <i class="bx bx-cart-alt" aria-hidden="true"></i>
-				                            <span>Administration</span>
-				                        </a>
-				                        <ul class="nav nav-children">
-				                            <li>
-				                                <a class="nav-link" href="{{path('app_section_index')}}">
-				                                    Gestion des modules
-				                                </a>
-				                            </li>
-				                            <li>
-				                                <a class="nav-link" href="{{path('action_index')}}">
-				                                    gestion des taches
-				                                </a>
-				                            </li>
-				                            <li>
-				                                <a class="nav-link" href="{{ path('app_admin_index') }}" >
-				                                    Gestion des utilisateurs
-				                                </a>
-				                            </li>
-				                            <li>
-				                                <a class="nav-link" href="{{ path('app_profile_index') }}" >
-				                                    Gestion des profils
-				                                </a>
-				                            </li>
-				                            
-				                        </ul>
-				                    </li>
-				             
-				                    
+                            </ul>
+                        </li>
+                    {% endif %}
 
-				                </ul>
-				            </nav>
+                    <li class="nav-parent">
+                        <a class="nav-link" href="#">
+                            <i class="bx bx-cart-alt" aria-hidden="true"></i>
+                            <span>Ecoute Clientèle</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            {% if routes.app_contact_index is defined %}
+                                <li>
+                                    <a class="nav-link" href="{{ path('app_contact_index') }}">
+                                        Contact
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if routes.app_content_index is defined %}
+                                <li>
+                                    <a class="nav-link" href="{{ path('app_content_index') }}">
+                                        Réclamation
+                                    </a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </li>
+                    <li class="nav-parent">
+                        <a class="nav-link" href="#">
+                            <i class="bx bx-cart-alt" aria-hidden="true"></i>
+                            <span>TimeLine</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            {% if routes.app_time_line_all_news is defined %}
+                                <li>
+                                    <a class="nav-link" href="{{ path('app_time_line_all_news') }}">
+                                        Actualité
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if routes.app_content_index is defined %}
+                                <li>
+                                    <a class="nav-link" href="{{ path('app_content_index') }}">
+                                        Historique Transport collectif
+                                    </a>
+                                </li>
+                            {% endif %}
+                            {% if routes.app_content_index is defined %}
+                                <li>
+                                    <a class="nav-link" href="{{ path('app_content_index') }}">
+                                        Historique Identités visuelles
+                                    </a>
+                                </li>
+                            {% endif %}
 
-				            <hr class="separator" />
+                        </ul>
+                    </li>
 
-				            <hr class="separator" />
+                    {% if routes.app_menu_index is defined %}
+                        <li>
+                            <a class="nav-link" href="{{ path('app_menu_index') }}">
+                                <i class="bx bx-home-alt" aria-hidden="true"></i>
+                                <span>Gestion des menus</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {#     {% if app.user.profil.alias == 'SUPER_USER' %} #}
+                    <li class="nav-parent">
+                        <a class="nav-link" href="#">
+                            <i class="bx bx-cart-alt" aria-hidden="true"></i>
+                            <span>Administration</span>
+                        </a>
+                        <ul class="nav nav-children">
+                            <li>
+                                <a class="nav-link" href="{{ path('app_section_index') }}">
+                                    Gestion des modules
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ path('action_index') }}">
+                                    Gestion des taches
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ path('app_category_index') }}">
+                                    Gestion des Catégories
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ path('app_admin_index') }}">
+                                    Gestion des utilisateurs
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link" href="{{ path('app_profile_index') }}">
+                                    Gestion des profils
+                                </a>
+                            </li>
 
-				            <div class="sidebar-widget widget-stats">
-				             
-				                <div class="widget-content">
-				                    <ul>
-				                        {# <li>
+                        </ul>
+                    </li>
+
+
+                </ul>
+            </nav>
+
+            <hr class="separator"/>
+
+            <hr class="separator"/>
+
+            <div class="sidebar-widget widget-stats">
+
+                <div class="widget-content">
+                    <ul>
+                        {# <li>
 				                            <span class="stats-title">Stat 1</span>
 				                            <span class="stats-complete">85%</span>
 				                            <div class="progress">
@@ -206,24 +171,24 @@
 				                                </div>
 				                            </div>
 				                        </li> #}
-				                        
-				                    </ul>
-				                </div>
-				            </div>
-				        </div>
 
-				        <script>
-				            // Maintain Scroll Position
-				            if (typeof localStorage !== 'undefined') {
-				                if (localStorage.getItem('sidebar-left-position') !== null) {
-				                    var initialPosition = localStorage.getItem('sidebar-left-position'),
-				                        sidebarLeft = document.querySelector('#sidebar-left .nano-content');
+                    </ul>
+                </div>
+            </div>
+        </div>
 
-				                    sidebarLeft.scrollTop = initialPosition;
-				                }
-				            }
-				        </script>
+        <script>
+            // Maintain Scroll Position
+            if (typeof localStorage !== 'undefined') {
+                if (localStorage.getItem('sidebar-left-position') !== null) {
+                    var initialPosition = localStorage.getItem('sidebar-left-position'),
+                        sidebarLeft = document.querySelector('#sidebar-left .nano-content');
 
-				    </div>
+                    sidebarLeft.scrollTop = initialPosition;
+                }
+            }
+        </script>
 
-				</aside>
+    </div>
+
+</aside>

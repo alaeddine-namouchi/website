@@ -33,6 +33,8 @@ class ContentRepository extends ServiceEntityRepository
         }
     }
 
+
+
     /**
      * @throws ORMException
      * @throws OptimisticLockException
@@ -46,12 +48,12 @@ class ContentRepository extends ServiceEntityRepository
     }
 
     public function findArticleByLang(){
-        
+
         $conn = $this->getEntityManager()->getConnection();
         $sql = '
         SELECT c.*
         FROM content c
-        WHERE c.language_id = :lang 
+        WHERE c.language_id = :lang
         ORDER BY c.created_at DESC
         ';
         $stmt = $conn->prepare($sql);
@@ -73,8 +75,22 @@ class ContentRepository extends ServiceEntityRepository
 
         }
         return $outouts;
-       
+
         ;
+    }
+    public function getContentByArticlesQueryBuilder( $langId , $articleIds)
+    {
+//        $stringArticleIds = implode(",", $articleIds);
+        $qb = $this->createQueryBuilder('t');
+
+        $qb = $qb
+            ->where('t.article IN (:articleIds)')
+            ->Andwhere('t.language = :langId')
+            ->setParameter('articleIds', $articleIds)
+            ->setParameter('langId', $langId)
+            ->orderBy('t.published', 'DESC');
+
+        return $qb;
     }
 
     // /**
