@@ -87,6 +87,22 @@ class ContentController extends AbstractController
             ]);
     }
     /**
+     * @Route("/", name="font_menu_main", methods={"GET"})
+     */
+    public function mainMenu( Request $request): Response
+    {
+        $loc_url1 = $request->get('_locale');
+        $loc_url2 = $request->get('_locale');
+        dump($loc_url1, $loc_url2);
+        $category = $this->categoryRepository->findOneBy(['alias'=> 'fr']);
+        $category = $this->languageRepository->findOneBy(['alias'=> 'HOME']);
+        $loc_url = $request->get('_locale') ?? 'fr';
+        $plusMenu = $this->menuRepository->findBy(['typeMenu' => 'plus', 'emplacement'=>'level_two'], ['parent'=>'ASC']);
+        return $this->render('front/fr/index.html.twig', [
+            'menus' => $plusMenu,
+        ]);
+    }
+    /**
      * @Route("/{slug}/{id}", name="front_content_show", methods={"GET"} )
      */
     public function show($slug, $id, Request $request): Response

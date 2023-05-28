@@ -7,6 +7,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @method Profile|null find($id, $lockMode = null, $lockVersion = null)
@@ -16,9 +17,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ProfileRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $security;
+    public function __construct(ManagerRegistry $registry, Security $security)
     {
         parent::__construct($registry, Profile::class);
+        $this->security = $security;
+
     }
 
     /**
@@ -43,6 +47,17 @@ class ProfileRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
+    }
+
+    public function  scopeProfileQueryBuilder(){
+        $user = $this->security->getUser();
+        $profileId = $user->getProfile()->getId();
+        $qb = $this->createQueryBuilder('s')
+            ->addSelect('p');
+        $qb = $qb->join('s.profileScope', 'p')
+            ->andWhere('p.profile = :profileId')
+            ->setParameter('profileId', $profileId);
+        return $qb;
     }
 
     // /**

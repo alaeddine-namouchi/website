@@ -13,6 +13,7 @@ use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ContentRepository;
 use App\Repository\LanguageRepository;
+use App\Repository\ScopeRepository;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -20,6 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Sec;
@@ -67,24 +69,27 @@ class ContentController extends AbstractController
     /**
      * @Route("/", name="app_content_index", methods={"GET"})
      */
-    public function index(ContentRepository $contentRepository, LanguageRepository $languageRepository, Request $request): Response
+    public function index(ContentRepository $contentRepository,ScopeRepository $scopeRepository, LanguageRepository $languageRepository, Request $request): Response
     {
         // dump($this->security->getUser());
-        $scope = $request->get('scope');
+        $scopeId = $request->get('scope');
+        $scope = $scopeRepository->find($scopeId);
+        dump($scope);
+
         $loc_url = $request->get('_locale');
         $loc_url = $request->getLocale();
         $lang_from_url = $languageRepository->findOneByAlias($loc_url);
-        $listContent  = $contentRepository->findBy(['language' => $lang_from_url], ['created_at' => 'DESC']);
+        $listContent  = $contentRepository->findBy(['language' => $lang_from_url, 'scope' => $scope], ['created_at' => 'DESC']);
         $this->logger->info('USER : '. $loc_url .' : display article list');
         return $this->render('back/content/index.html.twig', [
             'contents' => $listContent,
-            'scope' => ScopeStatic::ALL
+            'scope' => $scopeId
         ]);
     }
     /**
      * @Route("/new", name="app_content_new", methods={"GET", "POST"})
      */
-    public function new(Request $request, LanguageRepository $languageRepository, ContentRepository $contentRepository, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
+    public function new(Request $request,  SluggerInterface $slugger, LanguageRepository $languageRepository, ContentRepository $contentRepository, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
     {
         $content = new Content();
         $form = $this->createForm(ContentType::class, $content);
@@ -100,14 +105,29 @@ class ContentController extends AbstractController
             $article->setNum(uniqid());
             $articleRepository->add($article);
             $content->setArticle($article);
-            $contentRepository->add($content);
-            return $this->redirectToRoute('app_content_index', [], Response::HTTP_SEE_OTHER);
+            $uploadedFile = $form['picture']->getData();
+
+            if ($uploadedFile) {
+                $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
+                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
+                $uploadedFile->move(
+                    $destination,
+                    $newFilename
+                );
+                $content->setPicture($newFilename);
+            }
+                $contentRepository->add($content);
+
+            return $this->redirectToRoute('app_content_index', ['scope' => $content->getScope()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/content/new.html.twig', [
             'content' => $content,
-            'form' => $form,
-            'scope' => Scope::ALL
+            'form'  => $form,
+//            'scope' => 1
+
         ]);
     }
 
@@ -133,7 +153,7 @@ class ContentController extends AbstractController
         return $this->renderForm('back/content/new.html.twig', [
             'content' => $content,
             'form' => $form,
-            'scope' => Scope::ALL
+            //'scope' => Scope::ALL
         ]);
     }
 
@@ -159,7 +179,7 @@ class ContentController extends AbstractController
         return $this->renderForm('back/content/new.html.twig', [
             'content' => $content,
             'form' => $form,
-            'scope' => Scope::ALL
+            ////'scope' => Scope::ALL
         ]);
     }
 
@@ -178,22 +198,19 @@ class ContentController extends AbstractController
         return $this->render('back/content/show.html.twig', [
             'content' => $content,
             'language' =>  $currentLang,
-            'scope' => Scope::ALL
+//            //'scope' => Scope::ALL
         ]);
     }
 
     /**
      * @Route("/{id}/edit/{article_id}", name="app_content_edit", methods={"GET", "POST"})
      */
-    public function edit(Request $request, $article_id, Content $content, LanguageRepository $languageRepository, ContentRepository $contentRepository, TranslatorInterface $translator): Response
+    public function edit(Request $request,  SluggerInterface $slugger, $article_id, Content $content, LanguageRepository $languageRepository, ContentRepository $contentRepository, TranslatorInterface $translator): Response
     {
 
-        // $loc_url = $request->get('_locale');
         $loc_url = $request->get('_locale');
-        // dd($loc_url);
         $objlang_from_url = $languageRepository->findOneByAlias($loc_url);
         $article  = $content->getArticle();
-        // dd($objlang_from_url);
         $action = $this->typeOfAction($objlang_from_url, $article);
         if($action == 'edit')
         {
@@ -201,16 +218,32 @@ class ContentController extends AbstractController
             $form = $this->createForm(ContentType::class, $content);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
+
+                $uploadedFile = $form['picture']->getData();
+                if ($uploadedFile) {
+                    $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
+                    $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeFilename = $slugger->slug($originalFilename);
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $uploadedFile->guessExtension();
+                    $uploadedFile->move(
+                        $destination,
+                        $newFilename
+                    );
+                    $content->setPicture($newFilename);
+                }
                 $this->contentRepository->add($content);
                 $message = $this->translator->trans("l article est enregistrer avec succès");
                 $this->addFlash("message", $message);
                 //  $this->addFlash("message", "l article est enregistrer avec succès");
                 return $this->redirectToRoute('app_content_show', ['id' => $content->getId()]);
             }
+            $urlPicture =  $this->getParameter('kernel.project_dir').'/public/uploads/'.$content->getPicture();
+
             return $this->renderForm('back/content/edit.html.twig', [
                 'content' => $content,
                 'form' => $form,
-                'scope' => Scope::ALL
+                'url_picture' =>$urlPicture
+                //'scope' => Scope::ALL
             ]);
 
         }
@@ -227,7 +260,7 @@ class ContentController extends AbstractController
             return $this->renderForm('back/content/new.html.twig', [
                 'content' => $content,
                 'form' => $form,
-                'scope' => Scope::ALL
+                //'scope' => Scope::ALL
             ]);
 
         }

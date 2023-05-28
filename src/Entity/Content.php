@@ -88,6 +88,16 @@ class Content
      */
     private $article;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Scope::class, inversedBy="contents")
+     */
+    private $scope;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $picture;
+
     // /**
     //  * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="contents")
     //  */
@@ -281,6 +291,30 @@ class Content
     public function setArticle(?Article $article): self
     {
         $this->article = $article;
+
+        return $this;
+    }
+
+    public function getScope(): ?Scope
+    {
+        return $this->scope;
+    }
+
+    public function setScope(?Scope $scope): self
+    {
+        $this->scope = $scope;
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }

@@ -4,6 +4,7 @@ namespace App\EventSubscriber;
 
 use App\Entity\Admin;
 use App\Entity\ProfilAction;
+use App\Entity\ProfileScope;
 use App\Repository\AdminRepository;
 use App\Repository\ProfilActionRepository;
 use App\Repository\ProfileRepository;
@@ -20,21 +21,21 @@ class UserAdminSubscriber implements EventSubscriberInterface
     private  $entityManager;
     /** @var \Symfony\Component\Security\Core\Security */
 	private $security;
-	
-	
+
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param Security $security
      * @param EntityManagerInterface        $entityManager
      * @param SessionInterface        $session
 	 */
 	public function __construct(
-                Security $security, 
-                EntityManagerInterface $entityManager,  
+                Security $security,
+                EntityManagerInterface $entityManager,
                 SessionInterface $session
                 ){
-        
+
         $this->session = $session;
 		$this->security = $security;
         $this->entityManager = $entityManager;
@@ -49,7 +50,8 @@ class UserAdminSubscriber implements EventSubscriberInterface
             $profil = $this->entityManager->getRepository(Admin::class)->findOneBy(['email' => $user->getUserIdentifier()])->getProfile();
             $profilActions = $this->entityManager->getRepository(ProfilAction::class)->findBy(['profile' => $profil->getId()]);
             $permessionRoutes = [];
-            foreach ($profilActions as $profilAction)
+
+        foreach ($profilActions as $profilAction)
             {
                 $route = $profilAction->getAction()->getRoute();
                 $permessionRoutes[$route] = $route;
@@ -58,8 +60,9 @@ class UserAdminSubscriber implements EventSubscriberInterface
             // echo count($permessionRoutes);
             // die;
             $this->session->clear();
-            $this->session->set('permession_routes', $permessionRoutes);  
-        
+            $this->session->set('permession_routes', $permessionRoutes);
+            $this->session->set('scope', $permessionRoutes);
+
     }
 
     public static function getSubscribedEvents()

@@ -9,6 +9,7 @@ use App\Entity\ScopeStatic;
 use App\Form\ProfileType;
 use App\Repository\ActionRepository;
 use App\Repository\ProfileRepository;
+use App\Repository\ProfileScopeRepository;
 use App\Repository\ScopeRepository;
 use App\Repository\SectionRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -147,16 +148,17 @@ class ProfileController extends AbstractController
     }
 
     /**
-     * @Route("/scope/add", name="remove_profile_scope", methods={"POST"})
+     * @Route("/scope/remove", name="remove_profile_scope", methods={"POST"})
      */
-    public function removeProfileScope(Request $request, ProfileRepository $profileRepository, EntityManagerInterface $entityManager, ScopeRepository $scopeRepository): Response
+    public function removeProfileScope(Request $request, ProfileRepository $profileRepository, ProfileScopeRepository $profileScopeRepository, EntityManagerInterface $entityManager, ScopeRepository $scopeRepository): Response
     {
 
         $profileId = $request->request->get('profile_id');
         $scopeId = $request->request->get('scope_id');
         $profile = $profileRepository->find($profileId);
         $scope = $scopeRepository->find($scopeId);
-        $profileScope = $profileRepository->findOneBy(['scope' => $scope, 'profile' => $profile ]);
+        $profileScope = $profileScopeRepository->findOneBy(['scope' => $scope, 'profile' => $profile ]);
+//        dd($profileScope);
         $entityManager->remove($profileScope);
         $entityManager->flush();
 

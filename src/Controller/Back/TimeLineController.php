@@ -17,9 +17,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 /**
- * 
+ *
  * @Route("/back/{_locale}/time/line", requirements={  "_locale": "fr|ar|en"   })
- * 
+ *
  */
 class TimeLineController extends AbstractController
 {
@@ -35,7 +35,7 @@ class TimeLineController extends AbstractController
 		// $line_type_id = $paramFetcher->get('line_type_id');
 		// $network_id = $paramFetcher->get('network_id');
 
-        
+
         $lang_from_url = $languageService->getUsedLanguage($request);
         // $listConent  = $timeLineRepository->findBy(['language' => $lang_from_url], ['createdAt' => 'DESC']);
         $listConent  = $timeLineService->getTimeLines($page, $limit, $lang_from_url->getId());
@@ -48,11 +48,11 @@ class TimeLineController extends AbstractController
      /**
      * @Route("/new", name="app_time_line_new", methods={"GET", "POST"})
      */
-    public function new(FileUploaderService $fileUploaderService, Request $request, SluggerInterface $slugger, TimeLineRepository $timeLineRepository, LanguageService $languageService): Response
+    public function new( Request $request, SluggerInterface $slugger, TimeLineRepository $timeLineRepository, LanguageService $languageService): Response
     {
         $timeLine = new TimeLine();
         $type = $request->query->get('type');
-        dump($type);
+//        dump($type);
         $form = $this->createForm(TimeLineType::class, $timeLine);
         $form->handleRequest($request);
         $objlangUsed= $languageService->getUsedLanguage($request);
@@ -60,13 +60,28 @@ class TimeLineController extends AbstractController
             $timeLine->setArticle($type);
             $timeLine->setLanguage($objlangUsed);
             /** @var UploadedFile $brochureFile */
-            $iconFile = $form->get('icon')->getData();
-            if ($iconFile) {
-                $newFilename = $fileUploaderService->upload($iconFile);
+            $uploadedFile = $form->get('icon')->getData();
+            if ($uploadedFile) {
+                $destination = $this->getParameter('kernel.project_dir').'/public/uploads';
+                $originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
+                $uploadedFile->move(
+                    $destination,
+                    $newFilename
+                );
                 $timeLine->setIcon($newFilename);
                 $timeLineRepository->add($timeLine);
                 return $this->redirectToRoute('app_time_line_index', [], Response::HTTP_SEE_OTHER);
             }
+//            if ($iconFile) {
+//                $newFilename = $fileUploaderService->upload($iconFile);
+//                $timeLine->setIcon($newFilename);
+//                $timeLineRepository->add($timeLine);
+//                return $this->redirectToRoute('app_time_line_index', [], Response::HTTP_SEE_OTHER);
+//            }
+
+//            $newFilename = $safeFilename.'-'.uniqid().'.'.$uploadedFile->guessExtension();
         }
         return $this->renderForm('back/time_line/new.html.twig', [
             'time_line' => $timeLine,
@@ -81,7 +96,7 @@ class TimeLineController extends AbstractController
     {
         $page = $request->query->getInt('page', 1);
         $limit = $request->query->getInt('limit', 5);
-        
+
         $lang_from_url = $languageService->getUsedLanguage($request);
         // $listConent  = $timeLineRepository->findBy(['language' => $lang_from_url], ['createdAt' => 'DESC']);
         $listNews  = $timeLineService->getTimeLineByCategory($page, $limit, $lang_from_url->getId());
@@ -125,7 +140,7 @@ class TimeLineController extends AbstractController
                 );
                 $timeLine->setIcon($newFilename);
             }
-            
+
             $timeLineRepository->add($timeLine);
            // return $this->redirectToRoute('app_time_line_index', [], Response::HTTP_SEE_OTHER);
         }

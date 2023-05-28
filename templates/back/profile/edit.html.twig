@@ -28,7 +28,7 @@
                             {% set checkedScope ="checked = true" %}
                         {% endif %}
                     {% endfor %}
-                    <li class="dd-item dd-handle ban-section" id="{{ scope.id }}">
+                    <li class="dd-item dd-handle ban-section pt-2" id="{{ scope.id }}">
                         <div class=" checkbox-custom checkbox-default" id="module-{{ scope.id }}">
                             <input type="checkbox" {{ checkedScope }} class="scope_{{ scope.id }}"
                                    id="scope_{{ scope.id }}" value="{{ scope.id }}" />

@@ -25,9 +25,9 @@
     {{ include('back/content/_form.html.twig', {'button_label': 'Update'}) }}
     <div class="mt-3 mb-3">
     {{ include('back/content/_delete_form.html.twig') }}
-   </div> 
+   </div>
 
-    <a class="btn btn-sm btn-default" href="{{ path('app_content_index') }}"><<< &nbsp;back to list</a>
+    <a class="btn btn-sm btn-default" href="{{ path('app_content_index', {'scope': content.scope.id}) }}"><<< &nbsp;back to list</a>
 {% endblock %}
 {# <script>
 function() {
@@ -41,7 +41,7 @@ function() {
         height: 350,
         transition: 'slideBasic',
         removeSlides: true,
-        siblingsNavigation: true, 
+        siblingsNavigation: true,
         imgAlign: 'xMidYMid slice',
         positionsToMove: 1,
         navigationArrows: false,
@@ -75,7 +75,7 @@ function() {
 				slidePercent: 90
 			}
   		}
-    });            
+    });
 }());
 $('#slide1').append(`      <div class="skw-slide" data-bg="/uploads/banner/thumbnails/media_temp_1457446227.jpg">
                 <div class="caption skw-caption">
@@ -89,8 +89,8 @@ $('#slide1').append(`      <div class="skw-slide" data-bg="/uploads/banner/thumb
  );
  $('#slide1').last().html();
  v = $('.skw-list').children().find("[href='" + /uploads/banner/thumbnails/media_temp_1457446227.jpg + "']").map( v => (v));
- console.log(v) 
- 
+ console.log(v)
+
  .each(function(i, obj) {
     console.log(i)
     if(i == 2){
@@ -116,7 +116,7 @@ $('#slide1').append(`      <div class="skw-slide" data-bg="/uploads/banner/thumb
                         <p>est le slogan de la campagne de sensibilisation organisée par la Transtu en collaboration avec la Radio IFM portant sur le thème de la Resquille </p>
                         <div class="voir_detail">
                             <a href="campagne de sensibilisation-resquille " target="_blank">voir les détails</a>
-                        </div>                
+                        </div>
                     </div>
                 </div>
                 <div class="skw-slide" data-bg="/uploads/banner/thumbnails/media_temp_1460984985.jpg">

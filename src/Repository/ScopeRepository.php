@@ -2,9 +2,11 @@
 
 namespace App\Repository;
 
+use App\Entity\ProfileScope;
 use App\Entity\Scope;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Security\Core\Security;
 
 /**
  * @extends ServiceEntityRepository<Scope>
@@ -16,9 +18,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ScopeRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    private $profileRepository;
+    public function __construct(ManagerRegistry $registry, Security $security, ProfileScopeRepository $profileRepository)
     {
         parent::__construct($registry, Scope::class);
+        $this->security = $security;
+        $this->profileRepository = $profileRepository;
     }
 
     public function add(Scope $entity, bool $flush = false): void
@@ -37,6 +42,22 @@ class ScopeRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function  scopeProfileQueryBuilder(){
+        $user = $this->security->getUser();
+
+        $profileScopes = $this->profileRepository->findBy(['profile'=>$user->getProfile()]);
+        $scopeIds = [];
+        foreach ($profileScopes as $item){
+            $scopeIds[] = $item->getScope()->getId();
+        }
+//        dd($scopeIds);
+
+        $qb = $this->createQueryBuilder('s')
+            ->andWhere('s.id IN (:scopeIds)')
+            ->setParameter('scopeIds', $scopeIds);
+        return $qb;
     }
 
 //    /**

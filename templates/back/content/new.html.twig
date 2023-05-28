@@ -3,9 +3,9 @@
 {% block title %}New Content{% endblock %}
 
 {% block body %}
-    
+
     <h1>Create new Content</h1>
 
     {{ include('back/content/_form.html.twig') }}
-    <a  class="btn btn-sm btn-default mt-3"   href="{{ path('app_content_index') }}"><<< back to list</a>
+{#    <a  class="btn btn-sm btn-default mt-3"   href="{{ path('app_content_index', {'scope': content.scope}) }}"><<< back to list</a>#}
 {% endblock %}

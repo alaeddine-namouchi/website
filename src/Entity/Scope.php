@@ -39,9 +39,15 @@ class Scope
      */
     private $profileScopes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Content::class, mappedBy="scope")
+     */
+    private $contents;
+
     public function __construct()
     {
         $this->profileScopes = new ArrayCollection();
+        $this->contents = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -109,6 +115,36 @@ class Scope
             // set the owning side to null (unless already changed)
             if ($profileScope->getScope() === $this) {
                 $profileScope->setScope(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Content>
+     */
+    public function getContents(): Collection
+    {
+        return $this->contents;
+    }
+
+    public function addContent(Content $content): self
+    {
+        if (!$this->contents->contains($content)) {
+            $this->contents[] = $content;
+            $content->setScope($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContent(Content $content): self
+    {
+        if ($this->contents->removeElement($content)) {
+            // set the owning side to null (unless already changed)
+            if ($content->getScope() === $this) {
+                $content->setScope(null);
             }
         }
 
