@@ -88,8 +88,8 @@
 					<i class="bi bi-twitter rs-icon-youtube" style="font-size:16px! important; "></i>
 				</button>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			
-			
+
+
 			</span>
                           <!-- Facebook -->
                             <!-- <i class="social-icon fab fa-facebook-f"></i> -->
@@ -105,45 +105,20 @@
                 </div>
             </div>
             <div class="col-md-1 col-sm-1 col-xs-12"></div>
+            {% for sub_menu in menus %}
+            {% if sub_menu.emplacement == 'level_two' %}
             <div class="col-md-2 col-sm-4 col-xs-12">
-                <h5 class="heading">Entreprise</h5>
-                <ul class="card-text">
-                    <li><a href="about.php" class=" ">A propos</a> </li>
-                    <li><a href="" class="  ">Rapport d'activité</a></li>
-                    <li><a href="time-line.php" class="  ">Historique</a></li>
-                    <li><a href="visual-identity.php" class="  ">Identités visuelles</a> </li>
-                    <li><a href="transport-museum.php" class="  ">Musée de transport</a></li>
-                    <li><a href="conatct.php" class="  ">Contact</a></li>
-                    <li><a href="gallery.php" class="  ">Galerie des photos</a></li>
-                </ul>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-12">
-                <h5 class="heading">Services</h5>
-                <ul  class="card-text" >
-                    <li><a href="contact.php" class="  ">Ecoute clientèle</a></li>
-                    <li><a href="journalists-area.php" class="  ">Espace journalistes</a></li>
-                    <!-- <li><a href="" class="  ">Dossiers de presse</a></li> -->
-                    <li><a href="" class="  ">Communiqués de presse</a></li>
-                    <li><a href="faq.php" class="  ">FAQ</a></li>
-                    <li><a href="access-to-information.php" class="  ">Accès à l'information</a></li>
-                    <li><a href="" class="  ">Données personnel</a></li>
-                    <li><a href="recruitment.php" class="  ">Recrutement</a></li>
+                <h5 class="heading">{{ sub_menu.label | capitalize }}</h5>
 
-                </ul>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-12">
-                <h5 class="heading d-xs-none">Tarifs</h5>
                 <ul class="card-text">
-                    <li> <a href="tickets.pĥp" class="  ">Ticket</a></li>
-                    <li> <a href="carte-hebdomadaire.php" class="  ">Carte hébdomadaire</a></li>
-                    <li><a href="abonnements.php" class="  ">Abonnement mensuel</a> </li>
-                    <li><a href="abonnements.php" class="  ">Abonnement annuel</a></li>
-                    <li><a href="abonnements.php" class="  ">Abonnement scolaire</a></li>
-                    <li><a href="carnet-10-tickets.php" class="  ">Carnet 10 Tickets</a></li>
-																				
+                    {% endif %}
+                    {% for menu in sub_menu.menus %}
+                    <li><a href="about.php" class=" ">{{ menu.label | capitalize }}</a> </li>
+                    {% endfor %}
                 </ul>
             </div>
-           
+            {% endfor %}
+
         </div>
         <div class="divider mb-4"> </div>
         <div class="row" style="font-size:12px;color:#393a3c">
@@ -160,7 +135,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- </div> -->
     </div>
 </div>

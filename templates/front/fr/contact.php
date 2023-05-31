@@ -11,8 +11,7 @@ $current_page = "Contact"
     ?>
     <main role="main">
         <div class="container marketing bg-light">
-        <?php
-            include "bloc/fil_arian.php";
+        <?php include "bloc/fil_arian.php";
         ?>
             <div class=" container">
             <!-- <div> -->

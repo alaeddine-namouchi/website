@@ -1,7 +1,8 @@
 {% include "front/fr/bloc/head-import.html.twig" %}
 <body>
-{#{% include "front/fr/bloc/header.html.twig" %}#}
-{{ render(url('font_menu_main')) }}
+{{ render(controller(
+    'App\\Controller\\Front\\ContentController::mainMenu', {'_local':  app.request.locale}
+)) }}
 <main role="main">
 
     <div class="container marketing bg-light pb-5" >
@@ -12,7 +13,9 @@
         </div>
     </div>
     <!-- /.container -->
-    {% include "front/fr/bloc/footer.html.twig" %}
+    {{ render(controller(
+        'App\\Controller\\Front\\ContentController::footer', {'_local':  app.request.locale}
+    )) }}
 </main>
 {% include "front/fr/bloc/import-js.html.twig" %}
 

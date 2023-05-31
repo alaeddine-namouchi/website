@@ -1,30 +1,26 @@
 
 {% include "front/fr/bloc/head-import.html.twig" %}
-{#{{ render(url('font_menu_main')) }}#}
 
 <body>
-
-        {% include "front/fr/bloc/header.html.twig" %}
+{{ render(controller(
+    'App\\Controller\\Front\\ContentController::mainMenu', {'_local':  app.request.locale}
+)) }}
 
     <main role="main">
         <div class="container marketing bg-light" >
-
             {% include "front/fr/bloc/baniere-img.html.twig" %}
-
             <div>
                 <!-- START : BLOC INFO VOUYAGEURS -->
-
             {% include "front/fr/bloc/info-travel.html.twig" %}
-
-
-
             {% include "front/fr/bloc/communication.html.twig" %}
 
 
 </div>
 
 
-            {% include "front/fr/bloc/footer.html.twig" %}
+            {{ render(controller(
+                'App\\Controller\\Front\\ContentController::footer', {'_local':  app.request.locale}
+            )) }}
 
 </div>
     </main>

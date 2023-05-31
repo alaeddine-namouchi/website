@@ -13,16 +13,14 @@ use App\Repository\LanguageRepository;
 use App\Repository\MenuRepository;
 use App\Service\ContentService;
 use App\Service\LanguageService;
-use App\Service\TimeLineService;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Core\Security;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security as Sec;
+use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/{_locale}", requirements={  "_locale": "fr|ar|en"   })
@@ -34,6 +32,7 @@ class ContentController extends AbstractController
     private $security;
     private $articleRepository;
     private $contentRepository;
+    private $contentService;
     private $languageRepository;
     private $categoryRepository;
     private $menuRepository;
@@ -46,18 +45,21 @@ class ContentController extends AbstractController
     /**
      *  constructor.
      */
-    public function __construct(LoggerInterface $logger,
-                                Security $security,
-                                MenuRepository $menuRepository,
-                                ContentRepository $contentRepository,
-                                LanguageRepository $languageRepository,
-                                CategoryRepository $categoryRepository,
-                                ArticleRepository $articleRepository,
-                                TranslatorInterface $translator)
-                            {
+    public function __construct(LoggerInterface     $logger,
+                                Security            $security,
+                                MenuRepository      $menuRepository,
+                                ContentRepository   $contentRepository,
+                                ContentService $contentService,
+                                LanguageRepository  $languageRepository,
+                                CategoryRepository  $categoryRepository,
+                                ArticleRepository   $articleRepository,
+                                TranslatorInterface $translator
+    )
+    {
         $this->security = $security;
         $this->articleRepository = $articleRepository;
         $this->contentRepository = $contentRepository;
+        $this->contentService = $contentService;
         $this->languageRepository = $languageRepository;
         $this->categoryRepository = $categoryRepository;
         $this->translator = $translator;
@@ -67,41 +69,32 @@ class ContentController extends AbstractController
     }
 
 
-
-
-
     /**
      * @Route("/", name="font_content_index", methods={"GET"})
      */
-    public function index( Request $request): Response
+    public function index(Request $request): Response
     {
-        $loc_url1 = $request->get('_locale');
-        $loc_url2 = $request->get('_locale');
-        dump($loc_url1, $loc_url2);
-        $category = $this->categoryRepository->findOneBy(['alias'=> 'fr']);
-        $category = $this->languageRepository->findOneBy(['alias'=> 'HOME']);
-        $loc_url = $request->get('_locale') ?? 'fr';
-        $plusMenu = $this->menuRepository->findBy(['typeMenu' => 'plus', 'emplacement'=>'level_two'], ['parent'=>'ASC']);
-            return $this->render('front/fr/index.html.twig', [
-                'menus' => $plusMenu,
-            ]);
+
+        return $this->render('front/fr/index.html.twig', []);
     }
+
     /**
      * @Route("/", name="font_menu_main", methods={"GET"})
      */
-    public function mainMenu( Request $request): Response
+    public function mainMenu($_locale): Response
     {
-        $loc_url1 = $request->get('_locale');
-        $loc_url2 = $request->get('_locale');
-        dump($loc_url1, $loc_url2);
-        $category = $this->categoryRepository->findOneBy(['alias'=> 'fr']);
-        $category = $this->languageRepository->findOneBy(['alias'=> 'HOME']);
-        $loc_url = $request->get('_locale') ?? 'fr';
-        $plusMenu = $this->menuRepository->findBy(['typeMenu' => 'plus', 'emplacement'=>'level_two'], ['parent'=>'ASC']);
-        return $this->render('front/fr/index.html.twig', [
+        $category = $this->categoryRepository->findOneBy(['alias' => 'fr']);
+        $language = $this->languageRepository->findOneBy(['alias' =>  $_locale]);
+        $plusMenu = $this->menuRepository->findBy([
+            'language' => $language,
+            'typeMenu' => 'plus',
+            'emplacement' => 'level_two'
+        ], ['parent' => 'ASC']);
+        return $this->render('front/fr/bloc/header.html.twig', [
             'menus' => $plusMenu,
         ]);
     }
+
     /**
      * @Route("/{slug}/{id}", name="front_content_show", methods={"GET"} )
      */
@@ -114,41 +107,33 @@ class ContentController extends AbstractController
         }
         $loc_url = $request->get('_locale') ?? 'fr';
         $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
-        //dd($objlang_from_url);
-        $article  = $content->getArticle();
-        $content = $this->validContentFront( $lang_from_url,  $article);
+        $article = $content->getArticle();
+        $content = $this->validContentFront($lang_from_url, $article);
         $loc_url = $request->get('_locale');
-        $currentLang = $lang_from_url->getName();
-
-        $plusMenu = $this->menuRepository->findBy(['typeMenu' => 'plus', 'emplacement'=>'level_two'], ['parent'=>'ASC']);
-        if($article->getCategory()->getAlias() == 'SIMPLE'){
-
-            return $this->render('front/fr/access-to-information.html.twig', [
-                'content_page' => $content->getBody(),
-                'slug'=> $slug,
-                'current_page'=> $content->getTitle(),
-                'menus' => $plusMenu,
+        if ($article->getCategory()->getAlias() == 'SIMPLE') {
+            return $this->render('front/fr/simple.html.twig', [
+                'content' => $content,
+                'slug' => $slug,
+                'current_page' => $content->getTitle(),
+                'local_lang' => $loc_url
+            ]);
+        }
+        if ($article->getCategory()->getAlias() == 'NEWS') {
+            return $this->render('front/fr/news.html.twig', [
+                'content' => $content,
+                'slug' => $slug,
+                'current_page' => $content->getTitle(),
 
             ]);
         }
-        if($article->getCategory()->getAlias() == 'NEWS'){
-
-            return $this->render('front/fr/show-news.html.twig', [
-                'content_page' => $content,
-                'slug'=> $slug,
-                'current_page'=> $content->getTitle(),
-                'menus' => $plusMenu,
-
-            ]);
-        }
-        if($article->getCategory()->getAlias() == 'WELCOME'){
+        if ($article->getCategory()->getAlias() == 'WELCOME') {
             return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
 
         }
-        if($article->getCategory()->getAlias() == 'FORM'){
+        if ($article->getCategory()->getAlias() == 'FORM') {
             return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
 
-        }else{
+        } else {
             return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
         }
     }
@@ -156,7 +141,7 @@ class ContentController extends AbstractController
     /**
      * @Route("/news", name="front_content_news", methods={"GET"} )
      */
-    public function showNews( Request $request, ContentService $contentService, LanguageService $languageService): Response
+    public function showNews(Request $request, ContentService $contentService, LanguageService $languageService): Response
     {
         $page = $request->query->getInt('page', 1);
         $limit = $request->query->getInt('limit', 2);
@@ -164,30 +149,27 @@ class ContentController extends AbstractController
         $category = $this->categoryRepository->findOneByAlias('NEWS');
         $loc_url = $request->get('_locale') ?? 'fr';
         $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
-        $articles = $this->articleRepository->findBy(['category'=> $category]);
+        $articles = $this->articleRepository->findBy(['category' => $category]);
         $articleIds = [];
-        foreach ($articles as $article){
+        foreach ($articles as $article) {
             $articleIds[] = $article->getId();
         }
-        $contents = $contentService->getContentByArticles( $page,  $limit,  $lang_from_url->getId(),  $articleIds);
-        $plusMenu = $this->menuRepository->findBy(['typeMenu' => 'plus', 'emplacement'=>'level_two'], ['parent'=>'ASC']);
-        if($article->getCategory()->getAlias() == 'NEWS'){
+        $contents = $contentService->getContentByArticles($page, $limit, $lang_from_url->getId(), $articleIds);
+        if ($article->getCategory()->getAlias() == 'NEWS') {
 
             return $this->render('front/fr/all-news.html.twig', [
                 'contents' => $contents,
-                'current_page'=> $category->getLabel(),
-                'menus' => $plusMenu,
-
+                'current_page' => $category->getLabel(),
             ]);
         }
-        if($article->getCategory()->getAlias() == 'WELCOME'){
+        if ($article->getCategory()->getAlias() == 'WELCOME') {
             return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
 
         }
-        if($article->getCategory()->getAlias() == 'FORM'){
+        if ($article->getCategory()->getAlias() == 'FORM') {
             return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
 
-        }else{
+        } else {
             return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -195,50 +177,75 @@ class ContentController extends AbstractController
 
 
 
+    public function blocNews($_locale): Response
+    {
+        $category = $this->categoryRepository->findOneByAlias('NEWS');
+        $articles = $this->articleRepository->findBy(['category' => $category]);
+        $language = $this->languageRepository->findOneBy(['alias' =>  $_locale]);
+        $articleIds = [];
+        foreach ($articles as $article) {
+            $articleIds[] = $article->getId();
+        }
+        $contents = $this->contentService->getContentByArticles(1, 3, $language->getId(), $articleIds);
+            return $this->render('front/fr/bloc/bloc-news.html.twig', [
+                'contents' => $contents,
+                'current_page' => $category->getLabel(),
+            ]);
+//        } else {
+//            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+//        }
+
+    }
+
+    public function footer($_locale): Response
+    {
+        !in_array($_locale, ['fr', 'ar'])? $_locale = 'fr':null;
+        $language = $this->languageRepository->findOneBy(['alias' =>  $_locale]);
+        $plusMenu = $this->menuRepository->findBy([
+            'language' => $language,
+            'typeMenu' => 'plus',
+            'emplacement' => 'level_two'
+        ], ['parent' => 'ASC']);
+        return $this->render('front/fr/bloc/footer.html.twig', [
+            'menus' => $plusMenu,
+        ]);
+    }
 
 
-
-    public function firstNWord(String $sentence, int $rankWord)
+    public function firstNWord(string $sentence, int $rankWord)
     {
         $str = trim(strip_tags($sentence));
-
-    return implode(' ', array_slice(explode(' ', $str), 0, $rankWord)) .  " ...";
-
+        return implode(' ', array_slice(explode(' ', $str), 0, $rankWord)) . " ...";
     }
-
-    public function typeOfAction(Language $lang, Article $article){
-
+    public function typeOfAction(Language $lang, Article $article)
+    {
         $content = $this->contentRepository->findBy(['language' => $lang, 'article' => $article]);
-
-        if(count($content) > 0){
+        if (count($content) > 0) {
             return 'edit';
 
-        }else{
+        } else {
             return 'new';
         }
-
-
     }
-    public function validContentFront(Language $lang, Article $article){
-        $exist = $this->contentRepository->findBy([ 'article' => $article]);
-        if(count($exist) < 1){
+
+    public function validContentFront(Language $lang, Article $article)
+    {
+        $exist = $this->contentRepository->findBy(['article' => $article]);
+        if (count($exist) < 1) {
             return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
         }
         $content = $this->contentRepository->findBy(['language' => $lang, 'article' => $article]);
-        if(count($content) === 0){
+        if (count($content) === 0) {
             return false;
         }
-        if(count($content) == 1){
+        if (count($content) == 1) {
             return $content[0];
-
-        }else{
-            throw new Exception('content duplicated '. count($content));
+        } else {
+            throw new Exception('content duplicated ' . count($content));
         }
-
-
     }
 
-    public function translateContentArticle(Request $request,  $id, LanguageRepository $languageRepository, ContentRepository $contentRepository, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
+    public function translateContentArticle(Request $request, $id, LanguageRepository $languageRepository, ContentRepository $contentRepository, CategoryRepository $categoryRepository, ArticleRepository $articleRepository): Response
     {
         $content = new Content();
         $form = $this->createForm(ContentType::class, $content);
