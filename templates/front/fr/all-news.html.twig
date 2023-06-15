@@ -4,21 +4,15 @@
     'App\\Controller\\Front\\ContentController::mainMenu', {'_locale':  app.request.locale}
 )) }}
 <main role="main">
-
     <div class="container marketing  pb-5">
         {% include "front/fr/bloc/fil_arian.html.twig" %}
         <div class=" container px-2">
-            <!-- <div> -->
-
-            <!-- START : BLOC  -->
             {% include "front/fr/bloc/detail-news.html.twig" %}
-
         </div>
     </div>
-    <!-- /.container -->
-
-
-    {% include "front/fr/bloc/footer.html.twig" %}
+    {{ render(controller(
+        'App\\Controller\\Front\\ContentController::footer', {'_local':  app.request.locale}
+    )) }}
 
     </div>
 </main>

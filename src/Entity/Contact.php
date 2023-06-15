@@ -3,10 +3,15 @@
 namespace App\Entity;
 
 use App\Repository\ContactRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=ContactRepository::class)
+ *  @ORM\Entity(repositoryClass=ContactRepository::class)
+ *  @ORM\HasLifecycleCallbacks
+ *  @Assert\EnableAutoMapping()
  */
 class Contact
 {
@@ -42,6 +47,26 @@ class Contact
      */
     private $mobileNumber;
 
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime_immutable", nullable=true)
+     */
+    private $readAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=ContactTheme::class, mappedBy="contact")
+     */
+    private $contactThemes;
+
+    public function __construct()
+    {
+        $this->contactThemes = new ArrayCollection();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,8 +84,8 @@ class Contact
         return $this;
     }
 
-   
-    
+
+
 
     public function getMessage(): ?string
     {
@@ -106,6 +131,60 @@ class Contact
     public function setMobileNumber(?string $mobileNumber): self
     {
         $this->mobileNumber = $mobileNumber;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getReadAt(): ?\DateTimeImmutable
+    {
+        return $this->readAt;
+    }
+
+    public function setReadAt(?\DateTimeImmutable $readAt): self
+    {
+        $this->readAt = $readAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ContactTheme>
+     */
+    public function getContactThemes(): Collection
+    {
+        return $this->contactThemes;
+    }
+
+    public function addContactTheme(ContactTheme $contactTheme): self
+    {
+        if (!$this->contactThemes->contains($contactTheme)) {
+            $this->contactThemes[] = $contactTheme;
+            $contactTheme->setContact($this);
+        }
+
+        return $this;
+    }
+
+    public function removeContactTheme(ContactTheme $contactTheme): self
+    {
+        if ($this->contactThemes->removeElement($contactTheme)) {
+            // set the owning side to null (unless already changed)
+            if ($contactTheme->getContact() === $this) {
+                $contactTheme->setContact(null);
+            }
+        }
 
         return $this;
     }

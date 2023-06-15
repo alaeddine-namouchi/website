@@ -4,6 +4,7 @@ namespace App\Controller\Back;
 
 use App\Entity\Menu;
 use App\Form\MenuType;
+use App\Repository\LanguageRepository;
 use App\Repository\MenuRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,14 +20,13 @@ class MenuController extends AbstractController
      * @Route("/", name="app_menu_index", methods={"GET"})
      *
      */
-    public function index(MenuRepository $menuRepository): Response
+    public function index(Request $request, MenuRepository $menuRepository, LanguageRepository  $languageRepository): Response
     {
         $ms = $menuRepository->findAll();
-        foreach ($ms as  $m){
-//            dd($m->getLabel());
-        }
+        $aliasLang = $request->getLocale();
+        $language = $languageRepository->findOneBy(['alias' => $aliasLang]);
         return $this->render('back/menu/index.html.twig', [
-            'menus' => $menuRepository->findBy([], ['parent'=>'ASC']),
+            'menus' => $menuRepository->findBy(['language' => $language], ['parent'=>'ASC']),
         ]);
     }
 
@@ -67,7 +67,7 @@ class MenuController extends AbstractController
     {
         $form = $this->createForm(MenuType::class, $menu);
         $form->handleRequest($request);
-
+//        dd($menu);
         if ($form->isSubmitted() && $form->isValid()) {
             $menuRepository->add($menu);
             return $this->redirectToRoute('app_menu_index', [], Response::HTTP_SEE_OTHER);

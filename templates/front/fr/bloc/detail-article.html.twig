@@ -4,7 +4,7 @@
 
         <article class="entry entry-single">
 
-            <h3 class=""> {{ content.title }}</h3>
+            <h3>{{ current_page }}</h3>
             <div class="entry-meta">
                 <ul class="list-inline">
 {#                    <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">John Doe</a></li>#}
@@ -14,25 +14,12 @@
                     <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
                 </ul>
             </div>
-            <div class="entry-img"> <img src="http://siteweb-transtu.dvl.to/assets/img/img-test.jpg" alt="" class="img-fluid  py-2 w-100"></div>
+            <div class="entry-img"> <img src="{{ asset('uploads/'~ content.picture) }}" alt="{{ current_page }}" title="{{ current_page }}" class="img-fluid  py-2 w-100"></div>
 
             <div class="entry-content text-justify">
                {{ content.body | raw }}
             </div>
 
-{#            <div class="entry-footer">#}
-{#                <ul class="tags list-inline">#}
-
-{#                    <li><a href="#"><i class="bi bi-folder"></i>Business</a></li>#}
-{#                    <li>#}
-
-{#                        <i class="bi bi-tags"></i>#}
-{#                    </li>#}
-{#                    <li><a href="#">Creative</a></li>#}
-{#                    <li><a href="#">Tips</a></li>#}
-{#                    <li><a href="#">Marketing</a></li>#}
-{#                </ul>#}
-{#            </div>#}
 
         </article>
     </div>

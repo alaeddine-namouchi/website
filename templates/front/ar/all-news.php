@@ -12,13 +12,13 @@ $current_page = "كل الأخبار"
 
         <!-- <div class="container marketing bg-light pb-5" > -->
         <div class="container marketing  pb-5" >
-        
+
         <?php
             include "bloc/fil_arian.php";
         ?>
             <div class=" container px-2">
             <!-- <div> -->
-                
+
                 <!-- START : BLOC INFO VOUYAGEURS -->
         <?php
             include "bloc/detail-news.php";
@@ -27,12 +27,12 @@ $current_page = "كل الأخبار"
         </div>
     <!-- /.container -->
         <?php
-            include "bloc/footer.php";    
+            include "bloc/footer.php";
         ?>
     </main>
 
     <?php
-        include "bloc/import-js.php";    
+        include "bloc/import-js.php";
     ?>
 
 

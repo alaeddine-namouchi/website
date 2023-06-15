@@ -250,6 +250,22 @@
             }
         });
 
+        $('[class^="theme_"]').on('click', function (e) {
+            let themeId = $(this).val()
+            let contactId = $("#contact_id").val()
+
+            if ($(this).is(":checked")) {
+                let urlUpdate = "{{ path('app_contact_add_theme' ) }}"
+                addThemeToContact(urlUpdate, contactId, themeId);
+
+            } else {
+                console.log("zone remove");
+                let removeUpdate = "{{ path('app_contact_remove_theme') }}"
+                removeThemeFromContact(removeUpdate, contactId, themeId);
+
+            }
+        });
+
         $('#all_privileges').on('click', function (e) {
             profilId = $("#profil_id").val()
             if ($(this).is(":checked")) {
@@ -508,6 +524,54 @@
                 console.log("Désolé, aucun résultat trouvé.");
             }
         });
+    }
+
+    function addThemeToContact(urlUpdate, idp, ida) {
+        $.ajax({
+            type: "POST",
+            url: urlUpdate,
+            timeout: 9000,
+            //dataType: 'json',
+            cache: false,
+            data: {theme_id: ida, contact_id: idp},
+            beforeSend: function () {
+                //Code à jouer avant l'appel ajax en lui même
+            },
+            success: function (data) {
+                console.log('data : ' + JSON.stringify(data))
+            },
+            // La fonction à appeler si la requête n'a pas abouti
+            error: function (e) {
+                console.log(e)
+                // J'affiche un message d'erreur
+                console.log("Désolé, aucun résultat trouvé.");
+            }
+        })
+
+    }
+
+    function removeThemeFromContact(urlRemove, idp, ida) {
+        $.ajax({
+            type: "POST",
+            url: urlRemove,
+            timeout: 9000,
+            //dataType: 'json',
+            cache: false,
+            data: {theme_id: ida, contact_id: idp},
+
+            beforeSend: function () {
+                //Code à jouer avant l'appel ajax en lui même
+            },
+            success: function (data) {
+                console.log('data : ' + JSON.stringify(data))
+            },
+            error: function (e) {
+                console.log(e)
+                // J'affiche un message d'erreur
+                console.log("Désolé, aucun résultat trouvé.");
+            }
+        });
+
     }
 
 </script>

@@ -27,7 +27,7 @@
     {{ include('back/content/_delete_form.html.twig') }}
    </div>
 
-    <a class="btn btn-sm btn-default" href="{{ path('app_content_index', {'scope': content.scope.id}) }}"><<< &nbsp;back to list</a>
+    <a class="btn btn-sm btn-default" href="{{ path('app_content_index', {'scope': app.session.get('current_scope').id}) }}"><<< &nbsp;back to list</a>
 {% endblock %}
 {# <script>
 function() {

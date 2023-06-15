@@ -1,0 +1,49 @@
+<div class="row pl-5 py-3">
+  <h3>{{ current_page }}</h3>
+  <hr />
+</div>
+<ul>
+  {%  for item in contents.items  %}
+  <li>
+    <div class="row pl-4 ">
+      <div class="col-md-6 mb-4">
+        <div class="bg-image hover-overlay ripple shadow-2-strong rounded-5" data-mdb-ripple-color="light">
+          <img src="{{ asset('uploads/'~ item.picture) }}" class="img-fluid" alt="{{ item.title }}" title="{{ item.title }}" />
+          <a href="#!">
+            <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="col-md-6 mb-4">
+        {% set difference = date(item.publishedDate).diff(date('now')) %}
+        {% set diffDays = difference.days %}
+        {% if diffDays < 7 %}
+          {#          <span class="badge-news bg-danger px-2 py-1 shadow-1-strong mb-3">Depuis {{ diffDays }} jour</span>#}
+          <span class="badge-news bg-danger px-2 py-1 shadow-1-strong mb-3"> هذا الاسبوع</span>
+        {% endif %}
+        <h4><strong>{{ item.title }}</strong></h4>
+        <div class="entry-meta">
+          <ul class="list-inline" style="list-style: none;">
+            <!-- <li class="posted-by"><i class="fa fa-user"></i> by <a href="#">Owen Williams</a></li> -->
+            <li class="publish-date"><a href="#"><i class="bi bi-calendar3"></i> {{ item.publishedDate ? item.publishedDate|date('Y-m-d') : '' }}</a></li>
+            <!-- <li class="views"><a href="#"><i class="fa fa-eye"></i>15k</a></li> -->
+          </ul>
+        </div>
+        <p class="text-muted">
+          {{ item.intro }}
+        </p>
+        <button type="button"  onclick="document.location.href='{{ path('front_content_show', {'id': item.id, 'slug': item.slug}) }}'" class="btn btn-primary-news">اقرأ المزيد</button>
+      </div>
+    </div>
+  </li>
+  {% endfor %}
+  <div class="navigation">
+    {{ knp_pagination_render(contents) }}
+  </div>
+
+</ul>
+<div class="row justify-content-start">
+
+
+</div>

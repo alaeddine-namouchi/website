@@ -4,28 +4,52 @@
 
 {% block body %}
     <h1>Contact index</h1>
-
+    <div class="count">
+        {{ pagination.getTotalItemCount }}
+    </div>
+    <style>
+        .not_read{
+            background-color: #0c5460;
+            color: white;
+            opacity: 0.7;
+        }
+        .not_read:hover{
+            background-color: #0c5460;
+            color: white;
+            font-weight: bold;
+            opacity: 1;
+        }
+    </style>
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Name</th>
+                <th>{{ knp_pagination_sortable(pagination, 'Id', 'c.id') }}</th>
+                <th{% if pagination.isSorted('c.Name') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, 'Nom', 'c.name') }}
+                </th>
                 <th>Message</th>
                 <th>Object</th>
                 <th>EmailAdress</th>
                 <th>MobileNumber</th>
+                <th>Envoyée le</th>
+                <th{% if pagination.isSorted('c.readAt') %} class="sorted"{% endif %}>
+                    {{ knp_pagination_sortable(pagination, 'Lue', 'c.readAt') }}
+                </th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for contact in contacts %}
-            <tr>
+        {% for contact in pagination %}
+            <tr class="{{ contact.readAt ? 'read' : 'not_read' }}">
                 <td>{{ contact.id }}</td>
                 <td>{{ contact.name }}</td>
                 <td>{{ contact.message }}</td>
                 <td>{{ contact.object }}</td>
                 <td>{{ contact.emailAdress }}</td>
                 <td>{{ contact.mobileNumber }}</td>
+                <td>{{ contact.createdAt ? contact.createdAt|date('Y-m-d H:i:s') : '-' }}</td>
+                <td>{{ contact.readAt ? 'Oui' : 'Non' }}</td>
+
                 <td>
                     <a href="{{ path('app_contact_show', {'id': contact.id}) }}">show</a>
                     {# <a href="{{ path('app_contact_edit', {'id': contact.id}) }}">edit</a> #}
@@ -38,6 +62,9 @@
         {% endfor %}
         </tbody>
     </table>
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 
     {# <a href="{{ path('app_contact_new') }}">Create new</a> #}
 {% endblock %}

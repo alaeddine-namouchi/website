@@ -98,6 +98,11 @@ class Content
      */
     private $picture;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $fullWidth;
+
     // /**
     //  * @ORM\ManyToOne(targetEntity=Article::class, inversedBy="contents")
     //  */
@@ -315,6 +320,18 @@ class Content
     public function setPicture(?string $picture): self
     {
         $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function isFullWidth(): ?bool
+    {
+        return $this->fullWidth;
+    }
+
+    public function setFullWidth(bool $fullWidth): self
+    {
+        $this->fullWidth = $fullWidth;
 
         return $this;
     }

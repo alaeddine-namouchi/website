@@ -1,0 +1,117 @@
+<header>
+
+    <!-- START:MENU-->
+    <!-- <nav class="navbar navbar-expand-lg  fixed-top navbar-light bg-light"  style="background-color: #e3f2fd!important;"> -->
+    <nav class="navbar navbar-expand-lg  py-0 fixed-top  navbar-expand-xs navbar-light bg-light"
+         style="background-color: #fff;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
+                aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <a class="navbar-brand mt-0" href="#">
+
+            <img src="http://info.transtu.tn/Content/images/transtu_logo.png" alt="" class="logo mt-0"/>
+
+        </a>
+        <!-- <img src="http://info.transtu.tn/Content/images/transtu_logo.png"  height="35" class="d-inline-block align-top" alt=""> -->
+        <!-- <img src="http://info.transtu.tn/Content/images/transtu_logo.png" height="50" class="d-inline-block align-top"  style="position: absolute;
+                z-index: 100;top:0;left: 0;" /> -->
+
+        <div class="collapse navbar-collapse mt-0 justify-content-between" id="navbarTogglerDemo03">
+            <!-- <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> -->
+            <ul class="navbar-nav me-auto mt-0 mt-lg-0">
+                <li class="nav-item active-nav">
+                    <a class="nav-link nav-link-topbar " href="{{ path('font_content_index') }}">اﻹستقبال <span
+                                class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-topbar" href="http://info.transtu.tn/info.php">توقيت السفرات</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  nav-link-topbar" href="{{ path('front_contact_new') }}">إتصل بنا</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link  nav-link-topbar" href="{{ path('front_content_news') }}">آخر الأخبار </a>
+                </li>
+
+                <!-- Navbar dropdown -->
+                <li class="nav-item dropdown position-static">
+                    <!-- <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"   data-mdb-toggle="dropdown" aria-expanded="false"> -->
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-expanded="false">
+                        باقي القائمة
+                    </a>
+                    <!-- Dropdown menu -->
+                    <div class="dropdown-menu w-100 mt-0" aria-labelledby="navbarDropdown" style="
+                          border-top-left-radius: 0;
+                          border-top-right-radius: 0;
+                        ">
+                        <div class="container">
+                            <div class="row my-4">
+                                {% for sub_menu in menus %}
+                                    {% if sub_menu.emplacement == 'level_two' %}
+                                        <div class="col-md-6 col-lg-4 mb-3 mb-lg-0" style="    border-right: 1px solid #999;">
+                                        <div class="list-group list-group-flush">
+                                        <p class="pb-2 list-group-item text-uppercase font-weight-bold"
+                                           style="color:#333;margin-bottom:7px">
+                                            {{ sub_menu.label }}
+                                        </p>
+                                    {% endif %}
+                                    {% for menu in sub_menu.menus %}
+                                        <a href="{{ path('front_content_show', {'id': menu.content.id, 'slug': menu.content.slug}) }}"
+                                           class="dropdown-item  mega-menu-item ">
+                                            {{ menu.label }}
+                                        </a>
+                                    {% endfor %}
+                                    </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+            <div class="d-flex flex-row">
+                <ul class="navbar-nav  mt-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="/ar" id="dropdown09" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            العربية &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flag-icon flag-icon-tn"> </span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown09">
+                            <a class="dropdown-item" href="../fr">
+                                <span class="flag-icon flag-icon-fr px-1"> &nbsp;&nbsp;&nbsp;</span> &nbsp;&nbsp;&nbsp;
+                                Français
+                            </a>
+                            <a class="dropdown-item" href="#us">
+                                <span class="flag-icon flag-icon-us px-1"> </span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;English
+
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="mt-1">
+
+				<span class="social-ban">
+				&nbsp;&nbsp;&nbsp;&nbsp;
+					<button type="button" class="btn btn-sm btn-outline-primary btn-outline-danger-icon-f"
+                            style="border:2px solid #9a9a9a;color: #9a9a9a; ">
+						<i class="bi bi-facebook rs-icon-facebook" style="font-size:16px! important;"></i>
+					</button>
+					<button type="button" class="btn btn-sm btn-outline-danger btn-outline-danger-icon"
+                            style="border:2px solid #9a9a9a;color: #9a9a9a;">
+						<i class="bi bi-youtube rs-icon-youtube" style="font-size:16px! important; "></i>
+					</button>
+				</span>
+                </div>
+            </div>
+            <!-- <a class="fa fa-twitter-square" aria-hidden="true"></a> -->
+        </div>
+        </div>
+    </nav>
+    <!-- END : MENU-->
+</header>

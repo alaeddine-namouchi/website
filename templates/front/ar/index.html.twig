@@ -1,0 +1,29 @@
+
+{% include "front/ar/bloc/head-import.html.twig" %}
+<body>
+<!--     include "bloc/header.php";-->
+    {{ render(controller(
+    'App\\Controller\\Front\\ContentController::mainMenu', {'_local':  app.request.locale}
+    )) }}
+    <main role="main">
+        <div class="container marketing " >
+            {% include  "front/ar/bloc/baniere-ar.html.twig" %}
+                </div>
+                <!-- START : BLOC INFO VOUYAGEURS -->
+            <div class=" container">
+{#                {% include  "front/ar/bloc/info-travel.html.twig" %}#}
+<!--                include "bloc/info-travel.php"; -->
+
+                {% include  "front/ar/bloc/communication.html.twig" %}
+
+</div>
+    <!-- /.container -->
+        {% include  "front/ar/bloc/footer.html.twig" %}
+</div>
+    </main>
+
+{% include  "front/ar/bloc/import-js.html.twig" %}
+
+
+
+

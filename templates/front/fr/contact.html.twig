@@ -5,16 +5,14 @@
 )) }}
 <main role="main">
     <div class="container marketing bg-light">
-        {% include "front/fr/bloc/fil_arian.html.twig" %}
+        {% include "front/ar/bloc/fil_arian.html.twig" %}
         <div class=" container">
-            {% include "front/fr/bloc/form-contact.html.twig" %}
+            {% include "front/ar/bloc/form-contact.html.twig" %}
         </div>
     </div>
-{#    {% include "front/fr/bloc/footer.html.twig" %}#}
     {{ render(controller(
         'App\\Controller\\Front\\ContentController::footer', {'_local':  app.request.locale}
     )) }}
 </main>
-
-{% include "front/fr/bloc/import-js.html.twig" %}
+{% include "front/ar/bloc/import-js.html.twig" %}
 

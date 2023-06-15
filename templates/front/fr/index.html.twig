@@ -13,11 +13,7 @@
                 <!-- START : BLOC INFO VOUYAGEURS -->
             {% include "front/fr/bloc/info-travel.html.twig" %}
             {% include "front/fr/bloc/communication.html.twig" %}
-
-
 </div>
-
-
             {{ render(controller(
                 'App\\Controller\\Front\\ContentController::footer', {'_local':  app.request.locale}
             )) }}

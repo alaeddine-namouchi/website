@@ -88,7 +88,7 @@ class ContentRepository extends ServiceEntityRepository
             ->Andwhere('t.language = :langId')
             ->setParameter('articleIds', $articleIds)
             ->setParameter('langId', $langId)
-            ->orderBy('t.published', 'DESC');
+            ->orderBy('t.published_date', 'DESC');
 
         return $qb;
     }

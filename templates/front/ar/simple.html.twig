@@ -1,0 +1,43 @@
+{% include "front/ar/bloc/head-import.html.twig" %}
+<body>
+<!--     include "bloc/header.php";-->
+{{ render(controller(
+    'App\\Controller\\Front\\ContentController::mainMenu', {'_local':  app.request.locale}
+)) }}
+    <main role="main">
+        <div class="container-fluid marketing bg-light pb-5" >
+            {% include  "front/ar/bloc/fil_arian.html.twig" %}
+            <div class=" container px-2">
+                <div class="row">
+                    {% if content.fullWidth %}
+                        <div class="  col-md-12  col-sm-12 col-12  px-md-4">
+                            {% if content.picture %}
+                                <div class="entry-img"><img src="{{ asset('uploads/'~ content.picture) }}" alt=""
+                                                            class="img-fluid  py-2 w-100"></div>
+                            {% endif %}
+                            {{ content.body | raw }}
+                        </div>
+                    {% else %}
+                        <div class="col-md-12 col-lg-8 col-sm-12 col-12 px-md-4">
+                            {% if content.picture %}
+                                <div class="entry-img"><img src="{{ asset('uploads/'~ content.picture) }}" alt=""
+                                                            class="img-fluid  py-2 w-100"></div>
+                            {% endif %}
+                            {{ content.body | raw }}
+                        </div>
+
+                        {{ render(controller(
+                            'App\\Controller\\Front\\ContentController::blocNews', {'_local':  app.request.locale}
+                        )) }}
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+
+        {% include  "front/ar/bloc/footer.html.twig" %}
+    </main>
+
+{% include  "front/ar/bloc/import-js.html.twig" %}
+
+

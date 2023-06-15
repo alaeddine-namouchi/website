@@ -64,9 +64,6 @@ class ContentType extends AbstractType
                     ),
                 ),
                 "row_attr" => ['class' => 'col-lg-8']])
-            // ->add('slug', TextType::class)
-
-            // ->add('slug', TextType::class)
             ->add('tags', TextType::class,
                 ['attr' => ['data-role' => "tagsinput", 'data-tag-class' => "badge badge-primary", 'class' => "form-control"
                 ]])
@@ -74,6 +71,7 @@ class ContentType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('published', CheckboxType::class, ["required" => false, 'attr' => ["class" => "form-check-input", 'style' => "height:20px; width: 40px; "], "row_attr" => ['class' => 'form-switch pt-2', 'style' => "padding-left: 10px!important;"]])
+            ->add('fullWidth', CheckboxType::class, ["required" => false, 'attr' => ["class" => "form-check-input", 'style' => "height:20px; width: 40px; "], "row_attr" => ['class' => 'form-switch pt-2', 'style' => "padding-left: 10px!important;"]])
             ->add('picture', FileType::class, [
                 'mapped' => false,
                 'required' => false,

@@ -33,6 +33,15 @@ class ContactRepository extends ServiceEntityRepository
         }
     }
 
+    public function getContactsQueryBuilder(  )
+    {
+        $qb = $this->createQueryBuilder('c');
+
+        $qb = $qb->orderBy('c.createdAt', 'DESC');
+
+        return $qb;
+    }
+
     /**
      * @throws ORMException
      * @throws OptimisticLockException
