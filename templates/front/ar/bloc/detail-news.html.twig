@@ -33,7 +33,7 @@
         <p class="text-muted">
           {{ item.intro }}
         </p>
-        <button type="button"  onclick="document.location.href='{{ path('front_content_show', {'id': item.id, 'slug': item.slug}) }}'" class="btn btn-primary-news">اقرأ المزيد</button>
+        <button type="button"  onclick="document.location.href='{{ path('front_content_show', {'id': item.article.num, 'slug': item.slug}) }}'" class="btn btn-primary-news">اقرأ المزيد</button>
       </div>
     </div>
   </li>

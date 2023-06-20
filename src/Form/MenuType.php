@@ -17,65 +17,70 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class MenuType extends AbstractType
 {
     private $contentRepository;
+
     public function __construct(ContentRepository $contentRepository)
     {
         $this->contentRepository = $contentRepository;
     }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
         $articles = array();
         // $this->contentRepository = $this->em->getRepository(Content::class);
-            $articles = $this->contentRepository->findArticleByLang();
+        $articles = $this->contentRepository->findArticleByLang();
 
         $builder
-            ->add('label', null, ["required"=> false,  "attr" => ["class" => "form-control"]])
-            ->add('link', null, ["required"=> false,  "attr" => ["class" => "form-control"]])
+            ->add('label', null, ["required" => false, "attr" => ["class" => "form-control"]])
+            ->add('link', null, ["required" => false, "attr" => ["class" => "form-control"]])
             ->add('emplacement', ChoiceType::class, [
                 'placeholder' => 'Choisir Emplacement',
-                'choices'  => [
+                'choices' => [
                     'Prémière Niveau' => 'level_one',
-                    'Deuxième Niveau' =>  'level_two',
+                    'Deuxième Niveau' => 'level_two',
                     'Troixième Niveau' => 'level_three',
                 ],
-            "required"=> false,  "attr" => ["class" => "form-control"]])
+                "required" => false, "attr" => ["class" => "form-control"]])
             ->add('typeMenu', ChoiceType::class, [
                 'placeholder' => 'Choisir type menu',
-                'choices'  => [
+                'choices' => [
                     'Main' => 'main',
-                    'Plus' =>  'plus',
+                    'Plus' => 'plus',
                     'Footer' => 'footer',
                 ],
-                "required"=> false,  "attr" => ["class" => "form-control"]])
-            ->add('content', EntityType::class, [  "required"=> false, "attr" => ["class" => "form-control",],
-            'placeholder' => 'Choisir Article',
-            'class' => Content::class,
-            'query_builder' => function (EntityRepository $er) {
-                return $er->createQueryBuilder('u')
-                            // ->where('u.language=:lang')
-                            // ->setParameter('lang', 'fr')
-                            ->orderBy('u.created_at', 'DESC');
-            },
-            'choice_label' => 'title',
-        ])
-
-        // ->add('content', EntityType::class, [ "attr" => ["class" => "form-control "],
-        //     'placeholder' => 'Choisir Article',
-        //     'class' => Content::class,
-        //     'choices' => $articles,
-        //     'choice_label' => 'title'
-        // ])
-        ->add('language', EntityType::class, [ "attr" => ["class" => "form-control "],
-            'placeholder' => 'Choisir Langue',
-            'class' => Language::class,
-            'choice_label' => 'name',
-        ])
-        ->add('parent', EntityType::class, [ "attr" => ["class" => "form-control "], "required"=> false,
-        'placeholder' => 'Choisir Langue',
-        'class' => Menu::class,
-        'choice_label' => 'label',
-        ])
-        ;
+                "required" => false, "attr" => ["class" => "form-control"]])
+            ->add('content', EntityType::class, ["required" => false, "attr" => ["class" => "form-control",],
+                'placeholder' => 'Choisir Article',
+                'class' => Content::class,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                        ->where('u.published=:published')
+                        // ->where('u.language=:lang')
+                        // ->setParameter('lang', 'fr')
+                         ->setParameter('published', true)
+                        ->orderBy('u.created_at', 'DESC');
+                },
+                'choice_label' => 'title',
+            ])
+            ->add('route', ChoiceType::class, [
+                'placeholder' => 'Choisir Autre',
+                'choices' => [
+                    'Choisir Autre' => NULL,
+                    'Toutes les actualitées' => 'front_content_news',
+                    'Espace Journalist' => 'front_content_area',
+                    'Formulaire de Contact' => 'front_contact_new',
+                ],
+                "required" => false, "attr" => ["class" => "form-control"]])
+            ->add('language', EntityType::class, ["attr" => ["class" => "form-control "],
+                'placeholder' => 'Choisir Langue',
+                'class' => Language::class,
+                'choice_label' => 'name',
+            ])
+            ->add('parent', EntityType::class, ["attr" => ["class" => "form-control "], "required" => false,
+                'placeholder' => 'Choisir Langue',
+                'class' => Menu::class,
+                'choice_label' => 'label',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

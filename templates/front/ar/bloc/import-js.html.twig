@@ -81,7 +81,6 @@ $('a.tgm').mouseout(function(){
             $(this).removeClass('green-logo-shadow');
         });
 
-        
 $('.dropdown-toggle').dropdown()
 $('.carousel-item').carousel({
   interval: 2000
@@ -90,9 +89,9 @@ $('.carousel-item').on('slid.bs.carousel', function (event) {
   $('#myCarousel').carousel('2') // Will slide to the slide 2 as soon as the transition to slide 1 is finished
 })
 var bootstrapButton = $.fn.button.noConflict() // return $.fn.button to previously assigned value
-$.fn.bootstrapBtn = bootstrapButton  
+$.fn.bootstrapBtn = bootstrapButton
 
-	
+
 //         $('body').append('<img style="position:absolute;top:0px;left:0px;visibility:hidden;" id="imgheight" src="'+$("#carousel .slides #slide" + nextSlide + ' img').attr('src')+'"/>');
 // var theheight=$('#imgheight').height();
 // $('#imgheight').remove();
@@ -124,8 +123,8 @@ $("iframe").mouseout(function(){
 $('iframe').on('touchstart touchend', function(e) {
         e.preventDefault();
         $("#card-info-travel").toggleClass('move-card')
-        
-        
+
+
         //.fadeIn(2000);
     });
 
@@ -139,10 +138,10 @@ $('iframe').on('touchstart touchend', function(e) {
 
 // console.log( img.height + " ;; " + img .width + " ;; " + img .naturalHeight + " ;; " + img .clientHeight + " ;; " + img.offsetHeight + " ;; " + img.scrollHeight + " ;; " + img.clientWidth + " ;; " + img.offsetWidth + " ;; " + img.scrollWidth )
 // wImg = img .width;
-// hImg = img.height; 
+// hImg = img.height;
 // wWindow = $( window ).width();
 
-// heightBan = calculateHeight(wImg, hImg, wWindow )    
+// heightBan = calculateHeight(wImg, hImg, wWindow )
 
 // console.log("Height rechercher : ", heightBan);
 // $('.carousel-item').css('height', heightBan+'px' )
@@ -178,7 +177,19 @@ $(document)
      * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.
      * @param setClickAttr  Sets the attribute for the click handler.
      */
+    $(".switch-lang").click(function () {
+      langId = $(this).prop('id');
+      var url = window.location.href;
+      // console.log(url)
+      const LANGS = ["fr", "ar", "en"];
+      let currentLang = LANGS.find((lang) => (url.includes('/' + lang + '/')));
+      let aliasLang = langId.split('_')[1];
+      {# console.log( $(this).find(":selected").val() ); #}
+      let urlSwitch = url.replace('/' + currentLang + '/',  '/' + aliasLang + '/');
+       // console.log(urlSwitch);
+      window.location.replace(urlSwitch);
 
+    })
     function loadGallery(setIDs, setClickAttr) {
       let current_image,
         selector,

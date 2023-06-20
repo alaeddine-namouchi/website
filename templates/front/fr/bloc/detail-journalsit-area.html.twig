@@ -12,7 +12,7 @@
         <li class="list-group-item bg-light  list-press " style="cursor:auto ;">
             <h5>{{ item.title }}</h5>
             <p> {{ item.intro }}.</p>
-            <button type="button" class="btn btn-primary-news  mr-2  float-right"  onclick="document.location.href='{{ path('front_content_show', {'id': item.id, 'slug': item.slug}) }}'">Lire l'article</button>
+            <button type="button" class="btn btn-primary-news  mr-2  float-right"  onclick="document.location.href='{{ path('front_content_show', {'id': item.article.num, 'slug': item.slug}) }}'">Lire l'article</button>
 
         </li>
         {% endfor %}

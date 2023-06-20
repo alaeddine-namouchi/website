@@ -113,36 +113,48 @@ class ContentController extends AbstractController
      */
     public function show($slug, $id, Request $request): Response
     {
-        $content = $this->contentRepository->find($id);
-        if ($content->getSlug() !== $slug) {
-            return $this->redirectToRoute('front_content_show', ['id' => $content->getId(), 'slug' => $content->getSlug()],
-                301);
-        }
         $loc_url = $request->getLocale() ?? 'fr';
         $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
+        $article = $this->articleRepository->findOneBy(['num'=> $id]);
+        $content = $this->contentRepository->findOneBy(['article'=> $article, 'language' => $lang_from_url ] );
+        if(!$content){
+            // a implementer un page d'information(....Cet contenu est tranduit en arabe) avant la  redirection à la page d'accueil
+            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+        }
+        if ($content->getSlug() !== $slug) {
+            return $this->redirectToRoute('front_content_show', ['id' => $article->getNum(), 'slug' => $content->getSlug()],
+                301);
+        }
+
         $article = $content->getArticle();
         $content = $this->validContentFront($lang_from_url, $article);
         $loc_url = $request->get('_locale');
-        if (in_array($article->getCategory()->getAlias(), ['SIMPLE', 'AREA_JOURNALIST'])) {
+        if (in_array($article->getCategory()->getAlias(), ['SIMPLE', 'AREA_JOURNALIST', 'NEWS', 'FORM'])) {
             return $this->render('front/' . $loc_url. '/simple.html.twig', [
                 'content' => $content,
                 'slug' => $slug,
                 'current_page' => $content->getTitle(),
                 'local_lang' => $loc_url
             ]);
-        }
-        if ($article->getCategory()->getAlias() == 'NEWS') {
+//        }
+       /* if ($article->getCategory()->getAlias() == 'NEWS') {
             return $this->render('front/' . $loc_url. '/news.html.twig', [
                 'content' => $content,
                 'slug' => $slug,
                 'current_page' => $content->getTitle(),
             ]);
-        }
-        if ($article->getCategory()->getAlias() == 'WELCOME') {
-            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
-        }
-        if ($article->getCategory()->getAlias() == 'FORM') {
-            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+        }*/
+//        if ($article->getCategory()->getAlias() == 'NEWS') {
+//            return $this->redirectToRoute('front_content_news', [], Response::HTTP_SEE_OTHER);
+//        }
+//        if ($article->getCategory()->getAlias() == 'AREA_JOURNALIST') {
+//            return $this->redirectToRoute('front_content_area', [], Response::HTTP_SEE_OTHER);
+//        }
+//        if ($article->getCategory()->getAlias() == 'WELCOME') {
+//            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+//        }
+//        if ($article->getCategory()->getAlias() == 'FORM') {
+//            return $this->redirectToRoute('front_contact_new', [], Response::HTTP_SEE_OTHER);
         } else {
             return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -227,15 +239,12 @@ class ContentController extends AbstractController
             'contents' => $contents,
             'current_page' => $category->getLabel(),
         ]);
-//        } else {
-//            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
-//        }
-
     }
 
     public function footer($_locale): Response
     {
         !in_array($_locale, ['fr', 'ar']) ? $_locale = 'fr' : null;
+
         $language = $this->languageRepository->findOneBy(['alias' => $_locale]);
         $plusMenu = $this->menuRepository->findBy([
             'language' => $language,
@@ -243,6 +252,7 @@ class ContentController extends AbstractController
             'emplacement' => 'level_two'
         ], ['parent' => 'ASC']
         );
+
         return $this->render('front/' . $_locale . '/bloc/footer.html.twig', [
             'menus' => $plusMenu,
         ]);

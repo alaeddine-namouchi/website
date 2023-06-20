@@ -24,6 +24,7 @@ class ContactController extends AbstractController
     public function new(Request $request, ContactRepository $contactRepository, MenuRepository $menuRepository): Response
     {
         $locLang = $request->getLocale();
+
         if (! in_array($locLang, ['fr', 'ar'])) {
             return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
         }

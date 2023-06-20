@@ -4,11 +4,12 @@
     <div class="card-header " style="    border-radius: 5px 5px 0 0;background-color:#1F487E; color:azure">
         <h5 class="card-title pt-1 pl-2">الأخبار</h5>
     </div>
-    <div class="card-body">
-        <!-- <h5 class="card-title" style="text-transform: uppercase;padding-left: 20px;font-size:17px; text-align:left;font-weight:bold;color:#999"></h5> -->
-        <div class="list-group" style="padding-right:20px;padding-top:5px">
+    <div class="card-body" style="padding: 0!important">
+        <div class="list-group" style="padding-left:0;padding-top:5px">
             {%  for item in contents.items  %}
-            <a href="{{ path('front_content_show', {'id': item.id, 'slug': item.slug}) }}" class="list-group-item list-group-item-action flex-column align-items-start  list-group-item-adapter-first" style="padding-right: 0px;">
+            <a href="{{ path('front_content_show', {'id': item.article.num, 'slug': item.slug}) }}"
+               class="list-group-item list-group-item-action flex-column align-items-start  list-group-item-adapter-first"
+               style="padding-right: 15px;">
                 <div class="d-flex w-100 justify-content-between">
                     <h6 class="mb-1 text-left " style="color:#454;text-align:right">{{ item.title }}</h6>
                 </div>
@@ -19,9 +20,6 @@
             {%  endfor %}
         </div>
     </div>
-    <a href="#" class="card-button bg-light" > كل الأخبار</a>
-    <!-- <div class="card-footer" style="border-top: 2px solid #004c99!important;float:right">
-<small class="text-muted" style="float:right"><a href="#">Toutes les Nouvelles</a></small>
-</div> -->
+    <a   href="{{ path('front_content_news') }}" class="card-button bg-light" > كل الأخبار</a>
 </div>
 </div>

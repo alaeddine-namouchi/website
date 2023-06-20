@@ -88,8 +88,8 @@
 					<i class="bi bi-twitter rs-icon-youtube" style="font-size:16px! important; "></i>
 				</button>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			
-			
+
+
 			</span>
                           <!-- Facebook -->
                             <!-- <i class="social-icon fab fa-facebook-f"></i> -->
@@ -105,45 +105,45 @@
                 </div>
             </div>
             <div class="col-md-1 col-sm-1 col-xs-12"></div>
+            {% for sub_menu in menus %}
+            {% if sub_menu.emplacement == 'level_two' %}
             <div class="col-md-2 col-sm-4 col-xs-12">
-                <h5 class="heading">الشركة</h5>
+                <h5 class="heading">{{ sub_menu.label | capitalize }}</h5>
                 <ul class="card-text">
-                    <li><a href="about.php" class=" ">التعريف بالشركة</a> </li>
-                    <li><a href="" class="  ">تقارير النشاط</a></li>
-                    <li><a href="time-line.php" class="  ">تاريخ الشركة</a></li>
-                    <li><a href="visual-identity.php" class="  ">تاريخ الهوية المرئية</a> </li>
-                    <li><a href="transport-museum.php" class="  ">متحف النقل</a></li>
-                    <li><a href="conatct.php" class="  ">إتصل بنا</a></li>
-                    <li><a href="gallery.php" class="  ">معرض الصور</a></li>
+                    {% endif %}
+                    {% for menu in sub_menu.menus %}
+                    <li><a href="{{ path('front_content_show', {'id': menu.content.id, 'slug': menu.content.slug}) }}" class=" ">{{ menu.label  }}</a> </li>
+                    {% endfor %}
                 </ul>
             </div>
-            <div class="col-md-2 col-sm-4 col-xs-12">
-                <h5 class="heading">الخدمات</h5>
-                <ul  class="card-text" >
-                    <li><a href="contact.php" class="  ">الإستماع إلى الحرفاء</a></li>
-                    <li><a href="journalists-area.php" class="  ">فضاء الصحفيين</a></li>
-                    <!-- <li><a href="" class="  ">Dossiers de presse</a></li> -->
-                    <li><a href="journalists-area.php" class="  ">بلاغات صحفية</a></li>
-                    <li><a href="faq.php" class="  ">منتدى الأسئلة</a></li>
-                    <li><a href="access-to-information.php" class="  ">النفاذ إلى المعلومة</a></li>
-                    <li><a href="" class="  ">حماية المعطيات الشخصية</a></li>
-                    <li><a href="recruitment.php" class="  ">الإنتدابات</a></li>
+            {% endfor %}
+{#            <div class="col-md-2 col-sm-4 col-xs-12">#}
+{#                <h5 class="heading">الخدمات</h5>#}
+{#                <ul  class="card-text" >#}
+{#                    <li><a href="contact.php" class="  ">الإستماع إلى الحرفاء</a></li>#}
+{#                    <li><a href="journalists-area.php" class="  ">فضاء الصحفيين</a></li>#}
+{#                    <!-- <li><a href="" class="  ">Dossiers de presse</a></li> -->#}
+{#                    <li><a href="journalists-area.php" class="  ">بلاغات صحفية</a></li>#}
+{#                    <li><a href="faq.php" class="  ">منتدى الأسئلة</a></li>#}
+{#                    <li><a href="access-to-information.php" class="  ">النفاذ إلى المعلومة</a></li>#}
+{#                    <li><a href="" class="  ">حماية المعطيات الشخصية</a></li>#}
+{#                    <li><a href="recruitment.php" class="  ">الإنتدابات</a></li>#}
 
-                </ul>
-            </div>
-            <div class="col-md-2 col-sm-4 col-xs-12">
-                <h5 class="heading d-xs-none">التعريفة</h5>
-                <ul class="card-text">
-                    <li> <a href="tickets.pĥp" class="  ">التذاكر</a></li>
-                    <li> <a href="carte-hebdomadaire.php" class="  ">البطاقات الأسبوعية</a></li>
-                    <li><a href="abonnements.php" class="  ">الإشتراكات الشهرية </a> </li>
-                    <li><a href="abonnements.php" class="  ">الإشتراكات السنوية </a></li>
-                    <li><a href="abonnements.php" class="  ">الإشتراكات المدرسية والجامعية </a></li>
-                    <li><a href="carnet-10-tickets.php" class="  ">كنش العشر تذاكر</a></li>
-																				
-                </ul>
-            </div>
-          
+{#                </ul>#}
+{#            </div>#}
+{#            <div class="col-md-2 col-sm-4 col-xs-12">#}
+{#                <h5 class="heading d-xs-none">التعريفة</h5>#}
+{#                <ul class="card-text">#}
+{#                    <li> <a href="tickets.pĥp" class="  ">التذاكر</a></li>#}
+{#                    <li> <a href="carte-hebdomadaire.php" class="  ">البطاقات الأسبوعية</a></li>#}
+{#                    <li><a href="abonnements.php" class="  ">الإشتراكات الشهرية </a> </li>#}
+{#                    <li><a href="abonnements.php" class="  ">الإشتراكات السنوية </a></li>#}
+{#                    <li><a href="abonnements.php" class="  ">الإشتراكات المدرسية والجامعية </a></li>#}
+{#                    <li><a href="carnet-10-tickets.php" class="  ">كنش العشر تذاكر</a></li>#}
+
+{#                </ul>#}
+{#            </div>#}
+
         </div>
         <div class="divider mb-4"> </div>
         <div class="row" style="font-size:12px;color:#393a3c">
@@ -160,7 +160,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- </div> -->
     </div>
 </div>

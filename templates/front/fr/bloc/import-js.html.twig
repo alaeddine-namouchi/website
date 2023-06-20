@@ -72,8 +72,8 @@ $("iframe").mouseout(function(){
 $('iframe').on('touchstart touchend', function(e) {
         e.preventDefault();
         $("#card-info-travel").toggleClass('move-card')
-        
-        
+
+
         //.fadeIn(2000);
     });
 
@@ -104,6 +104,19 @@ $(document)
       }
     }
 
+    $(".switch-lang").click(function () {
+      langId = $(this).prop('id');
+      var url = window.location.href;
+      console.log(url)
+      const LANGS = ["fr", "ar", "en"];
+      let currentLang = LANGS.find((lang) => (url.includes('/' + lang + '/')));
+      let aliasLang = langId.split('_')[1];
+      {# console.log( $(this).find(":selected").val() ); #}
+      let urlSwitch = url.replace('/' + currentLang + '/',  '/' + aliasLang + '/');
+      console.log(urlSwitch);
+      window.location.replace(urlSwitch);
+
+    })
     /**
      *
      * @param setIDs        Sets IDs when DOM is loaded. If using a PHP counter, set to false.

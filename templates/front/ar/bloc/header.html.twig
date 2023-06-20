@@ -59,7 +59,7 @@
                                         </p>
                                     {% endif %}
                                     {% for menu in sub_menu.menus %}
-                                        <a href="{{ path('front_content_show', {'id': menu.content.id, 'slug': menu.content.slug}) }}"
+                                        <a href="{{ path('front_content_show', {'id': menu.content.article.num, 'slug': menu.content.slug}) }}"
                                            class="dropdown-item  mega-menu-item ">
                                             {{ menu.label }}
                                         </a>
@@ -76,13 +76,15 @@
             <div class="d-flex flex-row">
                 <ul class="navbar-nav  mt-lg-0">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="/ar" id="dropdown09" data-toggle="dropdown"
+                        <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
                             العربية &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="flag-icon flag-icon-tn"> </span>
                             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         </a>
                         <div class="dropdown-menu" aria-labelledby="dropdown09">
-                            <a class="dropdown-item" href="../fr">
+                            <a class="dropdown-item switch-lang"
+                               href="#"
+                               id="lang_fr">
                                 <span class="flag-icon flag-icon-fr px-1"> &nbsp;&nbsp;&nbsp;</span> &nbsp;&nbsp;&nbsp;
                                 Français
                             </a>

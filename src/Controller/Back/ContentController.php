@@ -10,6 +10,7 @@ use App\Repository\ArticleRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\ContentRepository;
 use App\Repository\LanguageRepository;
+use App\Repository\MenuRepository;
 use App\Repository\ScopeRepository;
 use Exception;
 use Psr\Log\LoggerInterface;
@@ -99,10 +100,29 @@ class ContentController extends AbstractController
         $loc_url = $request->get('_locale');
         $lang_from_url = $languageRepository->findOneByAlias($loc_url);
         $content->setLanguage($lang_from_url);
-
+        $scope = $request->get('scope');
+//        $scope == 1?$aliasCat = 'NEWS':$aliasCat = 'SIMPLE';
+        switch ($scope) {
+            case 1:
+                $aliasCat = 'SIMPLE';
+                break;
+            case 2:
+                $aliasCat = 'NEWS';
+                break;
+            case 4:
+                $aliasCat = 'AREA_JOURNALIST';
+                break;
+            case 5:
+                $aliasCat = 'FORM';
+                break;
+            default:
+                $aliasCat = 'SIMPLE';
+                break;
+        }
+       // dd($aliasCat);
         if ($form->isSubmitted() && $form->isValid()) {
             $article = new Article();
-            $cat = $categoryRepository->findOneByAlias('SIMPLE');
+            $cat = $categoryRepository->findOneByAlias($aliasCat);
             $article->setCategory($cat);
             $article->setNum(uniqid());
             $articleRepository->add($article);
@@ -147,7 +167,7 @@ class ContentController extends AbstractController
             $content->setArticle($article);
 //            dump($content);
             $contentRepository->add($content);
-            return $this->redirectToRoute('app_content_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_content_index', ['scope' => $content->getScope()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/content/new.html.twig', [
@@ -253,7 +273,7 @@ class ContentController extends AbstractController
                 $content->setArticle($article);
                 $content->setLanguage($objlang_from_url);
                 $contentRepository->add($content);
-                return $this->redirectToRoute('app_content_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('app_content_index', ['scope' => $content->getScope()->getId()], Response::HTTP_SEE_OTHER);
             }
             return $this->renderForm('back/content/new.html.twig', [
                 'content' => $content,
@@ -267,13 +287,18 @@ class ContentController extends AbstractController
     /**
      * @Route("/{id}", name="app_content_delete", methods={"POST"})
      */
-    public function delete(Request $request, Content $content, ContentRepository $contentRepository): Response
+    public function delete(Request $request, Content $content, ContentRepository $contentRepository, MenuRepository $menuRepository): Response
     {
         if ($this->isCsrfTokenValid('delete' . $content->getId(), $request->request->get('_token'))) {
+            $menus = $menuRepository->findBy(['content' => $content]);
+                foreach ($menus as $menu) {
+                    $menuRepository->remove($menu);
+                }
+
             $contentRepository->remove($content);
         }
 
-        return $this->redirectToRoute('app_content_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_content_index', ['scope' => $content->getScope()->getId()], Response::HTTP_SEE_OTHER);
     }
 
 

@@ -60,8 +60,13 @@
                                         </p>
                                     {% endif %}
                                     {% for menu in sub_menu.menus %}
-                                        <a href="{{ path('front_content_show', {'id': menu.content.id, 'slug': menu.content.slug}) }}"
-                                           class="dropdown-item  mega-menu-item ">{{ menu.label }}</a>
+
+                                        {% if menu.content    %}
+                                            <a href="{{ path('front_content_show', {'id': menu.content.article.num, 'slug': menu.content.slug}) }}"
+                                               class="dropdown-item  mega-menu-item ">{{ menu.label | capitalize }}</a>
+                                        {% else %}
+                                            <a href="{{ path(menu.route) }}" class="dropdown-item  mega-menu-item ">{{ menu.label | capitalize }}</a>
+                                        {% endif %}
                                     {% endfor %}
                                     </div>
                                     </div>
@@ -81,11 +86,14 @@
               </form> -->
             <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="dropdown09" data-toggle="dropdown"
+                    <a class="nav-link dropdown-toggle" id="dropdown09" data-toggle="dropdown"
                        aria-haspopup="true" aria-expanded="false"><span class="flag-icon flag-icon-fr"> </span> Francais</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown09">
-                        <a class="dropdown-item" href="../ar"><span class="flag-icon flag-icon-tn px-3"> </span> العربية</a>
-                        <a class="dropdown-item" href="../fr"><span class="flag-icon flag-icon-us px-3"> </span> English
+                        <a class="dropdown-item  switch-lang" href="#"
+                           id="lang_ar"
+                        ><span class="flag-icon flag-icon-tn px-3"> </span> العربية</a>
+                        <a class="dropdown-item  switch-lang" href="#"
+                           id="lang_fr"><span class="flag-icon flag-icon-us px-3"> </span> English
                         </a>
                     </div>
                 </li>

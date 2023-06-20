@@ -133,3 +133,12 @@ iframe {
 .skw-caption .voir_detail a:hover{}
 .skw-copacity .8s
 */
+.list-group-item-faq-ar {
+    list-style-type: square;
+    padding: 2px 25px 3px 0px!important;
+}
+.list-group-item-faq-ar>li {
+    display: list-item;
+    margin: 2px 0px 3px 25px!important;
+    text-align: right!important;
+}

@@ -35,7 +35,9 @@
             </div>
         </div>
 
-        {% include  "front/ar/bloc/footer.html.twig" %}
+        {{ render(controller(
+            'App\\Controller\\Front\\ContentController::footer', {'_local':  app.request.locale}
+        )) }}
     </main>
 
 {% include  "front/ar/bloc/import-js.html.twig" %}

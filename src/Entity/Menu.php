@@ -31,12 +31,13 @@ class   Menu
 
     /**
      * @ORM\ManyToOne(targetEntity=Content::class)
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="cascade")
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity=Language::class, inversedBy="menus")
+     * @ORM\JoinColumn(name="language_id", referencedColumnName="id", nullable=false)
      */
     private $language;
 
@@ -60,6 +61,11 @@ class   Menu
      * @ORM\OneToMany(targetEntity=Menu::class, mappedBy="parent")
      */
     private $menus;
+
+    /**
+     * @ORM\Column(type="string", length=100, nullable=true)
+     */
+    private $route;
 
     public function __construct()
     {
@@ -181,6 +187,18 @@ class   Menu
                 $menu->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getRoute(): ?string
+    {
+        return $this->route;
+    }
+
+    public function setRoute(?string $route): self
+    {
+        $this->route = $route;
 
         return $this;
     }

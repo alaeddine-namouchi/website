@@ -1,24 +1,28 @@
 <div class="row px-3">
 <ul class="nav nav-tabs ml-4" id="myTab" role="tablist">
     <li class="nav-item">
-        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Présentation</a>
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">التقديم</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Réseaux</a>
+        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">الشبكة</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Parc et trafic
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">الأسطول والنشاط
+
         </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Ressources humaines
+        <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">الموارد البشرية
+
         </a>
     </li>
 </ul>
 <div class="tab-content" id="myTabContent">
     <div class="tab-pane fade show active px-4 py-4" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <h4>Notre mission</h4>
-        <p>Assurer le transport collectif des voyageurs dans la région du grand Tunis à travers les réseaux bus et métro ainsi que la ligne ferroviaire de la banlieue Nord (TGM)</p>
+        <h4>التقديم</h4>
+        <p>تأمين النقل العمومي للأشخاص داخل إقليم تونس الكبرى عبر شبكتي الحافلات و المترو و الخط الحديدي تونس - حلق الواد - المرسى الذي يربط العاصمة بالضاحية الشمالية
+
+        </p>
     <!--
         <ul class="list-group">
             <li class="list-group-item">
@@ -33,23 +37,23 @@
                 <b>Tutelle</b> <br />
                 Ministère du transport
             </li>
-        </ul> 
+        </ul>
     -->
         <div class="row">
   <div class="col-sm-4">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Nom Juridique</h6>
-        <p class="card-text"> Sociéte de transport de Tunis.</p>
-        
+        <h6 class="card-title">الإسم القانةوني</h6>
+        <p class="card-text"> شركة نقل بتونس</p>
+
       </div>
     </div>
   </div>
   <div class="col-sm-4">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Nom Commercial</h6>
-        <p class="card-text">TRANSTU</p>
+        <h6 class="card-title">الإسم التجاري</h6>
+        <p class="card-text">نقل تونس</p>
       </div>
     </div>
   </div>
@@ -57,8 +61,8 @@
   <div class="col-sm-4">
     <div class="card">
       <div class="card-body">
-        <h6 class="card-title">Tutelle</h6>
-        <p class="card-text">Ministère du transport</p>
+        <h6 class="card-title">الوزارة</h6>
+        <p class="card-text">وزارة النقل</p>
       </div>
     </div>
   </div>
@@ -68,8 +72,10 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Date de création</h5>
-                        <p class="card-text">28 avril 2003 héritant de la fusion de la Société Nationale des Transports SNT et de la Société du métro léger de Tunis SMLT.</p>
+                        <h5 class="card-title">تاريخ الإنشاء</h5>
+                        <p class="card-text">
+                            28 أفريل 2003 اندماج الشركة الوطنية للنقل وشركة المترو الخفيف بتونس
+                        </p>
                         <!-- <a href="#" class="btn btn-primary">Historique</a> -->
                     </div>
                 </div>
@@ -77,8 +83,10 @@
             <div class="col-sm-6">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Nature juridique</h5>
-                        <p class="card-text">Etablissement public à caractère non administratif doté de la personnalité civile et de l'autonomie financière.</p>
+                        <h5 class="card-title">الطبيعة القانونية</h5>
+                        <p class="card-text">
+                            مؤسسة عمومية ذات صبغة غير إدارية تتمتع بالشخصية المدنية والاستقلال المالي
+                        </p>
                         <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
                     </div>
                 </div>
@@ -92,35 +100,36 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body     ">
-                        <h5 class="card-title">MODE BUS </h5>
+                        <h5 class="card-title">شبكة الحافلات׃</h5>
                         <p class="card-text">
 
-                        <ul class="list-group-item-faq">
+                        <ul class="list-group-item-faq-ar">
                             <li>
-                                Nombre de districts : 5
+                                عدد الأقاليم ׃ 5 (تونس 1، تونس 2 ، بن عروس، باب سعدون و الزهروني)
                             </li>
                             <li>
-                                Nombre de dépôts : 7
+                                عدد المستودعات ׃ 7 (الشرقية 1 ، الشرقية 2 ، بئر القصعة ، باب سعدون، الزهروني ، البكري و طبربة)
                             </li>
                             <li>
-                                Nombre de lignes : 232
+                                الورشات المركزية ׃ تتولى الورشات المركزية تجديد الحافلات و إصلاح كافة مكوناتها وصيانتها
+                            </li>
+                            <li>
+                                عدد الخطوط ׃ 232
                             </li>
 
                             <li>
-                                Nombre de lignes : 232
+                                عدد خطوط الترابط حافلة – مترو ׃ 54
                             </li>
                             <li>
-                                Nombre de lignes de correspondance bus-metro : 54
+                                عدد خطوط الترابط حافلة – حافلة ׃ 12
                             </li>
                             <li>
-                                Nombre de lignes de correspondance bus-bus :12
+                                طول الشبكة ׃ 7284,15كلم.
                             </li>
                             <li>
-                                Longueur du réseau : 7284,15 Km
+                                عدد المحطات ׃ 1628 ذهابا و 1653 إيابا
                             </li>
-                            <li>
-                                Nombre des Stations : 1628 aller +1653 retour
-                            </li>
+
                         </ul>
 
                         </p>
@@ -131,18 +140,18 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">MODE MÉTRO</h5>
+                        <h5 class="card-title">شبكة المترو ׃</h5>
                         <p class="card-text">
 
-                        <ul class="list-group-item-faq">
+                        <ul class="list-group-item-faq-ar">
                             <li>
-                                Nombre de dépôts : 2
+                                عدد المستودعات ׃ 2 (أريانة و تونس البحرية)
                             </li>
                             <li>
-                                Nombre de lignes : 6
+                                عدد الخطوط ׃ 6
                             </li>
                             <li>
-                                Longueur du réseau : 61,3 Km voie double sens.
+                                طول الشبكة ׃ 61,3 كلم (سكّة مزدوجة)
                             </li>
                         </ul>
 
@@ -154,15 +163,15 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">LIGNE FERROVIAIRE</h5>
+                        <h5 class="card-title">شبكة الخط الحديدي ت –ح – م ׃</h5>
                         <p class="card-text">
 
-                        <ul class="list-group-item-faq">
+                        <ul class="list-group-item-faq-ar">
                             <li>
-                                Nombre de dépôts : 1
+                                عدد المستودعات ׃ 1 (تونس البحرية)
                             </li>
                             <li>
-                                Longueur du réseau : 18 Km (voie double sens).
+                                طول الشبكة ׃ 18,8 كلم (سكة مزدوجة)
                             </li>
                         </ul>
 
@@ -178,23 +187,22 @@
     </div>
     <div class="tab-pane fade px-3 py-3" id="contact" role="tabpanel" aria-labelledby="contact-tab">
 
-        <h5>PARC:</h5>
+        <h5>الأسطول:</h5>
         <div class="row">
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body     ">
-                        <h5 class="card-title">MODE BUS </h5>
-                        <p class="card-text">
+                        شبكة الحافلات:<p class="card-text">
 
-                        <ul class="list-group-item-faq">
+                        <ul class="list-group-item-faq-ar">
                             <li>
-                                Nombre total des véhicules : 1439 dont 390 articulés
+                                الأسطول المسند في 31 ديسمبر2021  1213 حافلة
                             </li>
                             <li>
-                                Taux de disponibilité : 51,1%
+                                نسبة الأسطول الجاهز للاستغلال  % 51.7
                             </li>
                             <li>
-                                Age moyen du parc au 31/12/2019 : 10 ans 5 mois 25 jours
+                                معدل عمر الأسطول في 31 ديسمبر 11 سنة و سبعة أشهر
                             </li>
 
 
@@ -208,19 +216,19 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">MODE MÉTRO</h5>
+                        <h5 class="card-title">شبكة المترو:</h5>
                         <p class="card-text">
 
-                        <ul class="list-group-item-faq">
+                        <ul class="list-group-item-faq-ar">
                             <li>
 
-                                Nombre total des rames : 189 dont 134 SIEMENS et 55 rames CITADIS.
+                                الأسطول المسند في 31 ديسمبر 189 عرية
                             </li>
                             <li>
-                                Taux de disponibilité : 56,1%
+                                نسبة الأسطول الجاهز للاستغلال % 42,8
                             </li>
                             <li>
-                                Age moyen du parc : 24 ans et 10 mois 17 jours
+                                معدل عمر الأسطول في 31 ديسمبر 26 سنة و 10 أشهر
                             </li>
                         </ul>
 
@@ -232,18 +240,18 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">LIGNE FERROVIAIRE</h5>
+                        <h5 class="card-title">شبكة الخط الحديدي ت –ح – م ׃</h5>
                         <p class="card-text">
 
-                        <ul class="list-group-item-faq">
+                        <ul class="list-group-item-faq-ar">
                             <li>
-                                Nombre total des Wagons : 18 remorques + 18 automotrices
+                                الأسطول المسند في 31 ديسمبر 18 عرية
                             </li>
                             <li>
-                                Taux de disponibilité 71,3%
+                                نسبة الأسطول الجاهز للاستغلال % 66,4
                             </li>
                             <li>
-                                Age moyen du parc : 41 ans et 11 mois
+                                معدل عمر الأسطول في 31 ديسمبر 43 سنة و 11 شهر
                             </li>
                         </ul>
 
@@ -255,20 +263,20 @@
 
         </div>
 
-        <h5>TRAFIC:</h5>
+        <h5>النشاط التجاري (2021) :</h5>
         <div class="row">
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body     ">
-                        <h5 class="card-title">MODE BUS </h5>
+                        <h5 class="card-title">شبكة الحافلات ׃</h5>
                         <p class="card-text">
 
-                        <ul class="list-group-item-faq">
+                        <ul class="list-group-item-faq-ar">
                             <li>
-                            Kilometrage parcouru utiles : 32 082,3 milliers de Km
+                                عدد الكيلومترات المجدية 27980.3 الف كلم
                             </li>
                             <li>
-                            Voyageurs transportés : 110,2 millions dont 40,5 millions élèves et étudiants.
+                                عدد المسافرين الخالصين 77.8 مليون مسافر من بينهم 25.5 مليون مسافر من التلاميذ و الطلبة
                             </li>
 
 
@@ -282,18 +290,17 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">MODE MÉTRO</h5>
+                        <h5 class="card-title">شبكة المترو ׃</h5>
                         <p class="card-text">
 
-                        <ul class="list-group-item-faq">
+                        <ul class="list-group-item-faq-ar">
                             <li>
+                                عدد الكيلومترات المجدية 5616 الف كلم
+                            </li>
+                            <li>
+                                عدد المسافرين الخالصين 39.2 مليون مسافر من بينهم 9.5 مليون مسافر من التلاميذ و الطلبة
+                            </li>
 
-                            Kilometrage parcouru 7094,4 milliers de Km Km
-                            </li>
-                            <li>
-                            Voyageurs transportés :63,1 millions dont 16,1 millions élèves et étudiants.
-                            </li>
-                            
                         </ul>
 
                         </p>
@@ -304,16 +311,15 @@
             <div class="col-lg-4">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">LIGNE FERROVIAIRE</h5>
+                        <h5 class="card-title">شبكة الخط الحديدي ت –ح – م ׃</h5>
                         <p class="card-text">
 
-                        <ul class="list-group-item-faq">
+                        <ul class="list-group-item-faq-ar">
                             <li>
-                            Kilometrage parcouru utiles : 818,4 milliers de Km.
+                                عدد الكيلومترات المجدية  611 الف كلم
                             </li>
                             <li>
-                            Voyageurs transportés : 7,2 millions dont 1,9 millions élèves et étudiants.
-                            </li>
+                                عدد المسافرين الخالصين 5.1 مليون مسافر من بينهم 1.2 مليون مسافر من التلاميذ و الطلبة                            </li>
                         </ul>
 
                         </p>

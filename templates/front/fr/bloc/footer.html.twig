@@ -113,7 +113,11 @@
                 <ul class="card-text">
                     {% endif %}
                     {% for menu in sub_menu.menus %}
-                    <li><a href="about.php" class=" ">{{ menu.label | capitalize }}</a> </li>
+                        {% if menu.content %}
+                    <li><a href="{{ path('front_content_show', {'id': menu.content.article.num, 'slug': menu.content.slug}) }}" class=" ">{{ menu.label | capitalize }}</a> </li>
+                   {% else %}
+                       <li><a href="{{ path(menu.route) }}" class=" ">{{ menu.label | capitalize }}</a> </li>
+                   {% endif %}
                     {% endfor %}
                 </ul>
             </div>
