@@ -27,16 +27,16 @@ class AdminType extends AbstractType
         'choice_label' => 'label',
     ])
             ->add('email')
-            ->add('roles', ChoiceType::class, [
-                'required' => true,
+            ->add('roles', ChoiceType::class, [ "attr" => ["class" => "form-control d-none ", "style" => "display: none"],
+//                'required' => true,
                 'multiple' => false,
                 'expanded' => false,
                 'choices'  => [
-                  'User' => 'ROLE_USER',
-                  'Administrateur' => 'ROLE_ADMIN',
+                    'Administrateur' => 'ROLE_ADMIN',
+                    'User' => 'ROLE_USER',
                   'Super User' => 'ROLE_SUPER_USER',
                 ],
-                // 'multiple'  => true, 
+                // 'multiple'  => true,
             ])
         ->add('workUnit')
         ->add('phoneNumber')
@@ -46,7 +46,7 @@ class AdminType extends AbstractType
                 'first_options'  => ['label' => 'Password'],
                 'second_options' => ['label' => 'Repeat Password'],
             ])
-            
+
             ->add('isVerified', ChoiceType::class, [
                 'choices'  => [
                     'Vérifié' => true,

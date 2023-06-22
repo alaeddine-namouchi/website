@@ -27,8 +27,8 @@ class AdminUpdateType extends AbstractType
         'choice_label' => 'label',
     ])
             ->add('email')
-            ->add('roles', ChoiceType::class, [
-                'required' => true,
+            ->add('roles', ChoiceType::class, [ "attr" => ["class" => "form-control d-none "],
+//                'required' => true,
                 'multiple' => false,
                 'expanded' => false,
                 'choices'  => [
@@ -36,11 +36,11 @@ class AdminUpdateType extends AbstractType
                   'Administrateur' => 'ROLE_ADMIN',
                   'Super User' => 'ROLE_SUPER_USER',
                 ],
-                // 'multiple'  => true, 
+                // 'multiple'  => true,
             ])
         ->add('workUnit')
         ->add('phoneNumber')
-            
+
             ->add('isVerified', ChoiceType::class, [
                 'choices'  => [
                     'Vérifié' => true,
