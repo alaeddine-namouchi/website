@@ -70,13 +70,13 @@ class ContentController extends AbstractController
 
 
     /**
-     * @Route("/", name="font_content_index", methods={"GET"})
+     * @Route("/", name="front_content_index", methods={"GET"})
      */
     public function index(Request $request): Response
     {
         $locLang = $request->getLocale();
         if (! in_array($locLang, ['fr', 'ar'])) {
-            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
         }
         $category = $this->categoryRepository->findOneByAlias('NEWS');
         $articles = $this->articleRepository->findBy(['category' => $category]);
@@ -92,7 +92,7 @@ class ContentController extends AbstractController
     }
 
     /**
-     * @Route("/", name="font_menu_main", methods={"GET"})
+     * @Route("/", name="front_menu_main", methods={"GET"})
      */
     public function mainMenu($_locale): Response
     {
@@ -103,8 +103,14 @@ class ContentController extends AbstractController
             'typeMenu' => 'plus',
             'emplacement' => 'level_two'
         ], ['parent' => 'ASC']);
+        $mainMenu = $this->menuRepository->findBy([
+            'language' => $language,
+            'typeMenu' => 'main',
+            'emplacement' => 'level_one'
+        ], ['parent' => 'ASC']);
         return $this->render('front/' . $_locale . '/bloc/header.html.twig', [
             'menus' => $plusMenu,
+            'main_menu' => $mainMenu
         ]);
     }
 
@@ -119,7 +125,7 @@ class ContentController extends AbstractController
         $content = $this->contentRepository->findOneBy(['article'=> $article, 'language' => $lang_from_url ] );
         if(!$content){
             // a implementer un page d'information(....Cet contenu est tranduit en arabe) avant la  redirection à la page d'accueil
-            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
         }
         if ($content->getSlug() !== $slug) {
             return $this->redirectToRoute('front_content_show', ['id' => $article->getNum(), 'slug' => $content->getSlug()],
@@ -151,12 +157,12 @@ class ContentController extends AbstractController
 //            return $this->redirectToRoute('front_content_area', [], Response::HTTP_SEE_OTHER);
 //        }
 //        if ($article->getCategory()->getAlias() == 'WELCOME') {
-//            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+//            return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
 //        }
 //        if ($article->getCategory()->getAlias() == 'FORM') {
 //            return $this->redirectToRoute('front_contact_new', [], Response::HTTP_SEE_OTHER);
         } else {
-            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
         }
     }
 
@@ -191,7 +197,7 @@ class ContentController extends AbstractController
 
 
         } else {
-            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
         }
 
     }
@@ -220,7 +226,7 @@ class ContentController extends AbstractController
                 'current_page' => $category->getLabel(),
             ]);
         } else {
-            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
         }
 
     }

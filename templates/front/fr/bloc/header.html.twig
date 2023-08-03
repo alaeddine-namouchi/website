@@ -7,7 +7,6 @@
                 aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-
         <a class="navbar-brand mt-0" href="#">
 
             <img src="http://info.transtu.tn/Content/images/transtu_logo.png" alt="" class="logo mt-0"/>
@@ -20,18 +19,27 @@
         <div class="collapse navbar-collapse mt-0 " id="navbarTogglerDemo03">
             <!-- <ul class="navbar-nav mr-auto mt-2 mt-lg-0"> -->
             <ul class="navbar-nav mr-auto mt-0 mt-lg-0">
-                <li class="nav-item active-nav">
-                    <a class="nav-link nav-link-topbar " href="{{ path('font_content_index') }}">Accueil <span class="sr-only">(current)</span></a>
-                </li>
+            {% for sub_menu in main_menu %}
                 <li class="nav-item">
-                    <a class="nav-link nav-link-topbar" href="http://info.transtu.tn/info.php">Horaires</a>
+                    {% if sub_menu.content    %}
+                        <a class="nav-link nav-link-topbar " href="{{ path('front_content_show', {'id': sub_menu.content.article.num, 'slug': sub_menu.content.slug}) }}">{{ sub_menu.label }} <span class="sr-only">(current)</span></a>
+                    
+                    {% else %}
+                        <a href="{{ path(sub_menu.route) }}"  class="nav-link  nav-link-topbar" >{{ sub_menu.label | capitalize }}</a>
+                    {% endif %}
+                    </li>
+                 {% endfor %}
+{# 
+                <li class="nav-item">
+                    <a class="nav-link nav-link-topbar" 
+                    href="http://info.transtu.tn/info.php">Horaires</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link  nav-link-topbar" href="{{ path('front_contact_new') }}">Contact</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link  nav-link-topbar" href="{{ path('front_content_news') }}">Dernières nouvelles</a>
-                </li>
+                </li> #}
 
                 <!-- Navbar dropdown -->
                 <li class="nav-item dropdown position-static">

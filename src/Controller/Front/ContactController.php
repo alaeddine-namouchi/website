@@ -26,7 +26,7 @@ class ContactController extends AbstractController
         $locLang = $request->getLocale();
 
         if (! in_array($locLang, ['fr', 'ar'])) {
-            return $this->redirectToRoute('font_content_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
         }
         $contact = new Contact();
         $contact->setCreatedAt(new \DateTimeImmutable());

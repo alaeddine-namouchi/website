@@ -67,7 +67,13 @@ class GenerateBaseAccessController extends AbstractController
          $tableActionByController = array();
         foreach ($allRoute as $k => $t ){
 
-            $test = !str_starts_with($k, '_') && !str_starts_with($k, 'fos_') && !str_starts_with($k, 'fullcalendar_');         
+            $test = !str_starts_with($k, '_') 
+            && !str_starts_with($k, 'fos_') 
+            && !str_starts_with($k, 'ef_') 
+            && !str_starts_with($k, 'elfinder') 
+            && !str_starts_with($k, 'front_')
+            && !str_starts_with($k, 'app_section')  
+            && !str_starts_with($k, 'fullcalendar_');         
             if( $test){
             
                 $ch = $t->getDefault('_controller');
@@ -90,9 +96,6 @@ class GenerateBaseAccessController extends AbstractController
      */
     public function userManagementAction( ):Response
     {
-        
-    
-       
         $dataUserMngs = $this->getDataUserManagement();
         $list =   '';
         foreach($dataUserMngs as $key => $actions){
@@ -117,13 +120,13 @@ class GenerateBaseAccessController extends AbstractController
             $defaultActionType = $repoActionType->findOneBy(['alias'=> 'PRINCIPAL']);
             $list .=   '$defaultActionType = $repoActionType->findOneBy([\'alias\'=> \'PRINCIPAL\']);<br/>'.PHP_EOL;
             $list .=   "     ".PHP_EOL;
-             $this->em->persist($section);
-             dump($defaultActionType);
+            //$this->em->persist($section);
+            //  dump($defaultActionType);
             foreach ($actions as $k => $_action)
             {
                 $action = new Action();
-                $list .=   '$action'.$k .' = new Action();<br/>'.PHP_EOL;
-$list .=   '$action'.$k .'->setLabel(\''.$_action['action'].'\')'.PHP_EOL.'->setRoute(\''.$_action['route'].'\')'.PHP_EOL.'->setAlias(strtoupper(\''.$_action['action'].'\'))'.PHP_EOL.'->setBusinessName(\'' . $_action['action'] . '\')'.PHP_EOL.'->setSection( $section'.$key .')'.PHP_EOL.'->setActionType( $defaultActionType  )'.PHP_EOL.'->setAction(Null);<br/>'.PHP_EOL;
+                $list  .=   '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$action'.$k .' = new Action();<br/>'.PHP_EOL;
+                $list  .=   '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$action'.$k .'->setLabel(\''.$_action['action'].'\')'.PHP_EOL.'->setRoute(\''.$_action['route'].'\')'.PHP_EOL.'->setAlias(strtoupper(\''.$_action['action'].'\'))'.PHP_EOL.'->setBusinessName(\'' . $_action['action'] . '\')'.PHP_EOL.'->setSection( $section'.$key .')'.PHP_EOL.'->setActionType( $defaultActionType  )'.PHP_EOL.'->setAction(Null);<br/>'.PHP_EOL;
                 $action->setLabel($_action['action'])
                         ->setRoute($_action['route'])
                         ->setAlias(strtoupper($_action['action']))
@@ -134,17 +137,15 @@ $list .=   '$action'.$k .'->setLabel(\''.$_action['action'].'\')'.PHP_EOL.'->set
                         ;
                $list .=   '$this->em->persist('. '$action'.$k .');<br/>'.PHP_EOL;
                $list .=   "     ".PHP_EOL;
-             // $this->em->persist($action);
-
+           /// $this->em->persist($action);
                //dump($action);
                 
-
             }
-            $this->em->flush();
+          // $this->em->flush();
         }
 
         $sectionFromDB = $this->getDoctrine()->getRepository(Section::class)->findAll();
-        dump($sectionFromDB);
+        //dump($sectionFromDB);    
      
        return $this->renderForm('back/access_control.html.twig', [
         'content' => $list,

@@ -50,7 +50,7 @@ class AppLoginAuthenticator extends AbstractLoginFormAuthenticator
         }
 
 
-        return new RedirectResponse($this->urlGenerator->generate('app_admin_index'));
+        return new RedirectResponse($this->urlGenerator->generate('app_contact_index'));
         throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
     }
 

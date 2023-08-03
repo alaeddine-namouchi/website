@@ -75,6 +75,9 @@ class ContentController extends AbstractController
     {
         // dump($this->security->getUser());
         $scopeId = $request->get('scope');
+        if(is_null($scopeId)){
+            return $this->redirectToRoute('app_contact_index', [], Response::HTTP_SEE_OTHER);
+        }
         $scope = $scopeRepository->find($scopeId);
 //        dump($scope);
         $this->session->set('current_scope', $scope);

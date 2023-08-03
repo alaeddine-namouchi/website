@@ -36,71 +36,63 @@
                             <ul class="nav nav-children">
                                 {% if routes.app_content_index is defined %}
                                     {% for  profile_scope in profile_scopes %}
+                                    {% if profile_scope.scope.alias != 'CLIENT' 
+                                    and    profile_scope.scope.alias != 'CONTACT'  
+                                    %}
                                         <li>
                                             <a class="nav-link" href="{{ path('app_content_index', {'scope': profile_scope.scope.id}) }}">
                                                 {{ profile_scope.scope.name }}
                                             </a>
                                         </li>
+                                        {% endif %}
                                     {% endfor %}
                                 {% endif %}
 
                             </ul>
                         </li>
                     {% endif %}
-
+                    {% if routes.app_contact_index is defined %}
                     <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-cart-alt" aria-hidden="true"></i>
                             <span>Ecoute Clientèle</span>
                         </a>
                         <ul class="nav nav-children">
-                            {% if routes.app_contact_index is defined %}
                                 <li>
                                     <a class="nav-link" href="{{ path('app_contact_index') }}">
                                         Contact
                                     </a>
                                 </li>
-                            {% endif %}
-                            {% if routes.app_content_index is defined %}
-                                <li>
+                                
+                                {# <li>
                                     <a class="nav-link" href="{{ path('app_content_index') }}">
                                         Réclamation
                                     </a>
-                                </li>
-                            {% endif %}
+                                </li> #}
                         </ul>
                     </li>
+                    {% endif %}
+                      {% if routes.app_time_line_index is defined %}
                     <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-cart-alt" aria-hidden="true"></i>
                             <span>TimeLine</span>
                         </a>
                         <ul class="nav nav-children">
-                            {% if routes.app_time_line_all_news is defined %}
-                                <li>
-                                    <a class="nav-link" href="{{ path('app_time_line_all_news') }}">
-                                        Actualité
-                                    </a>
-                                </li>
-                            {% endif %}
-                            {% if routes.app_content_index is defined %}
                                 <li>
                                     <a class="nav-link" href="{{ path('app_time_line_index') }}">
                                         Historique Transport collectif
                                     </a>
                                 </li>
-                            {% endif %}
-                            {% if routes.app_content_index is defined %}
                                 <li>
                                     <a class="nav-link" href="{{ path('app_time_line_index') }}">
                                         Historique Identités visuelles
                                     </a>
                                 </li>
-                            {% endif %}
 
                         </ul>
                     </li>
-
+²                   {% endif %}
                     {% if routes.app_menu_index is defined %}
                         <li>
                             <a class="nav-link" href="{{ path('app_menu_index') }}">
@@ -109,7 +101,7 @@
                             </a>
                         </li>
                     {% endif %}
-                    {#     {% if app.user.profil.alias == 'SUPER_USER' %} #}
+                        {% if app.user.profile.alias == 'SUPER_USER' %}
                     <li class="nav-parent">
                         <a class="nav-link" href="#">
                             <i class="bx bx-cart-alt" aria-hidden="true"></i>
@@ -122,7 +114,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link" href="{{ path('action_index') }}">
+                                <a class="nav-link" href="{{ path('app_action_index') }}">
                                     Gestion des taches
                                 </a>
                             </li>
@@ -144,6 +136,7 @@
 
                         </ul>
                     </li>
+                    {% endif %}
 
 
                 </ul>

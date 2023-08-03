@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ActionController extends AbstractController
 {
     /**
-     * @Route("/", name="action_index", methods={"GET"})
+     * @Route("/", name="app_action_index", methods={"GET"})
      */
     public function index(ActionRepository $actionRepository): Response
     {
@@ -31,7 +31,7 @@ class ActionController extends AbstractController
     }
 
     /**
-     * @Route("/new", name="action_new", methods={"GET", "POST"})
+     * @Route("/new", name="app_action_new", methods={"GET", "POST"})
      */
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -53,7 +53,7 @@ class ActionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="action_show", methods={"GET"})
+     * @Route("/{id}", name="app_action_show", methods={"GET"})
      */
     public function show(Action $action): Response
     {
@@ -256,7 +256,7 @@ class ActionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="action_edit", methods={"GET", "POST"})
+     * @Route("/{id}/edit", name="app_action_edit", methods={"GET", "POST"})
      */
     public function edit(Request $request, Action $action, EntityManagerInterface $entityManager): Response
     {
@@ -267,7 +267,7 @@ class ActionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('action_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_action_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('back/action/edit.html.twig', [
@@ -277,7 +277,7 @@ class ActionController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="action_delete", methods={"POST"})
+     * @Route("/{id}", name="app_action_delete", methods={"POST"})
      */
     public function delete(Request $request, Action $action, EntityManagerInterface $entityManager): Response
     {

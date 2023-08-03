@@ -67,6 +67,7 @@ class MenuType extends AbstractType
                 'choices' => [
                     'Choisir Autre' => NULL,
                     'Toutes les actualitées' => 'front_content_news',
+                    'Accuiel' => 'front_content_index',
                     'Espace Journalist' => 'front_content_area',
                     'Formulaire de Contact' => 'front_contact_new',
                 ],
@@ -77,7 +78,7 @@ class MenuType extends AbstractType
                 'choice_label' => 'name',
             ])
             ->add('parent', EntityType::class, ["attr" => ["class" => "form-control "], "required" => false,
-                'placeholder' => 'Choisir Langue',
+                'placeholder' => 'Choisir Parent',
                 'class' => Menu::class,
                 'choice_label' => 'label',
             ]);

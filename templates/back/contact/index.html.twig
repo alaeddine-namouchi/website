@@ -1,9 +1,10 @@
 {% extends 'back/base.html.twig' %}
 
-{% block title %}Contact index{% endblock %}
+{% block title %}Contact {% endblock %}
 
 {% block body %}
-    <h1>Contact index</h1>
+{% set routes = app.session.get('permession_routes') %}
+    <h1></h1>
     <div class="count">
         {{ pagination.getTotalItemCount }}
     </div>
@@ -51,8 +52,9 @@
                 <td>{{ contact.readAt ? 'Oui' : 'Non' }}</td>
 
                 <td>
+                {% if routes.app_contact_show is defined %}
                     <a href="{{ path('app_contact_show', {'id': contact.id}) }}">show</a>
-                    {# <a href="{{ path('app_contact_edit', {'id': contact.id}) }}">edit</a> #}
+                    {% endif %}
                 </td>
             </tr>
         {% else %}
