@@ -112,8 +112,11 @@ class ContentController extends AbstractController
             case 2:
                 $aliasCat = 'NEWS';
                 break;
-            case 4:
+            case 14:
                 $aliasCat = 'AREA_JOURNALIST';
+                break;
+            case 4:
+                $aliasCat = 'COM_PRESS';
                 break;
             case 5:
                 $aliasCat = 'FORM';

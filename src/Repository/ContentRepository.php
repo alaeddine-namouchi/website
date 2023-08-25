@@ -86,8 +86,10 @@ class ContentRepository extends ServiceEntityRepository
         $qb = $qb
             ->where('t.article IN (:articleIds)')
             ->Andwhere('t.language = :langId')
+            ->Andwhere('t.published = :published')
             ->setParameter('articleIds', $articleIds)
             ->setParameter('langId', $langId)
+            ->setParameter('published', true)
             ->orderBy('t.published_date', 'DESC');
 
         return $qb;

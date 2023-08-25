@@ -12,7 +12,9 @@
                     {% if content.fullWidth %}
                         <div class="  col-md-12  col-sm-12 col-12  px-md-4">
                             {% if content.picture %}
-                                <div class="entry-img"><img src="{{ asset('uploads/'~ content.picture) }}" alt=""
+                                <div class="entry-img">
+                                {# <img src="{{ asset('uploads/'~ content.picture) }}" alt="{{ content.picture }}"/> #}
+                                <img src="{{ asset('uploads/'~ content.picture) }}" alt="{{ content.picture }}"
                                                             class="img-fluid  py-2 w-100"></div>
                             {% endif %}
                             {{ content.body | raw }}
@@ -20,7 +22,8 @@
                     {% else %}
                         <div class="col-md-12 col-lg-8 col-sm-12 col-12 px-md-4">
                             {% if content.picture %}
-                                <div class="entry-img"><img src="{{ asset('uploads/'~ content.picture) }}" alt=""
+                                <div class="entry-img">
+                                <img src="{{ asset('uploads/'~ content.picture) }}" alt="{{ content.picture }}"
                                                             class="img-fluid  py-2 w-100"></div>
                             {% endif %}
                             {{ content.body | raw }}

@@ -1,11 +1,11 @@
 <div class="row pl-5 pb-0 pt-3 ">
-    <h3 class="ml-2">ESPACE JOURNALISTES</h3>
+    <h3 class="ml-2">بلاغات لصحفيين</h3>
 </div>
 
 <div class="row">
 
     <div class="col-md-12 col-lg-8 col-sm-12 col-12">
-
+{{dump(contents.items)}}
 <div class="row pl-5 py-3">
     <ul class="list-group list-group-flush " >
         {%  for item in contents.items  %}
@@ -15,6 +15,10 @@
             <button type="button" class="btn btn-primary-news  mr-2  float-right"  onclick="document.location.href='{{ path('front_content_show', {'id': item.article.num, 'slug': item.slug}) }}'">Lire l'article</button>
 
         </li>
+        {% else %}
+        
+            <p>لا يوجد محتوى</p>
+           
         {% endfor %}
         <br/>
         <div class="navigation">

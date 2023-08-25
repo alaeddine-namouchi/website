@@ -122,11 +122,14 @@ class ContentController extends AbstractController
         $loc_url = $request->getLocale() ?? 'fr';
         $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
         $article = $this->articleRepository->findOneBy(['num'=> $id]);
-        $content = $this->contentRepository->findOneBy(['article'=> $article, 'language' => $lang_from_url ] );
+        $content = $this->contentRepository->findOneBy(['article'=> $article, 'language' => $lang_from_url, 'published' => true] );
+        
         if(!$content){
+            dd($content);
             // a implementer un page d'information(....Cet contenu est tranduit en arabe) avant la  redirection à la page d'accueil
             return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
-        }
+            
+        }else
         if ($content->getSlug() !== $slug) {
             return $this->redirectToRoute('front_content_show', ['id' => $article->getNum(), 'slug' => $content->getSlug()],
                 301);
@@ -135,7 +138,7 @@ class ContentController extends AbstractController
         $article = $content->getArticle();
         $content = $this->validContentFront($lang_from_url, $article);
         $loc_url = $request->get('_locale');
-        if (in_array($article->getCategory()->getAlias(), ['SIMPLE', 'AREA_JOURNALIST', 'NEWS', 'FORM'])) {
+        if (in_array($article->getCategory()->getAlias(), ['SIMPLE', 'AREA_JOURNALIST', 'NEWS', 'FORM', 'COM_PRESS')) {
             return $this->render('front/' . $loc_url. '/simple.html.twig', [
                 'content' => $content,
                 'slug' => $slug,
@@ -222,6 +225,35 @@ class ContentController extends AbstractController
         $contents = $contentService->getContentByArticles($page, $limit, $lang_from_url->getId(), $articleIds);
         if ($category->getAlias() == 'AREA_JOURNALIST') {
             return $this->render('front/' . $loc_url . '/all-area-journalist.html.twig', [
+                'contents' => $contents,
+                'current_page' => $category->getLabel(),
+            ]);
+        } else {
+            return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+    }
+
+    
+    /**
+     * @Route("/communication-press", name="front_content_press", methods={"GET"} )
+     */
+    public function showComPress(Request $request, ContentService $contentService, LanguageService $languageService): Response
+    {
+        $page = $request->query->getInt('page', 1);
+        $limit = $request->query->getInt('limit', 3);
+
+        $category = $this->categoryRepository->findOneByAlias('COM_PRESS');
+        $loc_url = $request->get('_locale') ?? 'fr';
+        $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
+        $articles = $this->articleRepository->findBy(['category' => $category]);
+        $articleIds = [];
+        foreach ($articles as $article) {
+            $articleIds[] = $article->getId();
+        }
+        $contents = $contentService->getContentByArticles($page, $limit, $lang_from_url->getId(), $articleIds);
+        if ($category->getAlias() == 'COM_PRESS') {
+            return $this->render('front/' . $loc_url . '/all-com-press.html.twig', [
                 'contents' => $contents,
                 'current_page' => $category->getLabel(),
             ]);

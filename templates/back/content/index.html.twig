@@ -15,9 +15,10 @@
                 <th>Body</th>
                 {# <th>Slug</th>
                 <th>Tags</th> #}
+                <th>Rubrique</th>
                 <th>Published_date</th>
-                <th>Created_at</th>
-                <th>Updated_at</th>
+                {# <th>Created_at</th>
+                <th>Updated_at</th> #}
                 <th>Published</th>
                 <th>actions</th>
             </tr>
@@ -31,9 +32,10 @@
                 <td>{{ intro(content.body , 10, " ...") }}</td>
                 {# <td>{{ content.slug }}</td>
                 <td>{{ content.tags }}</td> #}
+                <td>{{content.scope.name}}</td>
                 <td>{{ content.publishedDate ? content.publishedDate|date('Y-m-d') : '' }}</td>
-                <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ content.updatedAt ? content.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                {# <td>{{ content.createdAt ? content.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ content.updatedAt ? content.updatedAt|date('Y-m-d H:i:s') : '' }}</td> #}
                 <td class="fw-bold {{content.published ? 'text-success' : 'text-danger'}}">{{ content.published ? 'Publié' : 'No' }}</td>
                 <td>
                     <a href="{{ path('app_content_show', {'id': content.id}) }}" class="on-default show-row"><i class="fa fa-eye"></i></a>
@@ -44,7 +46,7 @@
             </tr>
         {% else %}
             <tr>
-                <td colspan="11">no records found</td>
+                <td colspan="10">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
