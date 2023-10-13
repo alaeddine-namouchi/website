@@ -1,0 +1,54 @@
+<!-- START : carousel -->
+<section>
+  <div class="container-fluid container-fluid-baniere ">
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+
+            <ol class="carousel-indicators">
+      {% for key, content in contents %}
+        {% if key == 1 %}
+        <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index - 1}}" class="active"></li>
+        {% endif  %}
+        {% if key != 1 %}
+        <li data-target="#carouselExampleIndicators" data-slide-to="{{loop.index - 1}}"></li>
+        {% endif  %}           
+       
+        {% endfor %}
+      </ol>
+      <div class="carousel-inner">
+       {% for k, content in contents %}
+       {{loop.index}}
+          {% if k == 1 %}
+              <div class="carousel-item  active ">
+          {% endif  %}
+
+          {% if k != 1 %}
+              <div class="carousel-item">
+          {% endif  %} 
+                <img class="d-block w-100" id="img-ban-2"  src= "{{ asset('uploads/'~ content.picture) }}"  alt="First slide">
+                <div class="container d-flex align-items-end float-right comment-ar">
+
+                    <div class="  carousel-caption text-left skw-caption d-none d-lg-block ">
+                      <h1 class="d-xs-none title-baniere-ar text-uppercase">{{content.title}}</h1>
+                      <p class="d-xs-none text-baniere-ar" >
+                      {{content.intro}}
+                      <p><a class="btn btn-sm btn-warning btn-baniere " href="{{ path('front_content_show', {'id': content.article.num, 'slug': content.slug}) }}" role="button">مشاهدة التاصيل</a></p>
+                    </div>
+                </div>
+              </div>
+        {% endfor %}
+        
+      <div class="justify-content-between" dir="ltr" >
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+          <i class="fas fa-arrow-circle-right slick-next"  style= "color: orange;font-size:24px" ></i>
+          <span class="sr-only">Next</span>
+        </a>
+          <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" style="">
+            <i class="fas fa-arrow-circle-left slick-prev"  style= "color: orange;font-size:24px" ></i>
+            <span class="sr-only">Previous</span>
+          </a>
+      </div>
+      
+  </div>
+  </div>
+</section>
+<!-- END : carousel -->

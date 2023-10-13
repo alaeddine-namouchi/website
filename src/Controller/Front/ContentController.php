@@ -11,6 +11,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\ContentRepository;
 use App\Repository\LanguageRepository;
 use App\Repository\MenuRepository;
+use App\Repository\ScopeRepository;
 use App\Service\ContentService;
 use App\Service\LanguageService;
 use Exception;
@@ -37,6 +38,7 @@ class ContentController extends AbstractController
     private $categoryRepository;
     private $menuRepository;
     private $translator;
+    private $scopeRepository;
     /**
      * @var LoggerInterface
      */
@@ -53,7 +55,8 @@ class ContentController extends AbstractController
                                 LanguageRepository  $languageRepository,
                                 CategoryRepository  $categoryRepository,
                                 ArticleRepository   $articleRepository,
-                                TranslatorInterface $translator
+                                TranslatorInterface $translator, 
+                                ScopeRepository $scopeRepository
     )
     {
         $this->security = $security;
@@ -65,6 +68,7 @@ class ContentController extends AbstractController
         $this->translator = $translator;
         $this->menuRepository = $menuRepository;
         $this->logger = $logger;
+        $this->scopeRepository = $scopeRepository;
 
     }
 
@@ -125,7 +129,7 @@ class ContentController extends AbstractController
         $content = $this->contentRepository->findOneBy(['article'=> $article, 'language' => $lang_from_url, 'published' => true] );
         
         if(!$content){
-            dd($content);
+            dd($content);   
             // a implementer un page d'information(....Cet contenu est tranduit en arabe) avant la  redirection à la page d'accueil
             return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
             
@@ -138,7 +142,7 @@ class ContentController extends AbstractController
         $article = $content->getArticle();
         $content = $this->validContentFront($lang_from_url, $article);
         $loc_url = $request->get('_locale');
-        if (in_array($article->getCategory()->getAlias(), ['SIMPLE', 'AREA_JOURNALIST', 'NEWS', 'FORM', 'COM_PRESS')) {
+        if (in_array($article->getCategory()->getAlias(), ['SIMPLE', 'AREA_JOURNALIST', 'NEWS', 'FORM', 'COM_PRESS'])) {
             return $this->render('front/' . $loc_url. '/simple.html.twig', [
                 'content' => $content,
                 'slug' => $slug,
@@ -164,7 +168,16 @@ class ContentController extends AbstractController
 //        }
 //        if ($article->getCategory()->getAlias() == 'FORM') {
 //            return $this->redirectToRoute('front_contact_new', [], Response::HTTP_SEE_OTHER);
-        } else {
+        } elseif(in_array($article->getCategory()->getAlias(), ['GALLERY'])){
+
+            return $this->render('front/' . $loc_url. '/gallery.html.twig', [
+                'content' => $content,
+                'slug' => $slug,
+                'current_page' => $content->getTitle(),
+                'local_lang' => $loc_url
+            ]);
+        }
+        else {
             return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
         }
     }
@@ -234,6 +247,35 @@ class ContentController extends AbstractController
 
     }
 
+
+       /**
+     * @Route("/gakkery", name="front_content_area", methods={"GET"} )
+     */
+    public function showGallery(Request $request, ContentService $contentService, LanguageService $languageService): Response
+    {
+        $page = $request->query->getInt('page', 1);
+        $limit = $request->query->getInt('limit', 3);
+
+        $category = $this->categoryRepository->findOneByAlias('GALLERY');
+        $loc_url = $request->get('_locale') ?? 'fr';
+        $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
+        $articles = $this->articleRepository->findBy(['category' => $category]);
+        $articleIds = [];
+        foreach ($articles as $article) {
+            $articleIds[] = $article->getId();
+        }
+        $contents = $contentService->getContentByArticles($page, $limit, $lang_from_url->getId(), $articleIds);
+        if ($category->getAlias() == 'AREA_JOURNALIST') {
+            return $this->render('front/' . $loc_url . '/all-area-journalist.html.twig', [
+                'contents' => $contents,
+                'current_page' => $category->getLabel(),
+            ]);
+        } else {
+            return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+    }
+
     
     /**
      * @Route("/communication-press", name="front_content_press", methods={"GET"} )
@@ -276,6 +318,18 @@ class ContentController extends AbstractController
         return $this->render('front/' . $_locale . '/bloc/bloc-news.html.twig', [
             'contents' => $contents,
             'current_page' => $category->getLabel(),
+        ]);
+    }
+
+    public function banner($_locale): Response
+    {
+        !in_array($_locale, ['fr', 'ar']) ? $_locale = 'fr' : null;
+        // $language = $this->languageRepository->findOneBy(['alias' => $_locale]);
+        $lang_from_url = $this->languageRepository->findOneByAlias($_locale);
+        $scope = $this->scopeRepository->findOneByAlias('BANNER');
+        $contents = $this->contentRepository->findBy(['scope'=> $scope, 'language' => $lang_from_url, 'published' => true] );
+        return $this->render('front/' . $_locale . '/bloc/banner.html.twig', [
+            'contents' => $contents,
         ]);
     }
 

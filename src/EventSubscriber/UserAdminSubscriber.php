@@ -56,12 +56,13 @@ class UserAdminSubscriber implements EventSubscriberInterface
                 $route = $profilAction->getAction()->getRoute();
                 $permessionRoutes[$route] = $route;
             }
-            // dd($permessionRoutes);
+            $permessionRoutes['app_gallery_load'] = 'app_gallery_load';
+            dump($permessionRoutes);
             // echo count($permessionRoutes);
             // die;
             $this->session->clear();
             $this->session->set('permession_routes', $permessionRoutes);
-            $this->session->set('scope', $permessionRoutes);
+            $this->session->set('scope', $profilActions);
 
     }
 

@@ -20,7 +20,14 @@
         {#            {{ form_widget(form.scope, {'value' : content.scope }) }} #}
     </div>
     <small>{{ form_help(form.body) }}</small>
-
+{% if app.session.get('current_scope').id == 15 %}
+<div>
+    <a class="btn btn-sm btn-default" href="#" id="load_gallery" >Load Galleries</a>
+    </a>
+    <input type="hidden" id="content_scope" value="{{ app.session.get('current_scope').id }}"  />
+    <input type="hidden" id="content_id" value="{{ content.id }}"  />
+</div>
+{% endif %}
     <div class="form-error">
         {{ form_errors(form.body) }}
     </div>
@@ -108,10 +115,12 @@
 </style>
 
 <script>
-    CKEDITOR.replace('cke_content_body', {
+    CKEDITOR.replace('content_body', {
         width: '70%',
         height: 800,
-        removeButtons: 'PasteFromWord'
+        removeButtons: 'PasteFromWord',
+        {# allowedContent = true; #}
+        extraAllowedContent: 'a[data-*]'
     });
 </script>
 {{ form_end(form) }}

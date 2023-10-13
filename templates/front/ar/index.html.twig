@@ -6,7 +6,10 @@
 )) }}
 <main role="main">
     <div class="container marketing ">
-        {% include  "front/ar/bloc/baniere-ar.html.twig" %}
+        {# {% include  "front/ar/bloc/baniere-ar.html.twig" %} #}
+        {{ render(controller(
+                'App\\Controller\\Front\\ContentController::banner', {'_local':  app.request.locale}
+            )) }}
     </div>
     <!-- START : BLOC INFO VOUYAGEURS -->
     <div class=" container">

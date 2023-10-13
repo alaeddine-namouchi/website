@@ -92,6 +92,7 @@ class ContentController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/new", name="app_content_new", methods={"GET", "POST"})
      */
@@ -171,7 +172,6 @@ class ContentController extends AbstractController
             $article = $contentRepository->find($id)->getArticle();
             $articleRepository->add($article);
             $content->setArticle($article);
-//            dump($content);
             $contentRepository->add($content);
             return $this->redirectToRoute('app_content_index', ['scope' => $content->getScope()->getId()], Response::HTTP_SEE_OTHER);
         }
@@ -243,7 +243,6 @@ class ContentController extends AbstractController
             $form = $this->createForm(ContentType::class, $content);
             $form->handleRequest($request);
             if ($form->isSubmitted() && $form->isValid()) {
-
                 $uploadedFile = $form['picture']->getData();
                 if ($uploadedFile) {
                     $destination = $this->getParameter('kernel.project_dir') . '/public/uploads';
@@ -330,6 +329,103 @@ class ContentController extends AbstractController
 
 
     }
+    
+
+    /**
+     * @Route("/gallery/load/{id}", name="app_gallery_load", methods={"GET"})
+     */
+    public function loadGallery(Request $request, Content $content, ScopeRepository $scopeRepository, LanguageRepository $languageRepository, ContentRepository $contentRepository): Response
+    {
+        $scopeId  = 15;
+        // $scopeId = $request->request->get('scope_id');
+        if(is_null($scopeId) || $scopeId != 15){
+            return $this->redirectToRoute('app_content_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        $scope = $scopeRepository->find($scopeId);
+        $this->session->set('current_scope', $scope);
+        $basePathGalleri = '/uploads/images/Gallerie photo/';
+        $pathGallery = '/home/rached/Bureau/website/public/uploads/images/Gallerie photo/';
+        // $dirList = scandir($pathGallery);
+        $dirList = array_diff(scandir($pathGallery), array('..', '.'));
+        $htmTpl = '';
+        foreach($dirList as $cp => $dir){
+            $htmTpl .= ' <div class="tab-pane fade show active py-4" id="transport_museum" role="tabpanel" aria-labelledby="transport_museum-tab">';
+            $htmTpl .= '<h4>' . $dir . '</h4>';
+            $htmTpl .= '    <div class="container">';
+            $htmTpl .= '        <div class="row ar-float" >';
+            $htmTpl .= '            <div class="row " >';
+            // $htmTpl .= '                <div class="col-lg-3 col-md-4 col-xs-6 thumb">';
+    
+            $imgList = array_diff(scandir($pathGallery . "/" . $dir), array('..', '.'));    
+            foreach($imgList as $img){
+                $uriImg = $basePathGalleri . "/" . $dir . "/" . $img;
+
+                $htmTpl .= ' <div class="col-lg-3 col-md-4 col-xs-6 thumb">';
+                $htmTpl .= '        <a class="thumbnail" href="#" data-image-id="" data-toggle="modal" data-title="Titre de l\'image" data-image="http://127.0.0.1:8000/'.$uriImg.'" data-target="#image-gallery">';
+                $htmTpl .= '            <img class="img-thumbnail" style="width: 215px;height:150px" src="'.$uriImg.'" alt="Another alt text"/>';
+                $htmTpl .= '        </a>';
+                $htmTpl .= '</div>'."\n";
+            }
+            $htmTpl .="   </div>";
+                               
+                if($cp == count($dirList) - 1 ){
+                    $htmTpl .='<div class="modal fade" id="image-gallery" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="image-gallery-title"></h4>
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <img id="image-gallery-image" class="img-responsive col-md-12" src="">
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary float-left" id="show-previous-image"><i class="fa fa-arrow-left"></i>
+                                </button>
+
+                                <button type="button" id="show-next-image" class="btn btn-secondary float-right"><i class="fa fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+                }
+                    $htmTpl .="       </div>
+                            </div>
+                            </div>";
+                        
+        }
+        // dd($htmTpl);
+        $loc_url = $request->get('_locale');
+        $objlang_from_url = $languageRepository->findOneByAlias($loc_url);
+        $article = $content->getArticle();
+        $action = $this->typeOfAction($objlang_from_url, $article);
+        // if ($action == 'edit') {
+        //     $content = $this->validContent($objlang_from_url, $article);
+        //     // $form = $this->createForm(ContentType::class, $content);
+        //     // $form->handleRequest($request);
+        //     // if ($form->isSubmitted() && $form->isValid()) {
+        //         $content->setBody($htmTpl);
+        //         $contentRepository->add($content);
+        //         return $this->redirectToRoute('app_content_edit', ['id' => $content->getId(), 'article_id' => $article->getId()]);
+        //         // return $this->renderForm('back/content/edit.html.twig', [
+        //         //     'content' => $content,
+        //         //     'form' => $form,
+        //         //     'url_picture' => ''
+        //         //     //'scope' => Scope::ALL
+        //         // ]);
+        //     // }
+
+        // }else{
+
+        // }
+        // dd($htmTpl);
+        return $this->json(["save" => true,  'scope_id' => $action, 'content' => $htmTpl]);
+   
+    }
+    
 
     public function validContent(Language $lang, Article $article)
     {

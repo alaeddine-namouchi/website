@@ -55,11 +55,14 @@ class AccessControlEventSubscriber implements EventSubscriberInterface
                 $route = $profilAction->getAction()->getRoute();
                 $permessionRoutes[$route] = $route;
             }
+            $permessionRoutes['app_gallery_load'] = 'app_gallery_load';
+            
 //             dd($profileScopes);
 //             dd($profileScopes->getScope());
             // echo count($permessionRoutes);
             // die;
             //$this->session->clear();
+            // dump($permessionRoutes);
             $this->session->set('permession_routes', $permessionRoutes);
             $this->session->set('profile_scopes', $profileScopes);
         }

@@ -24,7 +24,10 @@
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 
-    <div class="tab-pane fade show active px-4 py-4" id="transport_museum" role="tabpanel" aria-labelledby="transport_museum-tab">
+
+
+
+    <!-- <div class="tab-pane fade show active px-4 py-4" id="transport_museum" role="tabpanel" aria-labelledby="transport_museum-tab">
         <h4>Titre 1</h4>
         <div class="container">
                 <div class="row">
@@ -188,17 +191,8 @@
                     </div>
                 </div>
             </div>
-    </div>
+    </div> -->
 
 
 
 <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
-
-<script>
-
-
-
-
-
-  
-</script>

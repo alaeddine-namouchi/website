@@ -8,10 +8,14 @@
 
     <main role="main">
         <div class="container marketing bg-light" >
-            {% include "front/fr/bloc/baniere-img.html.twig" %}
+            {# {% include "front/fr/bloc/baniere-img.html.twig" %} #}
+       
+            {{ render(controller(
+                'App\\Controller\\Front\\ContentController::banner', {'_local':  app.request.locale}
+            )) }}
             <div>
                 <!-- START : BLOC INFO VOUYAGEURS -->
-            {% include "front/fr/bloc/info-travel.html.twig" %}
+            {# {% include "front/fr/bloc/info-travel.html.twig" %} #}
             {% include "front/fr/bloc/communication.html.twig" %}
 </div>
             {{ render(controller(
