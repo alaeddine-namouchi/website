@@ -1,14 +1,15 @@
 <div class="row pl-5 pb-0 pt-3 ">
-    <h3 class="ml-2">COMMUNICATION PRESS</h3>
+    <h3 class="ml-2">{{ current_page }}</h3>
 </div>
+
 <div class="row">
-    <div class="col-md-12 col-lg-12 col-sm-12 col-12">
+    <div class="col-md-12 col-lg-8 col-sm-12 col-12">
         <div class="row pl-5 py-3">
             <ul class="list-group list-group-flush ">
                 {% for item in contents.items %}
                     <li class="list-group-item bg-light  list-press " style="cursor:auto ;">
                         <h5>{{ item.title }}</h5>
-                        <p> {{ item.intro }}.</p>
+                        <p style="width: 100%"> {{ item.intro }}.</p>
                         <button type="button" class="btn btn-primary-news  mr-2  float-right"
                                 onclick="document.location.href='{{ path('front_content_show', {'id': item.article.num, 'slug': item.slug}) }}'">
                             Lire l'article
@@ -26,7 +27,7 @@
             </ul>
         </div>
     </div>
-{#    {{ render(controller(#}
-{#        'App\\Controller\\Front\\ContentController::blocNews', {'_local':  app.request.locale}#}
-{#    )) }}#}
+    {{ render(controller(
+        'App\\Controller\\Front\\ContentController::blocNews', {'_local':  app.request.locale}
+    )) }}
 </div>

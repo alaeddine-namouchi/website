@@ -9,18 +9,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
- 
+
     /**
      * @Route("/swith-locale/{locale}", name="switch_locale")
      */
     public function index($locale, Request $request ): Response
     {
-        
+
         $url = $request->headers->get('referer');
         // dump($url);
         // if(str_contains($url, 'edit')){
         //     $array = explode('/', $url);
-        //     $id = $array[count($array)-2]; 
+        //     $id = $array[count($array)-2];
         //     $content = $this->contentRepository->find($id);
         //     dump($id);die;
         //     $aliasOriginLang = $content->getLanguage()->getAlias();
@@ -36,13 +36,13 @@ class MainController extends AbstractController
         //     }
         // }
         // else{
-        //     $validUrl = $url; 
+        //     $validUrl = $url;
         // }
-        
+
         $request->getSession()->set('_locale', $locale);
         $langs = ['/fr/', '/ar/', '/en/'];
         $newUrl = str_replace($langs, '/'.$locale.'/', $url );
-        dump($url, $newUrl);
+//        dump($url, $newUrl);
         //  $newUrl = str_replace('/edit', '/new', $url );
         return $this->redirect($newUrl);
     }
