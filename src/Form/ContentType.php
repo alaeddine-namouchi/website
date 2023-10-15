@@ -63,7 +63,7 @@ class ContentType extends AbstractType
                         // array('name' => 'Widget Style', 'type' => 'widget' , 'widget' => 'my_widget', 'attributes' => array('class' => 'my_widget_style')),
                     ),
                 ),
-                "row_attr" => ['class' => 'col-lg-8']])
+                "row_attr" => ['class' => 'col-lg-10']])
             ->add('tags', TextType::class,
                 ['attr' => ['data-role' => "tagsinput", 'data-tag-class' => "badge badge-primary", 'class' => "form-control"
                 ]])

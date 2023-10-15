@@ -69,6 +69,7 @@ class MenuType extends AbstractType
                     'Toutes les actualitées' => 'front_content_news',
                     'Accuiel' => 'front_content_index',
                     'Espace Journalist' => 'front_content_area',
+                    'Communication de press' => 'front_content_press',
                     'Formulaire de Contact' => 'front_contact_new',
                 ],
                 "required" => false, "attr" => ["class" => "form-control"]])

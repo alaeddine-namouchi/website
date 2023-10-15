@@ -249,7 +249,7 @@ class ContentController extends AbstractController
 
 
        /**
-     * @Route("/gakkery", name="front_content_area", methods={"GET"} )
+     * @Route("/gallery", name="front_content_area_bis", methods={"GET"} )
      */
     public function showGallery(Request $request, ContentService $contentService, LanguageService $languageService): Response
     {
@@ -294,6 +294,7 @@ class ContentController extends AbstractController
             $articleIds[] = $article->getId();
         }
         $contents = $contentService->getContentByArticles($page, $limit, $lang_from_url->getId(), $articleIds);
+
         if ($category->getAlias() == 'COM_PRESS') {
             return $this->render('front/' . $loc_url . '/all-com-press.html.twig', [
                 'contents' => $contents,

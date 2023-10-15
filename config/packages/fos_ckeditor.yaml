@@ -5,10 +5,10 @@ twig:
         - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
 
 fos_ck_editor:
-    input_sync: true
+#    input_sync: true
     configs:
         main_config:
-            inline: true
+#            inline: true
             toolbarr:  full
             htmlSupport: {
                 allow: [
@@ -22,4 +22,4 @@ fos_ck_editor:
             }
             filebrowserBrowseRoute: elfinder
             filebrowserBrowseRouteParameters: []
- 
+
