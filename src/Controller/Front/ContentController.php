@@ -132,6 +132,8 @@ class ContentController extends AbstractController
             /**@todo
              * need to fixed
              * /
+             *
+             *
             dd($content , 'Cet article n est pas traduit en '.$loc_url);
             // a implementer un page d'information(....Cet contenu est tranduit en arabe) avant la  redirection à la page d'accueil
             return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
