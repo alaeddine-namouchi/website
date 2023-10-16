@@ -249,7 +249,7 @@ class ContentController extends AbstractController
 
 
        /**
-     * @Route("/gakkery", name="front_content_area", methods={"GET"} )
+     * @Route("/aaa-journatist", name="front_content_area_tt", methods={"GET"} )
      */
     public function showGallery(Request $request, ContentService $contentService, LanguageService $languageService): Response
     {
