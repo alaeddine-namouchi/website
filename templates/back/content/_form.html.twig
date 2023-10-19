@@ -103,24 +103,15 @@
 <div class="mt-3">
     <button class="btn btn-sm btn-primary">{{ button_label|default('Save') }}</button>
 </div>
-<style>
-    #cke_1_contents {
-        height: 1000px !important
-    }
+{#<style>#}
+{#    #cke_1_contents {#}
+{#        height: 1000px !important#}
+{#    }#}
 
-    .ck-editor__editable_inline {
-        min-height: 800px !important;
-    }
+{#    .ck-editor__editable_inline {#}
+{#        min-height: 800px !important;#}
+{#    }#}
 
-</style>
+{#</style>#}
 
-<script>
-    CKEDITOR.replace('content_body', {
-        width: '70%',
-        height: 800,
-        removeButtons: 'PasteFromWord',
-        {# allowedContent = true; #}
-        extraAllowedContent: 'a[data-*]'
-    });
-</script>
 {{ form_end(form) }}

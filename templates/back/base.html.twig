@@ -302,13 +302,13 @@
         });
 console.log(urlLoadGallery);
 $('#load_gallery').click( function (e) {
-            
+
                 id = $('#content_id').val()
                 url = urlLoadGallery.replace('/_content_id_', '/' + id);
                 scopeId = $("#content_scope").val();
             console.log(scopeId)
                 if(scopeId == 15){
-            
+
                 console.log()
                 loadGallery(url, scopeId);
 
@@ -325,7 +325,7 @@ $('#load_gallery').click( function (e) {
     * Load Gallery
     */
 
-        
+
 
     function loadGallery(urlLoadGallery, scopeId) {
         console.log(urlLoadGallery);
@@ -341,9 +341,9 @@ $('#load_gallery').click( function (e) {
             },
             success: function (data) {
                     {# console.log(data) #}
-                CKEDITOR.instances.content_body.setData(data.content);
-              
-            
+                // CKEDITOR.instances.content_body.setHtml(data.content);
+
+
                 {# console.log('data : ' + JSON.stringify(data)) #}
                 /*if (data.scope_id) {
                     $("#scope_" + data.scope_id).prop('checked', true);
@@ -631,7 +631,6 @@ $('#load_gallery').click( function (e) {
         });
 
     }
-
 </script>
 
 </body>
