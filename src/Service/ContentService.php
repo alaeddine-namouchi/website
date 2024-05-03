@@ -51,9 +51,9 @@ class ContentService
 
     }
 
-    public function getContentByArticles( int $page, int $limit,int $langId ,array $articleIds)
+    public function getContentByArticles( int $page, int $limit,int $langId ,array $articleIds, array $params= [])
     {
-        $pagination = $this->paginator->paginate($this->repository->getContentByArticlesQueryBuilder( $langId , $articleIds), $page, $limit);
+        $pagination = $this->paginator->paginate($this->repository->getContentByArticlesQueryBuilder( $langId , $articleIds, $params), $page, $limit);
         return $pagination;
 
     }

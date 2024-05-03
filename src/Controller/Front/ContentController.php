@@ -126,6 +126,7 @@ class ContentController extends AbstractController
         $loc_url = $request->getLocale() ?? 'fr';
         $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
         $article = $this->articleRepository->findOneBy(['num'=> $id]);
+        // dd($article);
         $content = $this->contentRepository->findOneBy(['article'=> $article, 'language' => $lang_from_url, 'published' => true] );
 
         if(!$content){
@@ -133,7 +134,7 @@ class ContentController extends AbstractController
              * need to fixed
              */
           
-            dd($content , 'Cet article n est pas traduit en '.$loc_url);
+            // dd($content , 'Cet article n est pas traduit en '.$loc_url);
             // a implementer un page d'information(....Cet contenu est tranduit en arabe) avant la  redirection à la page d'accueil
             return $this->redirectToRoute('front_content_index', [], Response::HTTP_SEE_OTHER);
 
@@ -318,7 +319,12 @@ class ContentController extends AbstractController
     {
         $page = $request->query->getInt('page', 1);
         $limit = $request->query->getInt('limit', 5);
-
+        $publishedDate = $request->query->getInt('published_date');
+        $keySearch = $request->query->get('key_search');
+        $params = [];
+        $params['published_date'] = isset($publishedDate)?$publishedDate:null;
+        $params['key_search'] = $keySearch;
+        // dd($publishedDate);
         $category = $this->categoryRepository->findOneByAlias('ACHAT_PUBLIC');
         $loc_url = $request->get('_locale') ?? 'fr';
         $lang_from_url = $this->languageRepository->findOneByAlias($loc_url);
@@ -327,7 +333,7 @@ class ContentController extends AbstractController
         foreach ($articles as $article) {
             $articleIds[] = $article->getId();
         }
-        $contents = $contentService->getContentByArticles($page, $limit, $lang_from_url->getId(), $articleIds);
+        $contents = $contentService->getContentByArticles($page, $limit, $lang_from_url->getId(), $articleIds, $params );
 
         if ($category->getAlias() == 'ACHAT_PUBLIC') {
             return $this->render('front/' . $loc_url . '/all-achat-public.html.twig', [
@@ -349,7 +355,9 @@ class ContentController extends AbstractController
         foreach ($articles as $article) {
             $articleIds[] = $article->getId();
         }
+       
         $contents = $this->contentService->getContentByArticles(1, 3, $language->getId(), $articleIds);
+        // dd($contents);
         return $this->render('front/' . $_locale . '/bloc/bloc-news.html.twig', [
             'contents' => $contents,
             'current_page' => $category->getLabel(),

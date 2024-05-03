@@ -1,0 +1,66 @@
+<div class="row pl-5 pb-0 pt-3 ">
+    <h3 class="ml-2">{{ current_page }}</h3>
+</div>
+<div  class="row" >
+
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12 col-12">
+        <form class= "pl-5" action="{{ path('front_content_achat') }}" method="get">
+            <div class="form-row align-items-center">
+                <div class="col-auto my-1">
+                
+                    <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="published_date">
+                        <option value='0'>السنة</option>
+                        {% for i in 0..10 %}
+                         {% if app.request.get('published_date') == 2023-i %} 
+                            <option  selected value={{2023 - i }}>{{2023 - i  }}</option>
+                            {% else  %}
+                            <option  value={{ 2023 - i }}>{{ 2023 - i  }}</option>
+                            {% endif %}
+                        {% endfor %}
+
+                    </select>
+                </div>
+                <div class="col-auto my-1">
+                    <div class="custom-control custom-checkbox mr-sm-2">
+                    {% if app.request.get('key_search') is defined %} 
+                        <input type="text" class="form-control" name="key_search" value="{{ app.request.get('key_search') }}" id="" placeholder="mot clé" />
+                         {% else  %}
+                            <input type="text" class="form-control" name="key_search" id="" placeholder="mot clé" />
+                            {% endif %}
+                    </div>
+                </div>
+                <div class="col-auto my-1">
+                    <button type="submit" class="btn btn-primary">بحث</button>
+                </div>
+            </div>
+        </form>
+        <div class="row pl-5 py-3">
+            <ul class="list-group list-group-flush ">
+                {% for item in contents.items %}
+                    <li class="list-group-item bg-light  list-press " style="cursor:auto ;">
+                        <h5>{{ item.title }}</h5>
+                        <h4>Date : {{item.publishedDate ? item.publishedDate|date('d-m-Y') : '' }}</h4>                        
+                        <p style="width: 100%"> {{ item.intro }}.</p>
+                        <button type="button" class="btn btn-primary-news  mr-2  float-right"
+                                onclick="document.location.href='{{ path('front_content_show', {'id': item.article.num, 'slug': item.slug}) }}'">
+                            Lire l'article
+                        </button>
+                    </li>
+                {% endfor %}
+                <br/>
+                <div class="navigation">
+                    <div class="row justify-content-end ">
+                        <nav aria-label="Page navigation example " class="float-right ">
+                            {{ knp_pagination_render(contents) }}
+                        </nav>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+{#    {{ render(controller(#}
+{#        'App\\Controller\\Front\\ContentController::blocNews', {'_local':  app.request.locale}#}
+{#    )) }}#}
+</div>

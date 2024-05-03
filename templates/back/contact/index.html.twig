@@ -55,6 +55,9 @@
                 {% if routes.app_contact_show is defined %}
                     <a href="{{ path('app_contact_show', {'id': contact.id}) }}">show</a>
                     {% endif %}
+                    {% if routes.app_contact_show is defined %}
+                    <a href="{{ path('app_response_new', {'contact_id': contact.id}) }}">Repondre</a>
+                    {% endif %}
                 </td>
             </tr>
         {% else %}

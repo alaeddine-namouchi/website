@@ -19,6 +19,8 @@ use Symfony\Component\Security\Core\Security;
 
 class ContentType extends AbstractType
 {
+    private $security;
+    private $entityManager;
     /**
      * Constructor
      *

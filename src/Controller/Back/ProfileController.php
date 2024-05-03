@@ -84,7 +84,7 @@ class ProfileController extends AbstractController
     {
         $form = $this->createForm(ProfileType::class, $profil);
         $form->handleRequest($request);
-        dump($form);
+        // dump($form);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 

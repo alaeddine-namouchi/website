@@ -29,6 +29,7 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->articles = new ArrayCollection();
         $this->contents = new ArrayCollection();
+        $this->responses = new ArrayCollection();
         
     }
 
@@ -109,6 +110,11 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\OneToMany(targetEntity=Content::class, mappedBy="author_id")
      */
     private $contents;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Response::class, mappedBy="user")
+     */
+    private $responses;
 
 
     public function __toString(): string
@@ -358,6 +364,36 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($content->getAuthorId() === $this) {
                 $content->setAuthorId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Response>
+     */
+    public function getResponses(): Collection
+    {
+        return $this->responses;
+    }
+
+    public function addResponse(Response $response): self
+    {
+        if (!$this->responses->contains($response)) {
+            $this->responses[] = $response;
+            $response->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResponse(Response $response): self
+    {
+        if ($this->responses->removeElement($response)) {
+            // set the owning side to null (unless already changed)
+            if ($response->getUser() === $this) {
+                $response->setUser(null);
             }
         }
 

@@ -6,21 +6,29 @@
 </div>
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12 col-12">
-        <form action="{{ path('front_content_achat') }}" method="get">
+        <form class= "pl-5" action="{{ path('front_content_achat') }}" method="get">
             <div class="form-row align-items-center">
                 <div class="col-auto my-1">
                     <label class="mr-sm-2 sr-only" for="inlineFormCustomSelect">Preference</label>
                     <select class="custom-select mr-sm-2" id="inlineFormCustomSelect" name="published_date">
-                        <option selected >Choisir Année</option>
+                        <option value='0'>Choisir Année</option>
                         {% for i in 0..10 %}
-                            <option value="2023">{{2023-i  }}</option>
+                         {% if app.request.get('published_date') == 2023-i %} 
+                            <option  selected value={{2023 - i }}>{{2023 - i  }}</option>
+                            {% else  %}
+                            <option  value={{ 2023 - i }}>{{ 2023 - i  }}</option>
+                            {% endif %}
                         {% endfor %}
 
                     </select>
                 </div>
                 <div class="col-auto my-1">
                     <div class="custom-control custom-checkbox mr-sm-2">
-                        <input type="text" class="form-control" name="" id="" placeholder="mot clé" />
+                    {% if app.request.get('key_search') is defined %} 
+                        <input type="text" class="form-control" name="key_search" value="{{ app.request.get('key_search') }}" id="" placeholder="mot clé" />
+                         {% else  %}
+                            <input type="text" class="form-control" name="key_search" id="" placeholder="mot clé" />
+                            {% endif %}
                     </div>
                 </div>
                 <div class="col-auto my-1">
@@ -33,9 +41,10 @@
                 {% for item in contents.items %}
                     <li class="list-group-item bg-light  list-press " style="cursor:auto ;">
                         <h5>{{ item.title }}</h5>
-{#                        <div{% if pagination.isSorted(['a.published_date', 'a.published_date']) %} class="sorted"{% endif %}>#}
-{#                            {{ knp_pagination_sortable(pagination, 'Release', ['a.date', 'a.time']) }}#}
-{#                        </div>#}
+                        <h4>Date : {{item.publishedDate ? item.publishedDate|date('d-m-Y') : '' }}</h4>
+                       
+                            {# {{ knp_pagination_sortable(contents.items, 'publishedDate', ['t.publishedDate']) }} #}
+                        
                         <p style="width: 100%"> {{ item.intro }}.</p>
                         <button type="button" class="btn btn-primary-news  mr-2  float-right"
                                 onclick="document.location.href='{{ path('front_content_show', {'id': item.article.num, 'slug': item.slug}) }}'">

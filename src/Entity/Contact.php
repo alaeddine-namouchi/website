@@ -62,9 +62,15 @@ class Contact
      */
     private $contactThemes;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Response::class, mappedBy="contact")
+     */
+    private $responses;
+
     public function __construct()
     {
         $this->contactThemes = new ArrayCollection();
+        $this->responses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -183,6 +189,36 @@ class Contact
             // set the owning side to null (unless already changed)
             if ($contactTheme->getContact() === $this) {
                 $contactTheme->setContact(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Response>
+     */
+    public function getResponses(): Collection
+    {
+        return $this->responses;
+    }
+
+    public function addResponse(Response $response): self
+    {
+        if (!$this->responses->contains($response)) {
+            $this->responses[] = $response;
+            $response->setContact($this);
+        }
+
+        return $this;
+    }
+
+    public function removeResponse(Response $response): self
+    {
+        if ($this->responses->removeElement($response)) {
+            // set the owning side to null (unless already changed)
+            if ($response->getContact() === $this) {
+                $response->setContact(null);
             }
         }
 

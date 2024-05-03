@@ -78,20 +78,40 @@ class ContentRepository extends ServiceEntityRepository
 
         ;
     }
-    public function getContentByArticlesQueryBuilder( $langId , $articleIds)
+    public function getContentByArticlesQueryBuilder( $langId , $articleIds,array $params)
     {
 //        $stringArticleIds = implode(",", $articleIds);
-        $qb = $this->createQueryBuilder('t');
-
+        $publishedDate = isset($params['published_date'])? $params['published_date']:null;
+        $keySearch = isset($params['key_search'])?$params['key_search']:null;
+        
+        
+        $qb = $this->createQueryBuilder('t'); 
         $qb = $qb
             ->where('t.article IN (:articleIds)')
-            ->Andwhere('t.language = :langId')
-            ->Andwhere('t.published = :published')
+            ->andwhere('t.language = :langId')
+            ->andwhere('t.published = :published')
             ->setParameter('articleIds', $articleIds)
             ->setParameter('langId', $langId)
-            ->setParameter('published', true)
-            ->orderBy('t.published_date', 'DESC');
-
+            ->setParameter('published', true);
+            
+            if(isset($publishedDate) && $publishedDate > 2000){
+                $startDate = new \DateTime($publishedDate .'-01-01');
+                $endDate = new \DateTime($publishedDate .'-12-31');
+                $qb->andWhere($qb->expr()->between('t.published_date', ':startDate', ':endDate'));
+                $qb->setParameter('startDate', $startDate);
+                $qb->setParameter('endDate', $endDate);
+            }
+    
+            if(isset($keySearch)){
+                $qb->andwhere($qb->expr()->like('t.body', ':keySearch'))
+                ->setParameter('keySearch', '%' . $keySearch . '%');
+            }
+            
+            
+            
+            $qb->orderBy('t.published_date', 'DESC')
+            ->getQuery();
+        
         return $qb;
     }
 

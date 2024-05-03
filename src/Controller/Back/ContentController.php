@@ -122,6 +122,9 @@ class ContentController extends AbstractController
             case 5:
                 $aliasCat = 'FORM';
                 break;
+                case 20:
+                    $aliasCat = 'ACHAT_PUBLIC';
+                    break;
             default:
                 $aliasCat = 'SIMPLE';
                 break;
