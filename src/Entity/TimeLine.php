@@ -30,6 +30,7 @@ class TimeLine
      */
     private $stepDate;
 
+
     /**
      * @ORM\Column(type="text")
      */
@@ -74,6 +75,11 @@ class TimeLine
      * @ORM\ManyToOne(targetEntity=TimeLineTopic::class, inversedBy="timeLines")
      */
     private $timeLineTopic;
+
+    /**
+     * @ORM\Column(type="string", length=10, nullable=true)
+     */
+    private $articleType;
 
 
     /**
@@ -229,6 +235,18 @@ class TimeLine
     public function setTimeLineTopic(?TimeLineTopic $timeLineTopic): self
     {
         $this->timeLineTopic = $timeLineTopic;
+
+        return $this;
+    }
+
+    public function getArticleType(): ?string
+    {
+        return $this->articleType;
+    }
+
+    public function setArticleType(?string $articleType): self
+    {
+        $this->articleType = $articleType;
 
         return $this;
     }

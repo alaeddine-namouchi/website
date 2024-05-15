@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\TimeLine;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -20,6 +21,14 @@ class TimeLineType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('description')
+            ->add('article_type', ChoiceType::class, [
+                'placeholder' => 'Choisir type',
+                'choices'  => [
+                    'Article' => 'article',
+                    'Titre de bloque ' => 'title_bloc',
+                ],
+                "required" => true, "attr" => ["class" => "form-control"]
+        ])
             ->add('icon', FileType::class, [
                 'mapped' => false,
                 'required' => false
