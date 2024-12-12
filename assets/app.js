@@ -22,6 +22,11 @@ import $ from 'jquery';
 // import the function from greet.js (the .js extension is optional)
 // ./ (or ../) means to look for a local file
 import greet from './greet';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import CKEditor from '@ckeditor/ckeditor5-react';
+
+window.ClassicEditor = ClassicEditor;
+window.CKEditor = CKEditor;
 
 bsCustomFileInput.init();
 

@@ -1,0 +1,56 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: symfony_app
+    volumes:
+      - .:/var/www/html
+    ports:
+      - "8000:80"
+    depends_on:
+      - db
+    networks:
+      - symfony_net
+
+  db:
+    image: mysql:5.7
+    container_name: symfony_db
+    environment:
+      MYSQL_ROOT_PASSWORD: 160481
+      MYSQL_DATABASE: siteweb_transtu_v4
+      MYSQL_USER: root
+      MYSQL_PASSWORD: 160481
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - symfony_net
+
+  node:
+    image: node:16
+    container_name: symfony_node
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    command: "tail -f /dev/null"
+    networks:
+      - symfony_net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: 160481
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - symfony_net
+
+volumes:
+  db_data:
+
+networks:
+  symfony_net:

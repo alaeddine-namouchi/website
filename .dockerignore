@@ -1,0 +1,8 @@
+node_modules
+var
+vendor
+.git
+cache
+*.log
+*.lock
+*.zip

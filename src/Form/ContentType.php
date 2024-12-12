@@ -53,19 +53,24 @@ class ContentType extends AbstractType
             ->add('intro')
 //            ->add('scope', HiddenType::class)
             ->add('body', CKEditorType::class, [
-                'config' => array(
-                    'stylesSet' => 'my_styles',
-                ),
-
-                'styles' => array(
-                    'my_styles' => array(
-                        // array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
-                        array('name' => 'cssCKE', 'element' => 'span', 'attributes' => array('class' => 'my_cssCKE')),
-                        // array('name' => 'Multiple Element Style', 'element' => array('h2', 'span'), 'attributes' => array('class' => 'my_class')),
-                        // array('name' => 'Widget Style', 'type' => 'widget' , 'widget' => 'my_widget', 'attributes' => array('class' => 'my_widget_style')),
-                    ),
-                ),
-                "row_attr" => ['class' => 'col-lg-10']])
+                'config' => [
+                    'toolbar' => 'full',
+                ],
+            ])
+//            ->add('body', CKEditorType::class, [
+//                'config' => array(
+//                    'stylesSet' => 'my_styles',
+//                ),
+//
+//                'styles' => array(
+//                    'my_styles' => array(
+//                        // array('name' => 'Blue Title', 'element' => 'h2', 'styles' => array('color' => 'Blue')),
+//                        array('name' => 'cssCKE', 'element' => 'span', 'attributes' => array('class' => 'my_cssCKE')),
+//                        // array('name' => 'Multiple Element Style', 'element' => array('h2', 'span'), 'attributes' => array('class' => 'my_class')),
+//                        // array('name' => 'Widget Style', 'type' => 'widget' , 'widget' => 'my_widget', 'attributes' => array('class' => 'my_widget_style')),
+//                    ),
+//                ),
+//                "row_attr" => ['class' => 'col-lg-10']])
             ->add('tags', TextType::class,
                 ['attr' => ['data-role' => "tagsinput", 'data-tag-class' => "badge badge-primary", 'class' => "form-control"
                 ]])
