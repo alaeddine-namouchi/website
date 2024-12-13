@@ -6,3 +6,6 @@ cache
 *.log
 *.lock
 *.zip
+.dockerignore
+.gitignore
+.env

@@ -12,6 +12,9 @@ services:
       - db
     networks:
       - symfony_net
+    environment:
+      DATABASE_URL: mysql://root:160481@symfony_db:3306/siteweb_transtu_v4?serverVersion=5.7
+    
 
   db:
     image: mysql:5.7
@@ -19,8 +22,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: 160481
       MYSQL_DATABASE: siteweb_transtu_v4
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 160481
+      MYSQL_ALLOW_EMPTY_PASSWORD: "no"
+      # MYSQL_USER: root
+      # MYSQL_PASSWORD: 160481
     volumes:
       - db_data:/var/lib/mysql
     networks:
